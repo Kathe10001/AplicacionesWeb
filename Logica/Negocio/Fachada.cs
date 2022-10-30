@@ -8,5 +8,6 @@ namespace Logica.Negocio
 {
     class Fachada //hacer despues
     {
+
     }
 }
