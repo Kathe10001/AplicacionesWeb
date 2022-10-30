@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.810.25
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AplicacionesWeb", "AplicacionesWeb\AplicacionesWeb.csproj", "{672DA5E1-1D68-45A4-B7C9-7AE384ADD2B5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logica", "Logica\Logica.csproj", "{9F063A83-8603-482A-AD80-50CE2F73BFED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebServices", "WebServices\WebServices.csproj", "{D3624C21-9328-451B-A53D-91B30D3DBE96}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{672DA5E1-1D68-45A4-B7C9-7AE384ADD2B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{672DA5E1-1D68-45A4-B7C9-7AE384ADD2B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{672DA5E1-1D68-45A4-B7C9-7AE384ADD2B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{672DA5E1-1D68-45A4-B7C9-7AE384ADD2B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F063A83-8603-482A-AD80-50CE2F73BFED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F063A83-8603-482A-AD80-50CE2F73BFED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F063A83-8603-482A-AD80-50CE2F73BFED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F063A83-8603-482A-AD80-50CE2F73BFED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3624C21-9328-451B-A53D-91B30D3DBE96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3624C21-9328-451B-A53D-91B30D3DBE96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3624C21-9328-451B-A53D-91B30D3DBE96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3624C21-9328-451B-A53D-91B30D3DBE96}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
