@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logica.Negocio
+namespace Logica.VOs
 {
-    class Cancion
+    class VOCancion
     {
     }
 }
