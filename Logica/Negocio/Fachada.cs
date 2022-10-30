@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Logica.Negocio
 {
-    class Fachada
+    class Fachada //hacer despues
     {
     }
 }
