@@ -1,4 +1,5 @@
-﻿using Logica.VOs;
+﻿using Logica.DAOs;
+using Logica.VOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Logica.Negocio
 {
-    class Fachada //hacer despues
+    public class Fachada //hacer despues
     {
 
 
@@ -33,7 +34,12 @@ namespace Logica.Negocio
 
         public List<VOCancion> ListarCanciones() { throw new NotImplementedException(); }
 
-        public void AltaCancion(VOCancion cancion) { }
+        public void AltaCancion(VOCancion cancion) 
+        {
+            DAOCancion daoc = new DAOCancion();
+            daoc.Insertar(cancion);
+
+        }
 
         public void BajaCancion(int idCancion) { }
 

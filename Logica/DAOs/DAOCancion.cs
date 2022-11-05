@@ -53,7 +53,7 @@ namespace Logica.DAOs
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.StackTrace);
+                Console.WriteLine(e.StackTrace); // arreglar exception
             }
             finally
             {
@@ -68,5 +68,77 @@ namespace Logica.DAOs
             return voc;
         }
 
+
+        public void Insertar (VOCancion voc) 
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("insert into Cancion ");
+            sb.Append("values(@Nombre, @Duracion, @Anio, @Genero, @Cantante) ");
+            SqlConnection conn = null;
+            SqlDataReader myReader = null;
+
+            try
+            {
+                conn = Conexion();
+                conn.Open();
+
+                SqlCommand comando = new SqlCommand(sb.ToString(), conn);
+                SqlParameter nombreParameter = new SqlParameter()
+                {
+                    ParameterName = "@Nombre",
+                    Value = voc.Nombre,
+                    SqlDbType = SqlDbType.VarChar
+                };
+                comando.Parameters.Add(nombreParameter);
+
+                SqlParameter duracionParameter = new SqlParameter()
+                {
+                    ParameterName = "@Duracion",
+                    Value = voc.Duracion,
+                    SqlDbType = SqlDbType.Int
+                };
+                comando.Parameters.Add(duracionParameter);
+
+                SqlParameter anioParameter = new SqlParameter()
+                {
+                    ParameterName = "@Anio",
+                    Value = voc.Anio,
+                    SqlDbType = SqlDbType.Int
+                };
+                comando.Parameters.Add(anioParameter);
+
+                SqlParameter generoParameter = new SqlParameter()
+                {
+                    ParameterName = "@Genero",
+                    Value = voc.GeneroMusical,
+                    SqlDbType = SqlDbType.VarChar
+                };
+                comando.Parameters.Add(generoParameter);
+
+                SqlParameter cantanteParameter = new SqlParameter()
+                {
+                    ParameterName = "@Cantante",
+                    Value = voc.IdCantante,
+                    SqlDbType = SqlDbType.Int
+                };
+                comando.Parameters.Add(cantanteParameter);
+
+                myReader = comando.ExecuteReader();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.StackTrace); // arreglar exception
+            }
+            finally
+            {
+                if (myReader != null)
+                    if (!myReader.IsClosed)
+                        myReader.Close();
+
+                if (conn != null)
+                    if (conn.State == ConnectionState.Open)
+                        conn.Close();
+            }
+        }
     }
 }

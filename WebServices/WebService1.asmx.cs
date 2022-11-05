@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Services;
 using Logica.VOs;
+using Logica.Negocio;
 
 namespace WebServices
 {
@@ -52,7 +53,13 @@ namespace WebServices
         public List<VOCancion> ListarCanciones() { throw new NotImplementedException(); }
 
         [WebMethod]
-        public void AltaCancion(VOCancion cancion) { }
+        //public void AltaCancion(VOCancion cancion) 
+        public void AltaCancion(String nombre, int duracion, String genero, int cantante, int anio)
+        {
+            Fachada f = new Fachada();
+            VOCancion voc = new VOCancion(nombre,duracion,genero,cantante,anio);
+            f.AltaCancion(voc);
+        }
 
         [WebMethod]
         public void BajaCancion(int idCancion) { }
