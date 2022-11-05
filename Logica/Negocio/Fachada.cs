@@ -42,7 +42,7 @@ namespace Logica.Negocio
         public void AltaIntegrante(VOIntegrante integrante) { }
 
         public void BajaIntegrante(int idIntegrante) { }
-        public void Calificar(VOCalificar calificar) { }
+        public void Calificar(VOCalificacion calificar) { }
 
 
 

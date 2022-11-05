@@ -12,9 +12,8 @@ namespace Logica.VOs
         public String Nombre { get; set; }
         public int AnioCreacion { get; set; }
         public int IdBanda { get; set; }
-
         public String GeneroMusica { get; set; }
-        public List<int> Canciones { get; set; }
+        public List<VOCancion> Canciones { get; set; }
 
 
     }

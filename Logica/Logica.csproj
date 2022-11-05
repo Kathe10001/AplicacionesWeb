@@ -48,14 +48,16 @@
   <ItemGroup>
     <Compile Include="Negocio\Album.cs" />
     <Compile Include="Negocio\Banda.cs" />
+    <Compile Include="Negocio\Calificacion.cs" />
     <Compile Include="Negocio\Cancion.cs" />
     <Compile Include="Negocio\Fachada.cs" />
     <Compile Include="Negocio\Integrante.cs" />
+    <Compile Include="Negocio\Usuario.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VOs\VOAlbum.cs" />
     <Compile Include="VOs\VOBanda.cs" />
-    <Compile Include="VOs\VOCalificar.cs" />
+    <Compile Include="VOs\VOCalificacion.cs" />
     <Compile Include="VOs\VOCancion.cs" />
     <Compile Include="VOs\VOIntegrante.cs" />
   </ItemGroup>
