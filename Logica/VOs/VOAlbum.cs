@@ -6,7 +6,16 @@ using System.Threading.Tasks;
 
 namespace Logica.VOs
 {
-    class VOAlbum
+    public class VOAlbum
     {
+        public int Id { get; set; }
+        public String Nombre { get; set; }
+        public int AnioCreacion { get; set; }
+        public int IdBanda { get; set; }
+
+        public String GeneroMusica { get; set; }
+        public List<int> Canciones { get; set; }
+
+
     }
 }

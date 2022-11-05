@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace Logica.VOs
 {
-    class VOIntegrante
+    public class VOIntegrante
     {
+        public int Id { get; set; }
+        public String Nombre { get; set; }
+        public String Apellido { get; set; }
+        public DateTime FechaNacimiento { get; set; }
+
     }
 }

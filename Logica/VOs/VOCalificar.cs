@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace Logica.VOs
 {
-    class VOCalificar
+    public class VOCalificar
     {
+        public int Id { get; set; }
+        public int IdUsuario { get; set; }
+        public int Puntaje { get; set; }
+        public String Comentario { get; set; }
+
+        //falta agregar tipo Calificacion (enumerado)
+
     }
 }
