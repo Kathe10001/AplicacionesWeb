@@ -56,6 +56,7 @@ namespace WebServices
         //public void AltaCancion(VOCancion cancion) 
         public void AltaCancion(String nombre, int duracion, String genero, int cantante, int anio)
         {
+            //borrar esto
             Fachada f = new Fachada();
             VOCancion voc = new VOCancion(nombre,duracion,genero,cantante,anio);
             f.AltaCancion(voc);

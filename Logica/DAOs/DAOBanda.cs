@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Logica.DAOs
 {
-    class DAOCancion
+    class DAOBanda
     {
         public SqlConnection Conexion()
         {
@@ -17,15 +17,15 @@ namespace Logica.DAOs
             SqlConnection conn = new SqlConnection(strConn);
             return conn;
         }
-        public VOCancion Buscar(int id)
+        public VOBanda Buscar(int id)
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("select * from Cancion ");
+            sb.Append("select * from Banda ");
             sb.Append("where Id= @id ");
             SqlConnection conn = null;
             SqlDataReader myReader = null;
-            VOCancion voc = null;
- 
+            VOBanda vob = null;
+
             try
             {
                 conn = Conexion();
@@ -36,19 +36,18 @@ namespace Logica.DAOs
                 {
                     ParameterName = "@id",
                     Value = id,
-                    SqlDbType = SqlDbType.Int 
+                    SqlDbType = SqlDbType.Int
                 };
                 comando.Parameters.Add(idParameter);
                 myReader = comando.ExecuteReader();
                 if (myReader.Read())
                 {
-                   voc = new VOCancion();
-                   voc.Id = id;
-                   voc.Nombre = Convert.ToString(myReader["Nombre"]);
-                   voc.GeneroMusical = Convert.ToString(myReader["GeneroMusical"]);
-                   voc.Duracion = Convert.ToInt32(myReader["Duracion"]);
-                   voc.Anio = Convert.ToInt32(myReader["Anio"]);
-                   voc.IdCantante = Convert.ToInt32(myReader["Cantante"]);
+                    vob = new VOBanda();
+                    vob.Id = id;
+                    vob.Nombre = Convert.ToString(myReader["Nombre"]);
+                    vob.GeneroMusical = Convert.ToString(myReader["GeneroMusical"]);
+                    vob.AnioCreacion = Convert.ToInt32(myReader["AnioCreacion"]);
+                    vob.AnioSeparacion = Convert.ToInt32(myReader["AnioSeparacion"]);
                 }
             }
             catch (SqlException e)
@@ -65,15 +64,15 @@ namespace Logica.DAOs
                     if (conn.State == ConnectionState.Open)
                         conn.Close();
             }
-            return voc;
+            return vob;
         }
 
 
-        public void Insertar (VOCancion voc) 
+        public void Insertar(VOBanda vob)
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("insert into Cancion ");
-            sb.Append("values(@Nombre, @Duracion, @Anio, @Genero, @Cantante) ");
+            sb.Append("insert into Banda ");
+            sb.Append("values(@Nombre, @GeneroMusical, @AnioCreacion, @AnioSeparacion) ");
             SqlConnection conn = null;
             SqlDataReader myReader = null;
 
@@ -86,43 +85,35 @@ namespace Logica.DAOs
                 SqlParameter nombreParameter = new SqlParameter()
                 {
                     ParameterName = "@Nombre",
-                    Value = voc.Nombre,
+                    Value = vob.Nombre,
                     SqlDbType = SqlDbType.VarChar
                 };
                 comando.Parameters.Add(nombreParameter);
 
-                SqlParameter duracionParameter = new SqlParameter()
+                SqlParameter generoMParameter = new SqlParameter()
                 {
-                    ParameterName = "@Duracion",
-                    Value = voc.Duracion,
+                    ParameterName = "@GeneroMusical",
+                    Value = vob.GeneroMusical,
                     SqlDbType = SqlDbType.Int
                 };
-                comando.Parameters.Add(duracionParameter);
+                comando.Parameters.Add(generoMParameter);
 
-                SqlParameter anioParameter = new SqlParameter()
+                SqlParameter anioCParameter = new SqlParameter()
                 {
-                    ParameterName = "@Anio",
-                    Value = voc.Anio,
+                    ParameterName = "@AnioCreacion",
+                    Value = vob.AnioCreacion,
                     SqlDbType = SqlDbType.Int
                 };
-                comando.Parameters.Add(anioParameter);
+                comando.Parameters.Add(anioCParameter);
 
-                SqlParameter generoParameter = new SqlParameter()
+                SqlParameter anioSParameter = new SqlParameter()
                 {
-                    ParameterName = "@Genero",
-                    Value = voc.GeneroMusical,
+                    ParameterName = "@AnioSeparacion",
+                    Value = vob.AnioSeparacion,
                     SqlDbType = SqlDbType.VarChar
                 };
-                comando.Parameters.Add(generoParameter);
-
-                SqlParameter cantanteParameter = new SqlParameter()
-                {
-                    ParameterName = "@Cantante",
-                    Value = voc.IdCantante,
-                    SqlDbType = SqlDbType.Int
-                };
-                comando.Parameters.Add(cantanteParameter);
-
+                comando.Parameters.Add(anioSParameter);
+                               
                 myReader = comando.ExecuteReader();
             }
             catch (SqlException e)
@@ -142,33 +133,33 @@ namespace Logica.DAOs
         }
 
 
-        public List<VOCancion> Listar()
+        public List<VOBanda> Listar()
         {
 
-            String consulta ="select  *  from Cancion";
+            String consulta = "select  *  from Banda";
             SqlConnection conn = null;
             SqlDataReader myReader = null;
-            List<VOCancion> listVoc = null;
+            List<VOBanda> listvob = null;
 
             try
             {
                 conn = Conexion();
                 conn.Open();
-                
+
                 SqlCommand comando = new SqlCommand(consulta, conn);
-                
+
 
                 myReader = comando.ExecuteReader();
-                VOCancion voc = new VOCancion();
+                VOBanda vob = new VOBanda();
                 while (myReader.Read())
-               {
-                    voc.Id = Convert.ToInt32(myReader["Id"]);
-                    voc.Nombre = Convert.ToString(myReader["Nombre"]);
-                    voc.GeneroMusical = Convert.ToString(myReader["GeneroMusical"]);
-                    voc.Duracion = Convert.ToInt32(myReader["Duracion"]);
-                    voc.Anio = Convert.ToInt32(myReader["Anio"]);
-                    voc.IdCantante = Convert.ToInt32(myReader["Cantante"]);
-                    listVoc.Add(voc);
+                {
+                    vob.Id = Convert.ToInt32(myReader["Id"]);
+                    vob.Nombre = Convert.ToString(myReader["Nombre"]);
+                    vob.GeneroMusical = Convert.ToString(myReader["GeneroMusical"]);
+                    vob.AnioCreacion = Convert.ToInt32(myReader["AnioCreacion"]);
+                    vob.AnioSeparacion = Convert.ToInt32(myReader["AnioSeparacion"]);
+
+                    listvob.Add(vob);
                 }
 
             }
@@ -186,13 +177,13 @@ namespace Logica.DAOs
                     if (conn.State == ConnectionState.Open)
                         conn.Close();
             }
-            return listVoc;
+            return listvob;
         }
 
         public void Borrar(int id)
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("delete from Cancion ");
+            sb.Append("delete from Banda ");
             sb.Append("where Id= @id ");
             SqlConnection conn = null;
             SqlDataReader myReader = null;
@@ -211,7 +202,7 @@ namespace Logica.DAOs
                 };
                 comando.Parameters.Add(idParameter);
                 myReader = comando.ExecuteReader();
-               
+
             }
             catch (SqlException e)
             {
@@ -229,7 +220,9 @@ namespace Logica.DAOs
             }
         }
 
-
-
+        public List<VOIntegrante> ListarIntegrantes(int idBanda)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

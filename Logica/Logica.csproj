@@ -46,6 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAOs\DAOAlbum.cs" />
+    <Compile Include="DAOs\DAOBanda.cs" />
     <Compile Include="DAOs\DAOCancion.cs" />
     <Compile Include="Negocio\Album.cs" />
     <Compile Include="Negocio\Banda.cs" />
