@@ -51,9 +51,9 @@ namespace Logica.DAOs
                    voc.IdCantante = Convert.ToInt32(myReader["Cantante"]);
                 }
             }
-            catch (SqlException e)
+            catch (Exception e)
             {
-                throw new ApplicationException("Error con acceso a datos");
+                Console.WriteLine(e.StackTrace); // arreglar exception
             }
             finally
             {
@@ -125,9 +125,9 @@ namespace Logica.DAOs
 
                 myReader = comando.ExecuteReader();
             }
-            catch (SqlException e)
+            catch (Exception e)
             {
-                throw new ApplicationException("Error con acceso a datos");
+                Console.WriteLine(e.StackTrace); // arreglar exception
             }
             finally
             {
@@ -140,96 +140,5 @@ namespace Logica.DAOs
                         conn.Close();
             }
         }
-
-
-        public List<VOCancion> Listar()
-        {
-
-            String consulta ="select  *  from Cancion";
-            SqlConnection conn = null;
-            SqlDataReader myReader = null;
-            List<VOCancion> listVoc = null;
-
-            try
-            {
-                conn = Conexion();
-                conn.Open();
-                
-                SqlCommand comando = new SqlCommand(consulta, conn);
-                
-
-                myReader = comando.ExecuteReader();
-                VOCancion voc = new VOCancion();
-                while (myReader.Read())
-               {
-                    voc.Id = Convert.ToInt32(myReader["Id"]);
-                    voc.Nombre = Convert.ToString(myReader["Nombre"]);
-                    voc.GeneroMusical = Convert.ToString(myReader["GeneroMusical"]);
-                    voc.Duracion = Convert.ToInt32(myReader["Duracion"]);
-                    voc.Anio = Convert.ToInt32(myReader["Anio"]);
-                    voc.IdCantante = Convert.ToInt32(myReader["Cantante"]);
-                    listVoc.Add(voc);
-                }
-
-            }
-            catch (SqlException e)
-            {
-                throw new ApplicationException("Error con acceso a datos");
-            }
-            finally
-            {
-                if (myReader != null)
-                    if (!myReader.IsClosed)
-                        myReader.Close();
-
-                if (conn != null)
-                    if (conn.State == ConnectionState.Open)
-                        conn.Close();
-            }
-            return listVoc;
-        }
-
-        public void Borrar(int id)
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("delete from Cancion ");
-            sb.Append("where Id= @id ");
-            SqlConnection conn = null;
-            SqlDataReader myReader = null;
-
-            try
-            {
-                conn = Conexion();
-                conn.Open();
-
-                SqlCommand comando = new SqlCommand(sb.ToString(), conn);
-                SqlParameter idParameter = new SqlParameter()
-                {
-                    ParameterName = "@id",
-                    Value = id,
-                    SqlDbType = SqlDbType.Int
-                };
-                comando.Parameters.Add(idParameter);
-                myReader = comando.ExecuteReader();
-               
-            }
-            catch (SqlException e)
-            {
-                throw new ApplicationException("Error con acceso a datos");
-            }
-            finally
-            {
-                if (myReader != null)
-                    if (!myReader.IsClosed)
-                        myReader.Close();
-
-                if (conn != null)
-                    if (conn.State == ConnectionState.Open)
-                        conn.Close();
-            }
-        }
-
-
-
     }
 }

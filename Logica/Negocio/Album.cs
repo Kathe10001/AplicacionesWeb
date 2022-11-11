@@ -12,7 +12,7 @@ namespace Logica.Negocio
         public String Nombre { get; set; }
         public int AnioCreacion { get; set; }
         public int IdBanda { get; set; }
-        public String GeneroMusical { get; set; }
+        public String GeneroMusica { get; set; }
         public List<Cancion> Canciones { get; set; }
     }
 }
