@@ -20,57 +20,132 @@ namespace WebServices
     {
 
         [WebMethod]
-        public List<VOAlbum> ListadoAlbum() { throw new NotImplementedException(); }
+        public List<VOAlbum> ListadoAlbum()
+        {
+            return Fachada.Instancia.ListadoAlbum();
+        }
 
         [WebMethod]
-        public void AltaAlbum(VOAlbum album) { }
+        public void AltaAlbum(String nombre, int anioCreacion, String generoMusical, int idBanda ) 
+        {
+            
+            VOAlbum voa = new VOAlbum(nombre, anioCreacion, generoMusical, idBanda);
+            Fachada.Instancia.AltaAlbum(voa);
+
+        }
 
         [WebMethod]
-        public void BajaAlbum(int idAlbum) { }
+        public void BajaAlbum(int idAlbum) 
+        {
+            
+            Fachada.Instancia.BajaAlbum(idAlbum);
+        }
 
         [WebMethod]
-        public void AgregarCancionAlbum(VOCancion cancion, VOAlbum album) { }
+        public void AgregarCancionAlbum(int idCancion, int idAlbum) 
+        {
+            
+            VOCancion voc = new VOCancion();
+            VOAlbum voa = new VOAlbum();
+            voc.Id = idCancion;
+            voa.Id = idAlbum;
+            Fachada.Instancia.AgregarCancionAlbum(voc,voa);
+        }
 
         [WebMethod]
-        public void QuitarCancionAlbum(int idCancion, VOAlbum album) { }
+        public void QuitarCancionAlbum(int idCancion, int idAlbum) 
+        {
+            
+            VOAlbum voa = new VOAlbum();
+            voa.Id = idAlbum;
+            Fachada.Instancia.QuitarCancionAlbum(idCancion, voa);
+        }
 
         [WebMethod]
-        public List<VOBanda> ListarBandas(VOBanda banda) { throw new NotImplementedException(); }
+        public List<VOBanda> ListarBandas(VOBanda banda) 
+        {
+            
+            return Fachada.Instancia.ListarBandas();
+        }
 
         [WebMethod]
-        public void AltaBanda(VOBanda banda) { }
+        public void AltaBanda(String nombre, String generoMusical, int anioC, int anioS) 
+        {
+            
+            VOBanda vob = new VOBanda(nombre, generoMusical, anioC, anioS);
+            Fachada.Instancia.AltaBanda(vob);
+        }
 
         [WebMethod]
-        public void BajaBanda(int idBanda) { }
+        public void BajaBanda(int idBanda) 
+        {
+            
+            Fachada.Instancia.BajaBanda(idBanda);
+        }
 
         [WebMethod]
-        public void AgregarIntegranteBanda(VOIntegrante integrante, VOBanda banda) { }
+        public void AgregarIntegranteBanda(int idIntegrante, int idBanda) 
+        {
+            
+            VOIntegrante voi = new VOIntegrante();
+            VOBanda vob = new VOBanda();
+            voi.Id = idIntegrante;
+            vob.Id = idBanda;
+            Fachada.Instancia.AgregarIntegranteBanda(voi, vob);
+
+        }
 
         [WebMethod]
-        public void QuitarIntegranteBanda(int idIntegrante, VOBanda banda) { }
+        public void QuitarIntegranteBanda(int idIntegrante, int  idBanda) 
+        {
+            
+            VOBanda vob = new VOBanda();
+            vob.Id = idBanda;
+            Fachada.Instancia.QuitarIntegranteBanda(idIntegrante,vob);
+        }
 
         [WebMethod]
-        public List<VOCancion> ListarCanciones() { throw new NotImplementedException(); }
+        public List<VOCancion> ListarCanciones() 
+        {
+            
+            return Fachada.Instancia.ListarCanciones();
+        }
 
         [WebMethod]
         //public void AltaCancion(VOCancion cancion) 
         public void AltaCancion(String nombre, int duracion, String genero, int cantante, int anio)
         {
-            Fachada f = new Fachada();
+            
             VOCancion voc = new VOCancion(nombre,duracion,genero,cantante,anio);
-            f.AltaCancion(voc);
+            Fachada.Instancia.AltaCancion(voc);
         }
 
         [WebMethod]
-        public void BajaCancion(int idCancion) { }
+        public void BajaCancion(int idCancion) 
+        {
+            
+            Fachada.Instancia.BajaCancion(idCancion);
+        }
 
         [WebMethod]
-        public List<VOIntegrante> ListarIntegrante() { throw new NotImplementedException(); }
+        public List<VOIntegrante> ListarIntegrante() 
+        {
+            
+            return Fachada.Instancia.ListarIntegrante();
+        }
 
         [WebMethod]
-        public void AltaIntegrante(VOIntegrante integrante) { }
+        public void AltaIntegrante(String nombre, String apellido, DateTime fechaNacimiento) 
+        {
+            
+            VOIntegrante voi = new VOIntegrante(nombre, apellido, fechaNacimiento);
+            Fachada.Instancia.AltaIntegrante(voi);
+        }
 
         [WebMethod]
-        public void BajaIntegrante(int idIntegrante) { }
+        public void BajaIntegrante(int idIntegrante) 
+        {
+            Fachada.Instancia.BajaIntegrante(idIntegrante);
+        }
     }
 }

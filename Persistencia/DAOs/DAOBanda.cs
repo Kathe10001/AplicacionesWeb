@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Logica.DAOs
 {
-    class DAOBanda
+    public class DAOBanda
     {
         public SqlConnection Conexion()
         {
@@ -272,7 +272,102 @@ namespace Logica.DAOs
                         conn.Close();
             }
             return listaintegrantes;
+        }
+            public void AgregarIntegrante(int idBanda, int idIntegrante)
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.Append("insert into BandaIntegrante ");
+                sb.Append("values(@IdIntegrante, @IdBanda) ");
+                SqlConnection conn = null;
+                SqlDataReader myReader = null;
 
+                try
+                {
+                    conn = Conexion();
+                    conn.Open();
+
+                    SqlCommand comando = new SqlCommand(sb.ToString(), conn);
+                    SqlParameter idintegratneParameter = new SqlParameter()
+                    {
+                        ParameterName = "@IdIntegrante",
+                        Value = idIntegrante,
+                        SqlDbType = SqlDbType.VarChar
+                    };
+                    comando.Parameters.Add(idintegratneParameter);
+
+                    SqlParameter idbandaParameter = new SqlParameter()
+                    {
+                        ParameterName = "@IdBanda",
+                        Value = idBanda,
+                        SqlDbType = SqlDbType.Int
+                    };
+                    comando.Parameters.Add(idbandaParameter);
+                
+                    myReader = comando.ExecuteReader();
+                }
+                catch (SqlException e)
+                {
+                    throw new ApplicationException("Error con acceso a datos");
+                }
+                finally
+                {
+                    if (myReader != null)
+                        if (!myReader.IsClosed)
+                            myReader.Close();
+
+                    if (conn != null)
+                        if (conn.State == ConnectionState.Open)
+                            conn.Close();
+                }
+            }
+
+        public void QuitarIntegrante(int idIntegrante, int idBanda)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("delete from BandaIntegrante ");
+            sb.Append("where IdIntegrante = @idIntegrante and IdBanda = @idBanda ");
+            SqlConnection conn = null;
+            SqlDataReader myReader = null;
+
+            try
+            {
+                conn = Conexion();
+                conn.Open();
+
+                SqlCommand comando = new SqlCommand(sb.ToString(), conn);
+                SqlParameter idintegranteParameter = new SqlParameter()
+                {
+                    ParameterName = "@idIntegrante",
+                    Value = idIntegrante,
+                    SqlDbType = SqlDbType.Int
+                };
+                comando.Parameters.Add(idintegranteParameter);
+               
+                SqlParameter idbandaParameter = new SqlParameter()
+                {
+                    ParameterName = "@idBanda",
+                    Value = idBanda,
+                    SqlDbType = SqlDbType.Int
+                };
+                comando.Parameters.Add(idbandaParameter);
+
+                myReader = comando.ExecuteReader();
+
+            }
+            catch (SqlException e)
+            {
+                throw new ApplicationException("Error con acceso a datos");
+            }
+            finally
+            {
+                if (myReader != null)
+                    if (!myReader.IsClosed)
+                        myReader.Close();
+
+                if (conn != null)
+                    if (conn.State == ConnectionState.Open)
+                        conn.Close();
+            }
         }
     }
-}
+    }

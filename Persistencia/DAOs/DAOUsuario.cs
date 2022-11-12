@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Logica.DAOs
 {
-    class DAOUsuario
+    public class DAOUsuario
     {
         public SqlConnection Conexion()
         {

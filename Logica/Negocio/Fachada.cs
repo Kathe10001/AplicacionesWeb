@@ -10,45 +10,145 @@ namespace Logica.Negocio
 {
     public class Fachada //hacer despues
     {
+        private DAOAlbum daoAlbum;
+        private DAOBanda daoBanda;
+        private DAOCancion daoCancion;
+        private DAOIntegrante daoIntegrante;
+        private DAOUsuario daoUsuario;
+
+        private static readonly Fachada instancia = new Fachada();
 
 
-        public List<VOAlbum> ListadoAlbum() { throw new NotImplementedException(); }
+        private Fachada()
+        {
+            daoAlbum = new DAOAlbum();
+            daoBanda = new DAOBanda();
+            daoCancion = new DAOCancion();
+            daoIntegrante = new DAOIntegrante();
+            daoUsuario = new DAOUsuario();
+        }
 
-        public void AltaAlbum(VOAlbum album) { }
+        public static Fachada Instancia
+        {
+            get { return instancia; }
+        }
+        public List<VOAlbum> ListadoAlbum() 
+        {  
+            return daoAlbum.Listar();
+        }
 
-        public void BajaAlbum(int idAlbum) { }
+        public void AltaAlbum(VOAlbum album) 
+        {
+            daoAlbum.Insertar(album);
+        }
 
-        public void AgregarCancionAlbum(VOCancion cancion, VOAlbum album) { }
+        public void BajaAlbum(int idAlbum)
+        {
+            VOAlbum voa = daoAlbum.Buscar(idAlbum);
+            if (voa != null)
+            {
+                daoAlbum.Borrar(idAlbum);
+            }
+            else
+            {
+                throw new ApplicationException("El album no existe");
+            }
+        }
 
-        public void QuitarCancionAlbum(int idCancion, VOAlbum album) { }
+        public void AgregarCancionAlbum(VOCancion cancion, VOAlbum album) 
+        {
+            daoAlbum.AgregarCancion(album.Id, cancion.Id);
+        }
 
-        public List<VOBanda> ListarBandas(VOBanda banda) { throw new NotImplementedException(); }
+        public void QuitarCancionAlbum(int idCancion, VOAlbum album) 
+        {
+            daoAlbum.QuitarCancion(album.Id, idCancion);
+        }
 
-        public void AltaBanda(VOBanda banda) { }
+        public List<VOBanda> ListarBandas() 
+        {
+            return daoBanda.Listar(); 
+        }
 
-        public void BajaBanda(int idBanda) { }
+        public void AltaBanda(VOBanda banda) 
+        {
+            daoBanda.Insertar(banda);
+        }
 
-        public void AgregarIntegranteBanda(VOIntegrante integrante, VOBanda banda) { }
+        public void BajaBanda(int idBanda) 
+        {
+            VOBanda vob = daoBanda.Buscar(idBanda);
+            if (vob != null)
+            {
+                daoBanda.Borrar(idBanda);
+            }
+            else
+            {
+                throw new ApplicationException("La banda no existe");
+            }
+        }
 
-        public void QuitarIntegranteBanda(int idIntegrante, VOBanda banda) { }
+        public void AgregarIntegranteBanda(VOIntegrante integrante, VOBanda banda) 
+        {
+            daoBanda.AgregarIntegrante(banda.Id, integrante.Id);
+        }
 
-        public List<VOCancion> ListarCanciones() { throw new NotImplementedException(); }
+        public void QuitarIntegranteBanda(int idIntegrante, VOBanda banda) 
+        {
+            daoBanda.QuitarIntegrante(idIntegrante, banda.Id);
+        }
+
+        public List<VOCancion> ListarCanciones() 
+        {
+            return daoCancion.Listar();
+        }
 
         public void AltaCancion(VOCancion cancion) 
         {
-            DAOCancion daoc = new DAOCancion();
-            daoc.Insertar(cancion);
-
+            daoCancion.Insertar(cancion);
         }
 
-        public void BajaCancion(int idCancion) { }
+        public void BajaCancion(int idCancion) 
+        {
 
-        public List<VOIntegrante> ListarIntegrante() { throw new NotImplementedException(); }
+            VOCancion voc = daoCancion.Buscar(idCancion);
+            if (voc != null)
+            {
+                daoCancion.Borrar(idCancion);
+            }
+            else
+            {
+                throw new ApplicationException("La cancion no existe");
+            }
+            
+        }
 
-        public void AltaIntegrante(VOIntegrante integrante) { }
+        public List<VOIntegrante> ListarIntegrante() 
+        {
+            return daoIntegrante.Listar();
+        }
 
-        public void BajaIntegrante(int idIntegrante) { }
-        public void Calificar(VOCalificacion calificar) { }
+        public void AltaIntegrante(VOIntegrante integrante) 
+        {
+            daoIntegrante.Insertar(integrante);
+        }
+
+        public void BajaIntegrante(int idIntegrante) 
+        {
+            VOIntegrante voi = daoIntegrante.Buscar(idIntegrante);
+            if (voi != null)
+            {
+                daoIntegrante.Borrar(idIntegrante);
+            }
+            else
+            {
+                throw new ApplicationException("El integrante no existe");
+            }
+        }
+        public void Calificar(VOCalificacion calificar) 
+        { 
+            //con webapi
+        }
 
 
 

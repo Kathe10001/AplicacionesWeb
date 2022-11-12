@@ -16,6 +16,17 @@ namespace Logica.VOs
         public List<VOCancion> Integrantes { get; set; }
         public int AnioSeparacion { get; set; }
 
+
+        public VOBanda() { }
+
+        public VOBanda(String nombre, String generoMusical, int anioC, int anioS)
+        {
+            Nombre = nombre;
+            GeneroMusical = generoMusical;
+            AnioCreacion = anioC;
+            AnioSeparacion = anioS;
+        }
+
     }
 
 }

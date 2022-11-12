@@ -9,7 +9,7 @@ using Logica.VOs;
 
 namespace Logica.DAOs
 {
-    class DAOAlbum
+    public class DAOAlbum
     {
         public SqlConnection Conexion()
         {
@@ -72,7 +72,7 @@ namespace Logica.DAOs
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("insert into Album ");
-            sb.Append("values(@Nombre, @AnioCreacion, @GeneroMusical, @Banda) ");
+            sb.Append("values(@Nombre, @GeneroMusical, @Banda,@AnioCreacion) ");
             SqlConnection conn = null;
             SqlDataReader myReader = null;
 
@@ -271,6 +271,102 @@ namespace Logica.DAOs
                         conn.Close();
             }
             return listVoc;
+        }
+
+        public void AgregarCancion(int idAlbum, int idCancion)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("insert into CancionAlbum ");
+            sb.Append("values(@IdCancion, @IdAlbum) ");
+            SqlConnection conn = null;
+            SqlDataReader myReader = null;
+
+            try
+            {
+                conn = Conexion();
+                conn.Open();
+
+                SqlCommand comando = new SqlCommand(sb.ToString(), conn);
+                SqlParameter idcancionParameter = new SqlParameter()
+                {
+                    ParameterName = "@IdCancion",
+                    Value = idCancion,
+                    SqlDbType = SqlDbType.Int
+                };
+                comando.Parameters.Add(idcancionParameter);
+
+                SqlParameter idalbumCParameter = new SqlParameter()
+                {
+                    ParameterName = "@IdAlbum",
+                    Value = idAlbum,
+                    SqlDbType = SqlDbType.Int
+                };
+                comando.Parameters.Add(idalbumCParameter);
+                            
+                myReader = comando.ExecuteReader();
+            }
+            catch (SqlException e)
+            {
+                throw new ApplicationException("Error con acceso a datos");
+            }
+            finally
+            {
+                if (myReader != null)
+                    if (!myReader.IsClosed)
+                        myReader.Close();
+
+                if (conn != null)
+                    if (conn.State == ConnectionState.Open)
+                        conn.Close();
+            }
+        }
+
+        public void QuitarCancion(int idAlbum, int idCancion)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("delete from CancionAlbum ");
+            sb.Append("where IdCancion = @IdCancion and IdAlbum =  @IdAlbum) ");
+            SqlConnection conn = null;
+            SqlDataReader myReader = null;
+
+            try
+            {
+                conn = Conexion();
+                conn.Open();
+
+                SqlCommand comando = new SqlCommand(sb.ToString(), conn);
+                SqlParameter idcancionParameter = new SqlParameter()
+                {
+                    ParameterName = "@IdCancion",
+                    Value = idCancion,
+                    SqlDbType = SqlDbType.Int
+                };
+                comando.Parameters.Add(idcancionParameter);
+
+                SqlParameter idalbumCParameter = new SqlParameter()
+                {
+                    ParameterName = "@IdAlbum",
+                    Value = idAlbum,
+                    SqlDbType = SqlDbType.Int
+                };
+                comando.Parameters.Add(idalbumCParameter);
+
+                myReader = comando.ExecuteReader();
+            }
+            catch (SqlException e)
+            {
+                throw new ApplicationException("Error con acceso a datos");
+            }
+            finally
+            {
+                if (myReader != null)
+                    if (!myReader.IsClosed)
+                        myReader.Close();
+
+                if (conn != null)
+                    if (conn.State == ConnectionState.Open)
+                        conn.Close();
+            }
         }
     }
 }

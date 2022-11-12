@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Logica.DAOs
 {
-    class DAOIntegrante
+    public class DAOCancion
     {
         public SqlConnection Conexion()
         {
@@ -17,14 +17,14 @@ namespace Logica.DAOs
             SqlConnection conn = new SqlConnection(strConn);
             return conn;
         }
-        public VOIntegrante Buscar(int id)
+        public VOCancion Buscar(int id)
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("select * from Integrante ");
+            sb.Append("select * from Cancion ");
             sb.Append("where Id= @id ");
             SqlConnection conn = null;
             SqlDataReader myReader = null;
-            VOIntegrante voi = null;
+            VOCancion voc = null;
 
             try
             {
@@ -42,11 +42,13 @@ namespace Logica.DAOs
                 myReader = comando.ExecuteReader();
                 if (myReader.Read())
                 {
-                    voi = new VOIntegrante();
-                    voi.Id = id;
-                    voi.Nombre = Convert.ToString(myReader["Nombre"]);
-                    voi.Apellido = Convert.ToString(myReader["Apellido"]);
-                    voi.FechaNacimiento = Convert.ToDateTime(myReader["FechaNacimiento"]);
+                    voc = new VOCancion();
+                    voc.Id = id;
+                    voc.Nombre = Convert.ToString(myReader["Nombre"]);
+                    voc.GeneroMusical = Convert.ToString(myReader["GeneroMusical"]);
+                    voc.Duracion = Convert.ToInt32(myReader["Duracion"]);
+                    voc.Anio = Convert.ToInt32(myReader["Anio"]);
+                    voc.IdCantante = Convert.ToInt32(myReader["Cantante"]);
                 }
             }
             catch (SqlException e)
@@ -63,15 +65,15 @@ namespace Logica.DAOs
                     if (conn.State == ConnectionState.Open)
                         conn.Close();
             }
-            return voi;
+            return voc;
         }
 
 
-        public void Insertar(VOIntegrante voi)
+        public void Insertar(VOCancion voc)
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("insert into Integrante ");
-            sb.Append("values(@Nombre, @Apellido, @FechaNacimiento) ");
+            sb.Append("insert into Cancion ");
+            sb.Append("values(@Nombre, @Duracion, @Anio, @Genero, @Cantante) ");
             SqlConnection conn = null;
             SqlDataReader myReader = null;
 
@@ -84,26 +86,42 @@ namespace Logica.DAOs
                 SqlParameter nombreParameter = new SqlParameter()
                 {
                     ParameterName = "@Nombre",
-                    Value = voi.Nombre,
+                    Value = voc.Nombre,
                     SqlDbType = SqlDbType.VarChar
                 };
                 comando.Parameters.Add(nombreParameter);
 
-                SqlParameter apellidoMParameter = new SqlParameter()
+                SqlParameter duracionParameter = new SqlParameter()
                 {
-                    ParameterName = "@Apellido",
-                    Value = voi.Apellido,
+                    ParameterName = "@Duracion",
+                    Value = voc.Duracion,
                     SqlDbType = SqlDbType.Int
                 };
-                comando.Parameters.Add(apellidoMParameter);
+                comando.Parameters.Add(duracionParameter);
 
-                SqlParameter fechaNParameter = new SqlParameter()
+                SqlParameter anioParameter = new SqlParameter()
                 {
-                    ParameterName = "@FechaNacimiento",
-                    Value = voi.FechaNacimiento,
+                    ParameterName = "@Anio",
+                    Value = voc.Anio,
                     SqlDbType = SqlDbType.Int
                 };
-                comando.Parameters.Add(fechaNParameter);
+                comando.Parameters.Add(anioParameter);
+
+                SqlParameter generoParameter = new SqlParameter()
+                {
+                    ParameterName = "@Genero",
+                    Value = voc.GeneroMusical,
+                    SqlDbType = SqlDbType.VarChar
+                };
+                comando.Parameters.Add(generoParameter);
+
+                SqlParameter cantanteParameter = new SqlParameter()
+                {
+                    ParameterName = "@Cantante",
+                    Value = voc.IdCantante,
+                    SqlDbType = SqlDbType.Int
+                };
+                comando.Parameters.Add(cantanteParameter);
 
                 myReader = comando.ExecuteReader();
             }
@@ -124,13 +142,13 @@ namespace Logica.DAOs
         }
 
 
-        public List<VOIntegrante> Listar()
+        public List<VOCancion> Listar()
         {
 
-            String consulta = "select  *  from Integrante";
+            String consulta = "select  *  from Cancion";
             SqlConnection conn = null;
             SqlDataReader myReader = null;
-            List<VOIntegrante> listvoi = null;
+            List<VOCancion> listVoc = new List<VOCancion>();
 
             try
             {
@@ -141,14 +159,16 @@ namespace Logica.DAOs
 
 
                 myReader = comando.ExecuteReader();
-                VOIntegrante voi = new VOIntegrante();
+                VOCancion voc = new VOCancion();
                 while (myReader.Read())
                 {
-                    voi.Id = Convert.ToInt32(myReader["Id"]);
-                    voi.Nombre = Convert.ToString(myReader["Nombre"]);
-                    voi.Apellido = Convert.ToString(myReader["Apellido"]);
-                    voi.FechaNacimiento = Convert.ToDateTime(myReader["FechaNacimiento"]);
-                    listvoi.Add(voi);
+                    voc.Id = Convert.ToInt32(myReader["Id"]);
+                    voc.Nombre = Convert.ToString(myReader["Nombre"]);
+                    voc.GeneroMusical = Convert.ToString(myReader["GeneroMusical"]);
+                    voc.Duracion = Convert.ToInt32(myReader["Duracion"]);
+                    voc.Anio = Convert.ToInt32(myReader["Anio"]);
+                    voc.IdCantante = Convert.ToInt32(myReader["Cantante"]);
+                    listVoc.Add(voc);
                 }
 
             }
@@ -166,13 +186,13 @@ namespace Logica.DAOs
                     if (conn.State == ConnectionState.Open)
                         conn.Close();
             }
-            return listvoi;
+            return listVoc;
         }
 
         public void Borrar(int id)
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("delete from Integrante ");
+            sb.Append("delete from Cancion ");
             sb.Append("where Id= @id ");
             SqlConnection conn = null;
             SqlDataReader myReader = null;
@@ -209,48 +229,7 @@ namespace Logica.DAOs
             }
         }
 
-        public List<VOIntegrante> ListarIntegrantes()
-        {
-           
-            String consulta = "select * from Integrante ";
-            
-            SqlConnection conn = null;
-            SqlDataReader myReader = null;
-            VOIntegrante voi = null;
-            List<VOIntegrante> listaintegrantes = null;
-            try
-            {
-                conn = Conexion();
-                conn.Open();
 
-                SqlCommand comando = new SqlCommand(consulta, conn);
-                listaintegrantes = new List<VOIntegrante>();
-                myReader = comando.ExecuteReader();
-                while (myReader.Read())
-                {
-                    voi = new VOIntegrante();
-                    voi.Id = Convert.ToInt32(myReader["Id"]);
-                    voi.Nombre = Convert.ToString(myReader["Nombre"]);
-                    voi.Apellido = Convert.ToString(myReader["Apellido"]);
-                    voi.FechaNacimiento = Convert.ToDateTime(myReader["FechaNacimiento"]);
-                    listaintegrantes.Add(voi);
-                }
-            }
-            catch (SqlException e)
-            {
-                throw new ApplicationException("Error con acceso a datos");
-            }
-            finally
-            {
-                if (myReader != null)
-                    if (!myReader.IsClosed)
-                        myReader.Close();
 
-                if (conn != null)
-                    if (conn.State == ConnectionState.Open)
-                        conn.Close();
-            }
-            return listaintegrantes;
-        }
     }
 }

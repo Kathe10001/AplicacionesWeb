@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9F063A83-8603-482A-AD80-50CE2F73BFED}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>Logica</RootNamespace>
-    <AssemblyName>Logica</AssemblyName>
+    <ProjectGuid>{8F197068-B307-46B0-A854-575F3A9306A5}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>VOS</RootNamespace>
+    <AssemblyName>VOS</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -32,9 +32,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -46,28 +43,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Negocio\Album.cs" />
-    <Compile Include="Negocio\Banda.cs" />
-    <Compile Include="Negocio\Calificacion.cs" />
-    <Compile Include="Negocio\Cancion.cs" />
-    <Compile Include="Negocio\Fachada.cs" />
-    <Compile Include="Negocio\Integrante.cs" />
-    <Compile Include="Negocio\Usuario.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VOs\VOAlbum.cs" />
+    <Compile Include="VOs\VOBanda.cs" />
+    <Compile Include="VOs\VOCalificacion.cs" />
+    <Compile Include="VOs\VOCancion.cs" />
+    <Compile Include="VOs\VOIntegrante.cs" />
+    <Compile Include="VOs\VOUsuario.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Persistencia\Persistencia.csproj">
-      <Project>{6ded5ee6-5bd0-4bf0-841c-ab6d172d3490}</Project>
-      <Name>Persistencia</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\VOS\VOS.csproj">
-      <Project>{8f197068-b307-46b0-a854-575f3a9306a5}</Project>
-      <Name>VOS</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -94,6 +94,10 @@
       <Project>{9f063a83-8603-482a-ad80-50ce2f73bfed}</Project>
       <Name>Logica</Name>
     </ProjectReference>
+    <ProjectReference Include="..\VOS\VOS.csproj">
+      <Project>{8f197068-b307-46b0-a854-575f3a9306a5}</Project>
+      <Name>VOS</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

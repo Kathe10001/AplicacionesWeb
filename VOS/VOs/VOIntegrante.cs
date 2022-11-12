@@ -13,5 +13,13 @@ namespace Logica.VOs
         public String Apellido { get; set; }
         public DateTime FechaNacimiento { get; set; }
 
+        public VOIntegrante() { }
+        public VOIntegrante(String nombre, String apellido, DateTime fechaNacimiento)
+        {
+            Nombre = nombre;
+            Apellido = apellido;
+            FechaNacimiento = fechaNacimiento;
+        }
+
     }
 }
