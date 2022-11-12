@@ -222,7 +222,57 @@ namespace Logica.DAOs
 
         public List<VOIntegrante> ListarIntegrantes(int idBanda)
         {
-            throw new NotImplementedException();
+            StringBuilder sb = new StringBuilder();
+            sb.Append("select I.* from Integrante I inner join BandaIntegrante BI ");
+            sb.Append("on I.Id = BI.IdIntegrante where BI.IdBanda = @id ");
+
+            SqlConnection conn = null;
+            SqlDataReader myReader = null;
+            VOIntegrante voi = null;
+            List<VOIntegrante> listaintegrantes = null;
+            try
+            {
+                conn = Conexion();
+                conn.Open();
+
+                SqlCommand comando = new SqlCommand(sb.ToString(), conn);
+                SqlParameter idParameter = new SqlParameter()
+                {
+                    ParameterName = "@id",
+                    Value = idBanda,
+                    SqlDbType = SqlDbType.Int
+                };
+                comando.Parameters.Add(idParameter);
+
+
+                listaintegrantes = new List<VOIntegrante>();
+                myReader = comando.ExecuteReader();
+                while (myReader.Read())
+                {
+                    voi = new VOIntegrante();
+                    voi.Id = Convert.ToInt32(myReader["Id"]);
+                    voi.Nombre = Convert.ToString(myReader["Nombre"]);
+                    voi.Apellido = Convert.ToString(myReader["Apellido"]);
+                    voi.FechaNacimiento = Convert.ToDateTime(myReader["FechaNacimiento"]);
+                    listaintegrantes.Add(voi);
+                }
+            }
+            catch (SqlException e)
+            {
+                throw new ApplicationException("Error con acceso a datos");
+            }
+            finally
+            {
+                if (myReader != null)
+                    if (!myReader.IsClosed)
+                        myReader.Close();
+
+                if (conn != null)
+                    if (conn.State == ConnectionState.Open)
+                        conn.Close();
+            }
+            return listaintegrantes;
+
         }
     }
 }

@@ -50,6 +50,7 @@
     <Compile Include="DAOs\DAOBanda.cs" />
     <Compile Include="DAOs\DAOCancion.cs" />
     <Compile Include="DAOs\DAOInegrante.cs" />
+    <Compile Include="DAOs\DAOUsuario.cs" />
     <Compile Include="Negocio\Album.cs" />
     <Compile Include="Negocio\Banda.cs" />
     <Compile Include="Negocio\Calificacion.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="VOs\VOCalificacion.cs" />
     <Compile Include="VOs\VOCancion.cs" />
     <Compile Include="VOs\VOIntegrante.cs" />
+    <Compile Include="VOs\VOUsuario.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
