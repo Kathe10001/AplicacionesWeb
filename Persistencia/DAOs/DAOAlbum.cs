@@ -138,7 +138,7 @@ namespace Logica.DAOs
             String consulta = "select  *  from Album";
             SqlConnection conn = null;
             SqlDataReader myReader = null;
-            List<VOAlbum> listvoa = null;
+            List<VOAlbum> listvoa = new List<VOAlbum>();
 
             try
             {

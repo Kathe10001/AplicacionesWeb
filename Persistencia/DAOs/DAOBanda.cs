@@ -94,7 +94,7 @@ namespace Logica.DAOs
                 {
                     ParameterName = "@GeneroMusical",
                     Value = vob.GeneroMusical,
-                    SqlDbType = SqlDbType.Int
+                    SqlDbType = SqlDbType.VarChar
                 };
                 comando.Parameters.Add(generoMParameter);
 
@@ -110,7 +110,7 @@ namespace Logica.DAOs
                 {
                     ParameterName = "@AnioSeparacion",
                     Value = vob.AnioSeparacion,
-                    SqlDbType = SqlDbType.VarChar
+                    SqlDbType = SqlDbType.Int
                 };
                 comando.Parameters.Add(anioSParameter);
 
@@ -139,7 +139,7 @@ namespace Logica.DAOs
             String consulta = "select  *  from Banda";
             SqlConnection conn = null;
             SqlDataReader myReader = null;
-            List<VOBanda> listvob = null;
+            List<VOBanda> listvob = new List<VOBanda>();
 
             try
             {
@@ -229,7 +229,7 @@ namespace Logica.DAOs
             SqlConnection conn = null;
             SqlDataReader myReader = null;
             VOIntegrante voi = null;
-            List<VOIntegrante> listaintegrantes = null;
+            List<VOIntegrante> listaintegrantes = new List<VOIntegrante>();
             try
             {
                 conn = Conexion();
@@ -245,7 +245,6 @@ namespace Logica.DAOs
                 comando.Parameters.Add(idParameter);
 
 
-                listaintegrantes = new List<VOIntegrante>();
                 myReader = comando.ExecuteReader();
                 while (myReader.Read())
                 {

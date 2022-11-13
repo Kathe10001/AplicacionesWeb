@@ -62,7 +62,7 @@ namespace WebServices
         }
 
         [WebMethod]
-        public List<VOBanda> ListarBandas(VOBanda banda) 
+        public List<VOBanda> ListarBandas() 
         {
             
             return Fachada.Instancia.ListarBandas();

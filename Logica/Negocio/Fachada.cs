@@ -150,7 +150,28 @@ namespace Logica.Negocio
             //con webapi
         }
 
+        public VOCancion BuscarCancion(int idCancion)
+        {
+           return daoCancion.Buscar(idCancion);
+        }
 
+        public VOAlbum BuscarAlbum(int idAlbum)
+        {
+            return daoAlbum.Buscar(idAlbum);
+        }
 
+        public VOBanda BuscarBanda(int idBanda)
+        {
+            return daoBanda.Buscar(idBanda);
+        }
+        public VOIntegrante BuscarIntegrante(int idIntegrante)
+        {
+            return daoIntegrante.Buscar(idIntegrante);
+        }
+
+        public VOUsuario BuscarUsuario(int idUsuario)
+        {
+            return daoUsuario.Buscar(idUsuario);
+        }
     }
 }
