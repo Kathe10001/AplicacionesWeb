@@ -6,13 +6,12 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Logica.Negocio;
-
+using System.Web.Http.Cors;
 
 namespace WebApi.Controllers
 {
     public class CancionController : ApiController
     {
-       
         public IEnumerable<VOCancion> GetAllCancion() {
             return Fachada.Instancia.ListarCanciones();}
 
