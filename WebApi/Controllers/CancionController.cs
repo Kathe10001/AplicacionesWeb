@@ -24,6 +24,18 @@ namespace WebApi.Controllers
             }
              return Ok(cancion);
         }
-  
+        public IHttpActionResult PostCancion(VOCancion cancion)
+        {
+            try
+            {
+                Fachada.Instancia.AltaCancion(cancion);
+
+            }
+            catch (ApplicationException e)
+            {
+                throw new ApplicationException();
+            }
+            return Ok("Se guardó correctamente");
+        }
     }
 }
