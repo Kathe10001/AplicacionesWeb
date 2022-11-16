@@ -1,0 +1,26 @@
+<h2>canciones</h2>
+
+<div *ngFor="let cancion of canciones">
+
+  <h3>
+    <a
+      [title]="cancion.name + ' details'"
+      [routerLink]="['/canciones', cancion.id]">
+      {{ cancion.nombre }}
+    </a>
+  </h3>
+
+  <p *ngIf="cancion.description">
+    Description: {{ cancion.cantante}}
+  </p>
+
+  <button type="button" (click)="share()">
+    Share
+  </button>
+
+  <app-cancion-alerts
+    [cancion]="cancion"
+    (notify)="onNotify()">
+  </app-cancion-alerts>
+
+</div>
