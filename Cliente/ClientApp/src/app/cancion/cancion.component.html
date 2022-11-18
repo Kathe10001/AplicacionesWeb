@@ -1,0 +1,7 @@
+<h3>Listado de canciones</h3>
+
+<div class="shipping-item" *ngFor="let cancion of canciones | async">
+  <div>Nombre: {{ cancion.Nombre }}</div>
+  <div>Duración: {{ cancion.Duracion }} segundos</div>
+  <div>Año: {{ cancion.Anio }}</div>
+</div>
