@@ -20,18 +20,15 @@ import CancionComponent from './cancion/cancion.component';
     ReactiveFormsModule,
     RouterModule.forRoot([
       { path: '', component: CancionComponent },
-      /*{ path: 'products/:productId', component: ProductDetailsComponent },
-      { path: 'cart', component: CartComponent },*/
-      { path: 'cancion', component: CancionComponent },
+      { path: 'integrantes', component: CancionComponent },
+      { path: 'bandas', component: CancionComponent },
+      { path: 'albunes', component: CancionComponent },
+      { path: 'canciones', component: CancionComponent }
     ])
   ],
   declarations: [
     AppComponent,
     TopBarComponent,
-    //ProductListComponent,
-    //ProductAlertsComponent,
-    //ProductDetailsComponent,
-    //CartComponent,
     CancionComponent
   ],
   bootstrap: [
