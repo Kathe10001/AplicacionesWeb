@@ -40,7 +40,7 @@ namespace ClienteConsola
                 } while (!mustExit);
             }
 
-
+    
             #endregion
         }
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Logica.Negocio
 {
-    public class Fachada //hacer despues
+    public class Fachada 
     {
         private DAOAlbum daoAlbum;
         private DAOBanda daoBanda;
