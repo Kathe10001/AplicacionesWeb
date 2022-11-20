@@ -151,9 +151,10 @@ namespace Logica.DAOs
 
 
                 myReader = comando.ExecuteReader();
-                VOUsuario vou = new VOUsuario();
+                VOUsuario vou;
                 while (myReader.Read())
                 {
+                    vou = new VOUsuario();
                     vou.Id = Convert.ToInt32(myReader["Id"]);
                     vou.Nombre = Convert.ToString(myReader["Nombre"]);
                     vou.Apellido = Convert.ToString(myReader["Apellido"]);

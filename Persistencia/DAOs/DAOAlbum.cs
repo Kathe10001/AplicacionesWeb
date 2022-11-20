@@ -148,9 +148,10 @@ namespace Logica.DAOs
 
                 SqlCommand comando = new SqlCommand(consulta, conn);
                 myReader = comando.ExecuteReader();
-                VOAlbum voa = new VOAlbum();
+                VOAlbum voa;
                 while (myReader.Read())
                 {
+                    voa = new VOAlbum();
                     voa.Id = Convert.ToInt32(myReader["Id"]);
                     voa.Nombre = Convert.ToString(myReader["Nombre"]);
                     voa.GeneroMusical = Convert.ToString(myReader["GeneroMusical"]);
@@ -482,7 +483,7 @@ namespace Logica.DAOs
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("delete from CancionAlbum ");
-            sb.Append("where IdCancion = @IdCancion and IdAlbum =  @IdAlbum) ");
+            sb.Append("where IdCancion = @IdCancion and IdAlbum =  @IdAlbum ");
             SqlConnection conn = null;
             SqlDataReader myReader = null;
 

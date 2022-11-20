@@ -160,9 +160,10 @@ namespace Logica.DAOs
 
 
                 myReader = comando.ExecuteReader();
-                VOCancion voc = new VOCancion();
+                VOCancion voc;
                 while (myReader.Read())
                 {
+                    voc = new VOCancion();
                     voc.Id = Convert.ToInt32(myReader["Id"]);
                     voc.Nombre = Convert.ToString(myReader["Nombre"]);
                     voc.GeneroMusical = Convert.ToString(myReader["GeneroMusical"]);

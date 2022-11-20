@@ -24,9 +24,8 @@ namespace ClienteConsola
                                "2 - Menú Banda",
                                "3 - Menú Integrantes",
                                "4 - Menú Album",
-                               "5 - Menú Usuario",
 
-                               "6 - Salir" };
+                               "5 - Salir" };
             return menu;
         }
 
@@ -86,18 +85,6 @@ namespace ClienteConsola
             return menu;
         }
 
-        public String[] MenuUsuario()
-        {
-            String[] menu = { "                  Menu de Opciones: ",
-                               "----------------------------------------------------------------------",
-                               "",
-                               "1 - Alta Usuario",
-                               "2 - Baja Usuario",
-                               "3 - Listado Usuarios",
-
-                               "4 - Salir" };
-            return menu;
-        }
 
         public void ShowMenu(String[] menu)
         {
@@ -253,6 +240,30 @@ namespace ClienteConsola
             }
         }
 
+        public void AgregarIntegranteBanda()
+        {
+            Console.Clear();
+            Console.WriteLine("Ingrese un ID de Integrante: ");
+            int idIntegrante = int.Parse(Console.ReadLine());
+            Console.WriteLine("Ingrese un ID de Banda: ");
+            int idBanda = int.Parse(Console.ReadLine());
+            wService.AgregarIntegranteBanda(idIntegrante, idBanda);
+            Console.WriteLine("Ingreso exitoso");
+            Console.ReadLine();
+        }
+
+
+        public void QuitarIntegranteBanda()
+        {
+            Console.Clear();
+            Console.WriteLine("Ingrese un ID de Integrante: ");
+            int idIntegrante = int.Parse(Console.ReadLine());
+            Console.WriteLine("Ingrese un ID de Banda: ");
+            int idBanda = int.Parse(Console.ReadLine());
+            wService.QuitarIntegranteBanda(idIntegrante, idBanda);
+            Console.WriteLine("Borrado exitoso");
+            Console.ReadLine();
+        }
 
         public void InsertarIntegrante()
         {
@@ -370,67 +381,33 @@ namespace ClienteConsola
             }
         }
 
-        /*    ///  NO HAY METODOS DE USUARIO ///
-         *      
-                public void InsertarUsuario()
-                {
-                    try
-                    {
-                        Console.Clear();
-                        Console.WriteLine("Ingrese Nombre: ");
-                        String nombre = Console.ReadLine();
-                        Console.WriteLine("Ingrese Apellido: ");
-                        String apellido = Console.ReadLine();
-                        Console.WriteLine("Ingrese Email: ");
-                        int email = int.Parse(Console.ReadLine());
-                        Console.WriteLine("Ingrese Contraseña: ");
-                        int pass = int.Parse(Console.ReadLine());
-                        wService.Alta(nombre, anioC, genero, idBanda);
-                        Console.WriteLine("Ingreso exitoso");
-                        Console.ReadLine();
-                    }
-                    catch (Exception e)
-                    {
-                        throw new ApplicationException("El dato ingresado no es correcto");
-                    }
-                }
-                public void BorrarUsuario()
-                {
-                    try
-                    {
-                        Console.Clear();
-                        Console.WriteLine("Ingrese ID del Integrante: ");
-                        int idEliminar = int.Parse(Console.ReadLine());
-                        wService.BajaAlbum(idEliminar);
-                        Console.WriteLine("Borrado exitoso");
-                        Console.ReadLine();
 
-                    }
-                    catch (Exception e)
-                    {
-                        throw new ApplicationException("El dato ingresado no es correcto");
-                    }
-                }
-                public void ListarUsuario()
-                {
-                    try
-                    {
-                        Console.Clear();
-                        Console.WriteLine("Nombre\t Apellido\t Banda(ID)\t Año Creacion(ID)\t");
-                        var listvoa = wService.ListadoAlbum();
-                        foreach (var vo in listvoa)
-                        {
-                            Console.WriteLine(vo.Nombre + "\t " + vo.GeneroMusical + "\t " + vo.IdBanda + "\t " + vo.AnioCreacion);
-                        }
-                        Console.ReadLine();
+        public void AgregarCancionAlbum()
+        {
+            Console.Clear();
+            Console.WriteLine("Ingrese un ID de Cancion: ");
+            int idCancion = int.Parse(Console.ReadLine());
+            Console.WriteLine("Ingrese un ID de Album: ");
+            int idAlbum = int.Parse(Console.ReadLine());
+            wService.AgregarCancionAlbum(idCancion, idAlbum);
+            Console.WriteLine("Ingreso exitoso");
+            Console.ReadLine();
+        }
 
-                    }
-                    catch (Exception e)
-                    {
-                        throw new ApplicationException("El dato ingresado no es correcto");
-                    }
-                }
-        */
+        public void QuitarCancionAlbum()
+        {
+            Console.Clear();
+            Console.WriteLine("Ingrese un ID de Cancion: ");
+            int idCancion = int.Parse(Console.ReadLine());
+            Console.WriteLine("Ingrese un ID de Album: ");
+            int idAlbum = int.Parse(Console.ReadLine());
+            wService.QuitarCancionAlbum(idCancion, idAlbum);
+            Console.WriteLine("Borrado exitoso");
+            Console.ReadLine();
+        }
+
+
+
         public void ActionCancion(int? action)
         {
             switch (action)
@@ -464,12 +441,12 @@ namespace ClienteConsola
                 case 3:
                     ListarBanda();
                     break;
-                    //case 4:
-                    //    AgregarIntegrante();
-                    //    break;
-                    //case 5:
-                    //    QuitarIntegrante();
-                    //    break;
+                case 4:
+                    AgregarIntegranteBanda();
+                    break;
+                case 5:
+                    QuitarIntegranteBanda();
+                    break;
             }
 
         }
@@ -507,32 +484,15 @@ namespace ClienteConsola
                 case 3:
                     ListarAlbum();
                     break;
-                    //case 4:
-                    //    AgregarCancionAlbum();
-                    //    break;
-                    //case 5:
-                    //    QuitarCancionAlbum();
-                    //    break;
-            }
-        }
-
-        public void ActionUsuario(int? action)
-        {
-            switch (action)
-            {
-                case 1:
-                    //    InsertarUsuario();
+                case 4:
+                    AgregarCancionAlbum();
                     break;
-
-                case 2:
-                    //    BorrarUsuario();
-                    break;
-
-                case 3:
-                    //   ListarUsuario();
+                case 5:
+                    QuitarCancionAlbum();
                     break;
             }
         }
+
         #endregion
 
         internal void ExecuteOption(int optionSelected)
@@ -556,10 +516,6 @@ namespace ClienteConsola
                 case 4:
                     ShowMenu(MenuAlbum());
                     ActionAlbum(OptionSelected());
-                    break;
-                case 5:
-                    ShowMenu(MenuUsuario());
-                    ActionUsuario(OptionSelected());
                     break;
             }
 

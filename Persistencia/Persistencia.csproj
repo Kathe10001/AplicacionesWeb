@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="DAOs\DAOAlbum.cs" />
     <Compile Include="DAOs\DAOBanda.cs" />
+    <Compile Include="DAOs\DAOCalificacion.cs" />
     <Compile Include="DAOs\DAOCancion.cs" />
     <Compile Include="DAOs\DAOInegrante.cs" />
     <Compile Include="DAOs\DAOUsuario.cs" />
