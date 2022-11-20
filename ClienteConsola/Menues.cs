@@ -1,5 +1,5 @@
-﻿using Logica.Negocio;
-using Logica.VOs;
+﻿using ClienteConsola.localhost;
+using Logica.Negocio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -177,8 +177,8 @@ namespace ClienteConsola
             {
                 Console.Clear();
                 Console.WriteLine("Nombre\t Duracion\t Año\t Genero\t Cantante(ID)\t");
-                var listVoc = wService.ListarCanciones(); //ya intenté de todo
-                foreach (var vo in listVoc)
+                VOCancion[] listVoc = wService.ListarCanciones(); //ya intenté de todo
+                foreach (VOCancion vo in listVoc)
                 {
                     Console.WriteLine(vo.Nombre + "\t " + vo.Duracion + "\t\t " + vo.Anio + "\t " + vo.GeneroMusical + "\t " + vo.IdCantante);
                 }
@@ -239,7 +239,7 @@ namespace ClienteConsola
             {
                 Console.Clear();
                 Console.WriteLine("Nombre\t Genero\t Año-Creacion\t Año-Separacion\t");
-                List<VOBanda> listvob = Fachada.Instancia.ListarBandas();
+                VOBanda[] listvob = wService.ListarBandas();
                 foreach (var vo in listvob)
                 {
                     Console.WriteLine(vo.Nombre + "\t " + vo.GeneroMusical + "\t " + vo.AnioCreacion + "\t " + vo.AnioSeparacion);

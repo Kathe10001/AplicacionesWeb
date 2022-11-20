@@ -181,52 +181,7 @@ namespace Logica.DAOs
             return listvob;
         }
 
-        public List<VOBanda> Listar()
-        {
-
-            String consulta = "select  *  from Banda";
-            SqlConnection conn = null;
-            SqlDataReader myReader = null;
-            List<VOBanda> listvob = new List<VOBanda>();
-
-            try
-            {
-                conn = Conexion();
-                conn.Open();
-
-                SqlCommand comando = new SqlCommand(consulta, conn);
-
-
-                myReader = comando.ExecuteReader();
-                VOBanda vob = new VOBanda();
-                while (myReader.Read())
-                {
-                    vob.Id = Convert.ToInt32(myReader["Id"]);
-                    vob.Nombre = Convert.ToString(myReader["Nombre"]);
-                    vob.GeneroMusical = Convert.ToString(myReader["GeneroMusical"]);
-                    vob.AnioCreacion = Convert.ToInt32(myReader["AnioCreacion"]);
-                    vob.AnioSeparacion = Convert.ToInt32(myReader["AnioSeparacion"]);
-
-                    listvob.Add(vob);
-                }
-
-            }
-            catch (SqlException e)
-            {
-                throw new ApplicationException("Error con acceso a datos");
-            }
-            finally
-            {
-                if (myReader != null)
-                    if (!myReader.IsClosed)
-                        myReader.Close();
-
-                if (conn != null)
-                    if (conn.State == ConnectionState.Open)
-                        conn.Close();
-            }
-            return listvob;
-        }
+       
         public List<VOBanda> ListarPorNombre(string nombre)
         {
 
