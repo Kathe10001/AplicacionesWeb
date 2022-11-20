@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Logica.VOs;
 
-namespace Logica.DAOs
+namespace Persistencia.DAOs
 {
     public class DAOAlbum
     {

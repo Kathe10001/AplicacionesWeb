@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logica.DAOs
+namespace Persistencia.DAOs
 {
     public class DAOCancion
     {

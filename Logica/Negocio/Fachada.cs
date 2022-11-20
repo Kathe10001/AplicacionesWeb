@@ -1,5 +1,5 @@
-﻿using Logica.DAOs;
-using Logica.VOs;
+﻿using Logica.VOs;
+using Persistencia.DAOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +15,7 @@ namespace Logica.Negocio
         private DAOCancion daoCancion;
         private DAOIntegrante daoIntegrante;
         private DAOUsuario daoUsuario;
+        private DAOCalificacion daoCalificacion;
 
         private static readonly Fachada instancia = new Fachada();
 
@@ -26,6 +27,7 @@ namespace Logica.Negocio
             daoCancion = new DAOCancion();
             daoIntegrante = new DAOIntegrante();
             daoUsuario = new DAOUsuario();
+            daoCalificacion = new DAOCalificacion();
         }
 
         public static Fachada Instancia
@@ -145,9 +147,9 @@ namespace Logica.Negocio
                 throw new ApplicationException("El integrante no existe");
             }
         }
-        public void Calificar(VOCalificacion calificar) 
-        { 
-            //con webapi
+        public void Calificar(VOCalificacion voc)
+        {
+            daoCalificacion.Alta(voc);
         }
 
         public VOCancion BuscarCancion(int idCancion)
@@ -169,9 +171,14 @@ namespace Logica.Negocio
             return daoIntegrante.Buscar(idIntegrante);
         }
 
-        public VOUsuario BuscarUsuario(int idUsuario)
+        public VOUsuario BuscarUsuario(String email)
         {
-            return daoUsuario.Buscar(idUsuario);
+            return daoUsuario.Buscar(email);
+        }
+
+        public void InsertarUsuario(VOUsuario vou)
+        {
+            daoUsuario.Insertar(vou);
         }
         public List<VOCancion> ListarCancionesporNombre(string nombre)
         {

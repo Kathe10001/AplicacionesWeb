@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logica.DAOs
+namespace Persistencia.DAOs
 {
     public class DAOUsuario
     {
@@ -18,11 +18,11 @@ namespace Logica.DAOs
             SqlConnection conn = new SqlConnection(strConn);
             return conn;
         }
-        public VOUsuario Buscar(int id)
+        public VOUsuario Buscar(String email)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("select * from Usuario ");
-            sb.Append("where Id= @id ");
+            sb.Append("where Email= @email ");
             SqlConnection conn = null;
             SqlDataReader myReader = null;
             VOUsuario vou = null;
@@ -33,21 +33,21 @@ namespace Logica.DAOs
                 conn.Open();
 
                 SqlCommand comando = new SqlCommand(sb.ToString(), conn);
-                SqlParameter idParameter = new SqlParameter()
+                SqlParameter emailParameter = new SqlParameter()
                 {
-                    ParameterName = "@id",
-                    Value = id,
+                    ParameterName = "@email",
+                    Value = email,
                     SqlDbType = SqlDbType.Int
                 };
-                comando.Parameters.Add(idParameter);
+                comando.Parameters.Add(emailParameter);
                 myReader = comando.ExecuteReader();
                 if (myReader.Read())
                 {
                     vou = new VOUsuario();
-                    vou.Id = id;
+                    vou.Id = Convert.ToInt32(myReader["Id"]);
                     vou.Nombre = Convert.ToString(myReader["Nombre"]);
                     vou.Apellido = Convert.ToString(myReader["Apellido"]);
-                    vou.Email = Convert.ToString(myReader["Email"]);
+                    vou.Email = email;
                     vou.Contrasenia = Convert.ToString(myReader["Contrasenia"]);
                 }
             }

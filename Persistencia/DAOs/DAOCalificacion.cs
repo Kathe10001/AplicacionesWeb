@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Persistencia.DAOs
 {
-    class DAOCalificacion
+    public class DAOCalificacion
     {
         public SqlConnection Conexion()
         {
