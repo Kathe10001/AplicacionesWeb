@@ -12,7 +12,8 @@ namespace Logica.VOs
         public int IdUsuario { get; set; }
         public int Puntaje { get; set; }
         public String Comentario { get; set; }
+        public TipoCalificacion Tipo { get; set; }
 
-        //falta agregar tipo Calificacion (enumerado)
     }
+        public enum TipoCalificacion { BANDA, CANCION };
 }

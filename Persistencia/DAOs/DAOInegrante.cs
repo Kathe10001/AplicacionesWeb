@@ -142,9 +142,10 @@ namespace Logica.DAOs
 
 
                 myReader = comando.ExecuteReader();
-                VOIntegrante voi = new VOIntegrante();
+                VOIntegrante voi;
                 while (myReader.Read())
                 {
+                    voi = new VOIntegrante();
                     voi.Id = Convert.ToInt32(myReader["Id"]);
                     voi.Nombre = Convert.ToString(myReader["Nombre"]);
                     voi.Apellido = Convert.ToString(myReader["Apellido"]);

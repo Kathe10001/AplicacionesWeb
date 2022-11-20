@@ -15,10 +15,9 @@ namespace ClienteConsola
 
             static void Main(string[] args)
             {
-            //Fachada f = new Fachada();
                 Menues m = new Menues();
                 bool mustExit = false;
-                int exitOption = 6;
+                int exitOption = 5;
                 do
                 {
                     m.ShowMenu(m.Menu());
@@ -31,7 +30,6 @@ namespace ClienteConsola
                     else
                     {
                         if (optionSelected.Value != exitOption)
-                            // ExecuteOption(f, optionSelected.Value);
                             m.ExecuteOption(optionSelected.Value);
                         else
                             mustExit = true;

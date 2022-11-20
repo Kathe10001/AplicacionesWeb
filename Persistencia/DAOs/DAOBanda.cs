@@ -151,9 +151,10 @@ namespace Logica.DAOs
 
 
                 myReader = comando.ExecuteReader();
-                VOBanda vob = new VOBanda();
+                VOBanda vob;
                 while (myReader.Read())
                 {
+                    vob = new VOBanda();
                     vob.Id = Convert.ToInt32(myReader["Id"]);
                     vob.Nombre = Convert.ToString(myReader["Nombre"]);
                     vob.GeneroMusical = Convert.ToString(myReader["GeneroMusical"]);
