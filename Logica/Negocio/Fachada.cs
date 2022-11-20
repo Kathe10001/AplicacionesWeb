@@ -173,5 +173,47 @@ namespace Logica.Negocio
         {
             return daoUsuario.Buscar(idUsuario);
         }
+        public List<VOCancion> ListarCancionesporNombre(string nombre)
+        {
+            return daoCancion.ListarPorNombre(nombre);
+        }
+        public List<VOCancion> ListarCancionesporGenero(string genero)
+        {
+            return daoCancion.ListarPorGenero(genero);
+        }
+        public List<VOCancion> ListarCancionesporAnio(int anio)
+        {
+            return daoCancion.ListarPorAnio(anio);
+        }
+        public List<VOBanda> ListarBandasPorNombre(string nombre)
+        {
+            return daoBanda.ListarPorNombre(nombre);
+        }
+        public List<VOBanda> ListarBandasPorGenero(string genero)
+        {
+            return daoBanda.ListarPorGenero(genero);
+        }
+        public List<VOAlbum> ListarAlbumsPorNombre(string nombre)
+        {
+            return daoAlbum.ListarPorNombre(nombre);
+        }
+        public List<VOAlbum> ListarAlbumsPorGenero(string genero)
+        {
+            return daoAlbum.ListarPorGenero(genero);
+        }
+        public List<VOAlbum> ListarAlbumsPoranio(int anio)
+        {
+            return daoAlbum.ListarPorAnio(anio);
+        }
+        public List<VOIntegrante> ListarIntegrantePorNombre(string nombre)
+        {
+            return daoIntegrante.ListarPorNombre(nombre);
+        }
+        public List<VOIntegrante> ListarIntegrantePorApellido(string apellido)
+        {
+            return daoIntegrante.ListarPorApellido(apellido);
+        }
+
+
     }
 }

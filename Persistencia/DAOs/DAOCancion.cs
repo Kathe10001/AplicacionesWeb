@@ -189,6 +189,162 @@ namespace Logica.DAOs
             }
             return listVoc;
         }
+        public List<VOCancion> ListarPorNombre(string nombre)
+        {
+
+            String consulta = "select  *  from Cancion where Nombre like %@nombre%";
+            SqlConnection conn = null;
+            SqlDataReader myReader = null;
+            List<VOCancion> listVoc = new List<VOCancion>();
+
+            try
+            {
+                conn = Conexion();
+                conn.Open();
+
+                SqlCommand comando = new SqlCommand(consulta, conn);
+                SqlParameter nomParameter = new SqlParameter()
+                {
+                    ParameterName = "@nombre",
+                    Value = nombre,
+                    SqlDbType = SqlDbType.VarChar
+                };
+                comando.Parameters.Add(nomParameter);
+
+                myReader = comando.ExecuteReader();
+                VOCancion voc = new VOCancion();
+                while (myReader.Read())
+                {
+                    voc.Id = Convert.ToInt32(myReader["Id"]);
+                    voc.Nombre = Convert.ToString(myReader["Nombre"]);
+                    voc.GeneroMusical = Convert.ToString(myReader["GeneroMusical"]);
+                    voc.Duracion = Convert.ToInt32(myReader["Duracion"]);
+                    voc.Anio = Convert.ToInt32(myReader["Anio"]);
+                    voc.IdCantante = Convert.ToInt32(myReader["Cantante"]);
+                    listVoc.Add(voc);
+                }
+
+            }
+            catch (SqlException e)
+            {
+                throw new ApplicationException("Error con acceso a datos");
+            }
+            finally
+            {
+                if (myReader != null)
+                    if (!myReader.IsClosed)
+                        myReader.Close();
+
+                if (conn != null)
+                    if (conn.State == ConnectionState.Open)
+                        conn.Close();
+            }
+            return listVoc;
+        }
+        public List<VOCancion> ListarPorGenero(string genero)
+        {
+
+            String consulta = "select  *  from Cancion where GeneroMusical like %@genero%";
+            SqlConnection conn = null;
+            SqlDataReader myReader = null;
+            List<VOCancion> listVoc = new List<VOCancion>();
+
+            try
+            {
+                conn = Conexion();
+                conn.Open();
+
+                SqlCommand comando = new SqlCommand(consulta, conn);
+                SqlParameter Parameter = new SqlParameter()
+                {
+                    ParameterName = "@genero",
+                    Value = genero,
+                    SqlDbType = SqlDbType.VarChar
+                };
+                comando.Parameters.Add(Parameter);
+
+                myReader = comando.ExecuteReader();
+                VOCancion voc = new VOCancion();
+                while (myReader.Read())
+                {
+                    voc.Id = Convert.ToInt32(myReader["Id"]);
+                    voc.Nombre = Convert.ToString(myReader["Nombre"]);
+                    voc.GeneroMusical = Convert.ToString(myReader["GeneroMusical"]);
+                    voc.Duracion = Convert.ToInt32(myReader["Duracion"]);
+                    voc.Anio = Convert.ToInt32(myReader["Anio"]);
+                    voc.IdCantante = Convert.ToInt32(myReader["Cantante"]);
+                    listVoc.Add(voc);
+                }
+
+            }
+            catch (SqlException e)
+            {
+                throw new ApplicationException("Error con acceso a datos");
+            }
+            finally
+            {
+                if (myReader != null)
+                    if (!myReader.IsClosed)
+                        myReader.Close();
+
+                if (conn != null)
+                    if (conn.State == ConnectionState.Open)
+                        conn.Close();
+            }
+            return listVoc;
+        }
+        public List<VOCancion> ListarPorAnio(int  anio)
+        {
+
+            String consulta = "select  *  from Cancion where  anio =@anio";
+            SqlConnection conn = null;
+            SqlDataReader myReader = null;
+            List<VOCancion> listVoc = new List<VOCancion>();
+
+            try
+            {
+                conn = Conexion();
+                conn.Open();
+
+                SqlCommand comando = new SqlCommand(consulta, conn);
+                SqlParameter Parameter = new SqlParameter()
+                {
+                    ParameterName = "@anio",
+                    Value = anio,
+                    SqlDbType = SqlDbType.Int
+                };
+                comando.Parameters.Add(Parameter);
+
+                myReader = comando.ExecuteReader();
+                VOCancion voc = new VOCancion();
+                while (myReader.Read())
+                {
+                    voc.Id = Convert.ToInt32(myReader["Id"]);
+                    voc.Nombre = Convert.ToString(myReader["Nombre"]);
+                    voc.GeneroMusical = Convert.ToString(myReader["GeneroMusical"]);
+                    voc.Duracion = Convert.ToInt32(myReader["Duracion"]);
+                    voc.Anio = Convert.ToInt32(myReader["Anio"]);
+                    voc.IdCantante = Convert.ToInt32(myReader["Cantante"]);
+                    listVoc.Add(voc);
+                }
+
+            }
+            catch (SqlException e)
+            {
+                throw new ApplicationException("Error con acceso a datos");
+            }
+            finally
+            {
+                if (myReader != null)
+                    if (!myReader.IsClosed)
+                        myReader.Close();
+
+                if (conn != null)
+                    if (conn.State == ConnectionState.Open)
+                        conn.Close();
+            }
+            return listVoc;
+        }
 
         public void Borrar(int id)
         {

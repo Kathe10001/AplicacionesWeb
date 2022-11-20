@@ -170,6 +170,109 @@ namespace Logica.DAOs
             return listvoi;
         }
 
+        public List<VOIntegrante> ListarPorNombre(String nombre)
+        {
+
+            String consulta = "select  *  from Integrante where nombre like %nombre%";
+            SqlConnection conn = null;
+            SqlDataReader myReader = null;
+            List<VOIntegrante> listvoi = null;
+
+            try
+            {
+                conn = Conexion();
+                conn.Open();
+
+                SqlCommand comando = new SqlCommand(consulta, conn);
+                SqlParameter nomParameter = new SqlParameter()
+                {
+                    ParameterName = "@nombre",
+                    Value = nombre,
+                    SqlDbType = SqlDbType.VarChar
+                };
+                comando.Parameters.Add(nomParameter);
+
+                myReader = comando.ExecuteReader();
+                VOIntegrante voi = new VOIntegrante();
+                while (myReader.Read())
+                {
+                    voi.Id = Convert.ToInt32(myReader["Id"]);
+                    voi.Nombre = Convert.ToString(myReader["Nombre"]);
+                    voi.Apellido = Convert.ToString(myReader["Apellido"]);
+                    voi.FechaNacimiento = Convert.ToDateTime(myReader["FechaNacimiento"]);
+                    listvoi.Add(voi);
+                }
+
+            }
+            catch (SqlException e)
+            {
+                throw new ApplicationException("Error con acceso a datos");
+            }
+            finally
+            {
+                if (myReader != null)
+                    if (!myReader.IsClosed)
+                        myReader.Close();
+
+                if (conn != null)
+                    if (conn.State == ConnectionState.Open)
+                        conn.Close();
+            }
+            return listvoi;
+        }
+
+        public List<VOIntegrante> ListarPorApellido(String apellido)
+        {
+
+            String consulta = "select  *  from Integrante where apellido like %apellido%";
+            SqlConnection conn = null;
+            SqlDataReader myReader = null;
+            List<VOIntegrante> listvoi = null;
+
+            try
+            {
+                conn = Conexion();
+                conn.Open();
+
+                SqlCommand comando = new SqlCommand(consulta, conn);
+                SqlParameter Parameter = new SqlParameter()
+                {
+                    ParameterName = "@apellido",
+                    Value = apellido,
+                    SqlDbType = SqlDbType.VarChar
+                };
+                comando.Parameters.Add(Parameter);
+
+                myReader = comando.ExecuteReader();
+                VOIntegrante voi = new VOIntegrante();
+                while (myReader.Read())
+                {
+                    voi.Id = Convert.ToInt32(myReader["Id"]);
+                    voi.Nombre = Convert.ToString(myReader["Nombre"]);
+                    voi.Apellido = Convert.ToString(myReader["Apellido"]);
+                    voi.FechaNacimiento = Convert.ToDateTime(myReader["FechaNacimiento"]);
+                    listvoi.Add(voi);
+                }
+
+            }
+            catch (SqlException e)
+            {
+                throw new ApplicationException("Error con acceso a datos");
+            }
+            finally
+            {
+                if (myReader != null)
+                    if (!myReader.IsClosed)
+                        myReader.Close();
+
+                if (conn != null)
+                    if (conn.State == ConnectionState.Open)
+                        conn.Close();
+            }
+            return listvoi;
+        }
+
+
         public void Borrar(int id)
         {
             StringBuilder sb = new StringBuilder();
