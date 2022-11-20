@@ -2,17 +2,17 @@
   <form class="row" [formGroup]="cancionesForm" (ngSubmit)="onSubmit()">
     <h3 class="mt-4 mb-4">Listado de canciones</h3>
     <div class="col-md-3">
-      <label for="nombre" class="form-label">Nombre</label>
+      <label for="Nombre" class="form-label">Nombre</label>
       <input type="text" class="form-control" id="Nombre" formControlName="Nombre">
     </div>
     <div class="col-md-3">
-      <label for="anio" class="form-label">Año</label>
-      <input type="text" class="form-control" id="Anio" formControlName="Anio">
+      <label for="Genero" class="form-label">Género</label>
+      <input type="text" class="form-control" id="Genero" formControlName="Genero">
     </div>
     <div class="col-md-3">
-      <label for="duracion" class="form-label">Duración</label>
-      <input type="text" class="form-control" id="Duracion" formControlName="Duracion">
-    </div>   
+      <label for="Anio" class="form-label">Año</label>
+      <input type="text" class="form-control" id="Anio" formControlName="Anio">
+    </div>
     <div class="col-12 mt-4 mb-4">
       <button type="submit" class="btn btn-primary">Buscar</button>
     </div>
@@ -22,6 +22,7 @@
       <thead>
         <tr>
           <th scope="col">Nombre</th>
+          <th scope="col">Género</th>
           <th scope="col">Duración</th>
           <th scope="col">Año</th>
         </tr>
@@ -29,8 +30,9 @@
       <tbody>
         <tr *ngFor="let cancion of canciones | async">
           <th scope="row">{{ cancion.Nombre }}</th>
-          <td> {{ cancion.Duracion }}</td>
-          <td>{{ cancion.Anio }}</td>
+          <th scope="row">{{ cancion.Genero }}</th>
+          <td scope="row"> {{ cancion.Duracion }}</td>
+          <td scope="row">{{ cancion.Anio }}</td>
         </tr>
       </tbody>
     </table>

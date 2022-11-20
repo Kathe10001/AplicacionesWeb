@@ -1,6 +1,6 @@
 <div class="container-md">
-  <form class="row" [formGroup]="cancionesForm" (ngSubmit)="onSubmit()">
-    <h3 class="mt-4 mb-4">Listado de canciones</h3>
+  <form class="row" [formGroup]="integrantesForm" (ngSubmit)="onSubmit()">
+    <h3 class="mt-4 mb-4">Listado de integrantes</h3>
     <div class="col-md-3">
       <label for="nombre" class="form-label">Nombre</label>
       <input type="text" class="form-control" id="Nombre" formControlName="Nombre">
@@ -17,7 +17,7 @@
       <button type="submit" class="btn btn-primary">Buscar</button>
     </div>
   </form>
-  <div class="row ps-2 pe-2" *ngIf="canciones">
+  <div class="row ps-2 pe-2" *ngIf="integrantes">
     <table class="table mt-4 mb-4">
       <thead>
         <tr>
@@ -27,10 +27,10 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let cancion of canciones | async">
-          <th scope="row">{{ cancion.Nombre }}</th>
-          <td> {{ cancion.Duracion }}</td>
-          <td>{{ cancion.Anio }}</td>
+        <tr *ngFor="let integrante of integrantes | async">
+          <th scope="row">{{ integrante.Nombre }}</th>
+          <td> {{ integrante.Duracion }}</td>
+          <td>{{ integrante.Anio }}</td>
         </tr>
       </tbody>
     </table>

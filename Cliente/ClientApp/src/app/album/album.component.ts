@@ -1,32 +1,34 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { CancionService } from '../cancion.service';
-import { Cancion } from '../tipos/cancion';
+import { AlbumService } from '../servicios/album.service';
+import { Album } from '../tipos/album';
+import { obtenerFiltros } from '../utils';
 
 @Component({
-  selector: 'app-cancion',
-  templateUrl: './cancion.component.html',
-  styleUrls: ['./cancion.component.css']
+  selector: 'app-album',
+  templateUrl: './album.component.html',
+  styleUrls: ['./album.component.css']
 })
-export default class CancionComponent {
+export default class AlbumComponent {
 
-  canciones!: Observable<Cancion[]>;
+  albumes!: Observable<Album[]>;
 
-  cancionesForm = this.formBuilder.group({
+  albumesForm = this.formBuilder.group({
     Nombre: '',
     Anio: '',
-    Duracion: ''
+    Genero: ''
   });
 
 
   constructor(
-    private cancionService: CancionService,
+    private albumService: AlbumService,
     private formBuilder: FormBuilder,
   ) { }
 
   onSubmit(): void {
-    this.canciones = this.cancionService.getCancionesApi();
-    this.cancionesForm.reset();
+    const filtros: any = obtenerFiltros(this.albumesForm, ["Genero", "Nombre", "Anio"]);
+    this.albumes = this.albumService.getAlbumesApi(filtros);
+    this.albumesForm.reset();
   }
 }

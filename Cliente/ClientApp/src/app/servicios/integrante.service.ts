@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Integrante } from './tipos/integrante';
+import { Integrante } from '../tipos/integrante';
+import { obtenerParametros } from '../utils';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class IntegranteService {
     return this.integrantes;
   }
 
-  getIntegrantesApi() {
-    return this.http.get<Integrante[]>('http://localhost:62462/api/integrante');
+  getIntegrantesApi(filtros: any) {
+    return this.http.get<Integrante[]>('http://localhost:62462/api/integrante'  + obtenerParametros(filtros));
   }
 }
