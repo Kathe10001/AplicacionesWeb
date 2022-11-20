@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Album } from './tipos/album';
+import { Album } from '../tipos/album';
+import { obtenerParametros } from '../utils';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class AlbumService {
     return this.albumes;
   }
 
-  getAlbumesApi() {
-    return this.http.get<Album[]>('http://localhost:62462/api/album');
+  getAlbumesApi(filtros: any) {
+    return this.http.get<Album[]>('http://localhost:62462/api/album' + obtenerParametros(filtros));
   }
 }

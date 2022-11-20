@@ -4,14 +4,15 @@ import { Nav } from '../tipos/nav';
 const updateMenu = (menu: Nav[], link: string) => (menu.map((nav: Nav) => ({ ...nav, Activo: nav.Link === link })));
 
 @Component({
-  selector: 'app-top-bar',
-  templateUrl: './top-bar.component.html',
-  styleUrls: ['./top-bar.component.css']
+  selector: 'app-menu',
+  templateUrl: './menu.component.html',
+  styleUrls: ['./menu.component.css']
 })
 
-export class TopBarComponent implements OnInit {
+export class MenuComponent implements OnInit {
 
   menu: Nav[] = [
+    { Titulo: "Home", Link: "/", Activo: false },
     { Titulo: "Integrantes", Link: "/integrantes", Activo: false },
     { Titulo: "Bandas", Link: "/bandas", Activo: false },
     { Titulo: "Álbumes", Link: "/albumes", Activo: false },

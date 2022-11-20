@@ -28,6 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\tipos\banda.ts" />
     <None Remove="ClientApp\src\app\tipos\cancion.ts" />
     <None Remove="ClientApp\src\app\tipos\nav.ts" />
   </ItemGroup>
@@ -38,7 +39,11 @@
     <TypeScriptCompile Remove="ClientApp\src\app\banda.service.ts" />
     <TypeScriptCompile Remove="ClientApp\src\app\cancion - Copia (2)\cancion.component.ts" />
     <TypeScriptCompile Remove="ClientApp\src\app\cancion - Copia (3)\cancion.component.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\home\home.component.ts" />
     <TypeScriptCompile Remove="ClientApp\src\app\integrante.service.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\tipos\album.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\tipos\integrante.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\utils\index.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -46,15 +51,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="ClientApp\src\app\tipos\cancion - Copia.js">
-      <DependentUpon>cancion.js</DependentUpon>
-    </None>
-    <None Update="ClientApp\src\app\tipos\cancion - Copia.js.map">
-      <DependentUpon>cancion.js.map</DependentUpon>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
+    <TypeScriptCompile Update="ClientApp\src\app\tipos\banda.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Update="ClientApp\src\app\tipos\nav.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>

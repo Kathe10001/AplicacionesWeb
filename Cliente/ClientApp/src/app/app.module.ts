@@ -5,12 +5,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
-import { TopBarComponent } from './top-bar/top-bar.component';
-/*import { ProductListComponent } from './product-list/product-list.component';
-import { ProductAlertsComponent } from './product-alerts/product-alerts.component';
-import { ProductDetailsComponent } from './product-details/product-details.component';
-import { CartComponent } from './cart/cart.component';*/
+import { MenuComponent } from './menu/menu.component';
+import HomeComponent from './home/home.component';
 import CancionComponent from './cancion/cancion.component';
+import IntegranteComponent from './integrante/integrante.component';
+import BandaComponent from './banda/banda.component';
+import AlbumComponent from './album/album.component';
 
 
 @NgModule({
@@ -19,17 +19,21 @@ import CancionComponent from './cancion/cancion.component';
     HttpClientModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
-      { path: '', component: CancionComponent },
-      { path: 'integrantes', component: CancionComponent },
-      { path: 'bandas', component: CancionComponent },
-      { path: 'albunes', component: CancionComponent },
+      { path: '', component: HomeComponent },
+      { path: 'integrantes', component: IntegranteComponent },
+      { path: 'bandas', component: BandaComponent },
+      { path: 'albumes', component: AlbumComponent },
       { path: 'canciones', component: CancionComponent }
     ])
   ],
   declarations: [
     AppComponent,
-    TopBarComponent,
-    CancionComponent
+    MenuComponent,
+    HomeComponent,
+    CancionComponent,
+    BandaComponent,
+    IntegranteComponent,
+    AlbumComponent
   ],
   bootstrap: [
     AppComponent

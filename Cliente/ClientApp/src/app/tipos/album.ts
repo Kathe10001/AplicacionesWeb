@@ -1,7 +1,7 @@
-export interface Cancion {
+export interface Album {
   Id: number;
-  Nombre: string;
   Genero: string;
+  Nombre: string;
   Duracion: number;
   Anio: number;
 }

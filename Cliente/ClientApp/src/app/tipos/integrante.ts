@@ -1,7 +1,6 @@
-export interface Cancion {
+export interface Integrante {
   Id: number;
   Nombre: string;
-  Genero: string;
   Duracion: number;
   Anio: number;
 }

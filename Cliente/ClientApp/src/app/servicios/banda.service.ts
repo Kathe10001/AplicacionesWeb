@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Banda } from './tipos/banda';
+import { Banda } from '../tipos/banda';
+import { obtenerParametros } from '../utils';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class BandaService {
     return this.bandas;
   }
 
-  getBandasApi() {
-    return this.http.get<Banda[]>('http://localhost:62462/api/banda');
+  getBandasApi(filtros: any) {
+    return this.http.get<Banda[]>('http://localhost:62462/api/banda' + obtenerParametros(filtros));
   }
 }
