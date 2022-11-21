@@ -26,20 +26,6 @@ namespace WebApi.Controllers
             }
             return Ok(album);
         }
-<<<<<<< HEAD
-        public IHttpActionResult PostAlbum(VOAlbum album)
-        {
-            try
-            {
-                Fachada.Instancia.AltaAlbum(album);
-
-            }
-            catch (ApplicationException e)
-            {
-                throw new ApplicationException();
-            }
-            return Ok("Se guardó correctamente");
-        }
 
         [Route("{id:int}/canciones")]
         public IHttpActionResult GetCanciones(int id)
@@ -52,7 +38,6 @@ namespace WebApi.Controllers
             return Ok(cancion);
         }
 
-=======
->>>>>>> main
+
     }
 }

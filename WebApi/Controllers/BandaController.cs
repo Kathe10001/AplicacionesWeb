@@ -26,21 +26,8 @@ namespace WebApi.Controllers
             }
             return Ok(cancion);
         }
-<<<<<<< HEAD
-=======
-        public IHttpActionResult PostBanda(VOBanda banda)
-        {
-            try
-            {
-                Fachada.Instancia.AltaBanda(banda);
 
-            }
-            catch (ApplicationException e)
-            {
-                throw new ApplicationException();
-            }
-            return Ok("Se guardó correctamente");
-        }
+       
 
         [Route("{id:int}/integrantes")]
         public IHttpActionResult GetIntegrantes(int id)
@@ -55,6 +42,6 @@ namespace WebApi.Controllers
 
 
 
->>>>>>> main
+
     }
 }
