@@ -6,8 +6,8 @@
       <input type="text" class="form-control" id="Nombre" formControlName="Nombre">
     </div>
     <div class="col-md-3">
-      <label for="Genero" class="form-label">Género</label>
-      <input type="text" class="form-control" id="Genero" formControlName="Genero">
+      <label for="GeneroMusical" class="form-label">Género</label>
+      <input type="text" class="form-control" id="GeneroMusical" formControlName="GeneroMusical">
     </div>
     <div class="col-md-3">
       <label for="Anio" class="form-label">Año</label>
@@ -18,23 +18,30 @@
     </div>
   </form>
   <div class="row ps-2 pe-2" *ngIf="canciones">
-    <table class="table mt-4 mb-4">
-      <thead>
-        <tr>
-          <th scope="col">Nombre</th>
-          <th scope="col">Género</th>
-          <th scope="col">Duración</th>
-          <th scope="col">Año</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let cancion of canciones | async">
-          <th scope="row">{{ cancion.Nombre }}</th>
-          <th scope="row">{{ cancion.Genero }}</th>
-          <td scope="row"> {{ cancion.Duracion }}</td>
-          <td scope="row">{{ cancion.Anio }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div *ngIf="canciones.length > 0">
+      <table class="table mt-4 mb-4">
+        <thead>
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Género</th>
+            <th scope="col">Duración</th>
+            <th scope="col">Año</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let cancion of canciones">
+            <th scope="row">{{ cancion.Id }}</th>
+            <th scope="row">{{ cancion.Nombre }}</th>
+            <td scope="row">{{ cancion.GeneroMusical }}</td>
+            <td scope="row"> {{ cancion.Duracion }}</td>
+            <td scope="row">{{ cancion.Anio }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="row ps-2 pe-2" *ngIf="canciones.length <= 0">
+      <h3 class="mt-4 mb-4">No se encontraron resultados</h3>
+    </div>
   </div>
 </div>

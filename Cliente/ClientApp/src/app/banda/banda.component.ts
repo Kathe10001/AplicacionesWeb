@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { Observable } from 'rxjs';
 import { BandaService } from '../servicios/banda.service';
 import { Banda } from '../tipos/banda';
 import { obtenerFiltros } from '../utils';
@@ -12,13 +11,12 @@ import { obtenerFiltros } from '../utils';
 })
 export default class BandaComponent {
 
-  bandas!: Observable<Banda[]>;
+  bandas!: Banda[];
 
   bandasForm = this.formBuilder.group({
     Nombre: '',
-    Genero: ''
+    GeneroMusical: ''
   });
-
 
   constructor(
     private bandaService: BandaService,
@@ -26,8 +24,8 @@ export default class BandaComponent {
   ) { }
 
   onSubmit(): void {
-    const filtros: any = obtenerFiltros(this.bandasForm, ["Genero", "Nombre"]);
-    this.bandas = this.bandaService.getBandasApi(filtros);
+    const filtros: any = obtenerFiltros(this.bandasForm, ["GeneroMusical", "Nombre"]);
+    this.bandaService.getBandasApi(filtros).subscribe(bandas => this.bandas = bandas);
     this.bandasForm.reset();
   }
 }

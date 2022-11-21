@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { Observable } from 'rxjs';
 import { CancionService } from '../servicios/cancion.service';
 import { Cancion } from '../tipos/cancion';
 import { obtenerFiltros } from '../utils';
@@ -12,12 +11,12 @@ import { obtenerFiltros } from '../utils';
 })
 export default class CancionComponent {
 
-  canciones!: Observable<Cancion[]>;
+  canciones!: Cancion[];
 
   cancionesForm = this.formBuilder.group({
     Nombre: '',
     Anio: '',
-    Genero: ''
+    GeneroMusical: ''
   });
 
 
@@ -27,8 +26,8 @@ export default class CancionComponent {
   ) { }
 
   onSubmit(): void {
-    const filtros: any = obtenerFiltros(this.cancionesForm, ["Anio", "Genero", "Nombre"]);
-    this.canciones = this.cancionService.getCancionesApi(filtros);
+    const filtros: any = obtenerFiltros(this.cancionesForm, ["Anio", "GeneroMusical", "Nombre"]);
+    this.cancionService.getCancionesApi(filtros).subscribe(canciones => this.canciones = canciones);
     this.cancionesForm.reset();
   }
 }

@@ -1,7 +1,7 @@
 export interface Cancion {
   Id: number;
   Nombre: string;
-  Genero: string;
+  GeneroMusical: string;
   Duracion: number;
   Anio: number;
 }

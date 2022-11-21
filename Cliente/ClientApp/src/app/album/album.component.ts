@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { Observable } from 'rxjs';
 import { AlbumService } from '../servicios/album.service';
 import { Album } from '../tipos/album';
 import { obtenerFiltros } from '../utils';
@@ -12,12 +11,12 @@ import { obtenerFiltros } from '../utils';
 })
 export default class AlbumComponent {
 
-  albumes!: Observable<Album[]>;
+  albumes!: Album[];
 
   albumesForm = this.formBuilder.group({
     Nombre: '',
-    Anio: '',
-    Genero: ''
+    AnioCreacion: '',
+    GeneroMusical: ''
   });
 
 
@@ -27,8 +26,8 @@ export default class AlbumComponent {
   ) { }
 
   onSubmit(): void {
-    const filtros: any = obtenerFiltros(this.albumesForm, ["Genero", "Nombre", "Anio"]);
-    this.albumes = this.albumService.getAlbumesApi(filtros);
+    const filtros: any = obtenerFiltros(this.albumesForm, ["GeneroMusical", "Nombre", "AnioCreacion"]);
+    this.albumService.getAlbumesApi(filtros).subscribe(albumes => this.albumes = albumes);
     this.albumesForm.reset();
   }
 }

@@ -25,18 +25,5 @@ namespace WebApi.Controllers
             }
             return Ok(cancion);
         }
-        public IHttpActionResult PostAlbum(VOAlbum album)
-        {
-            try
-            {
-                Fachada.Instancia.AltaAlbum(album);
-
-            }
-            catch (ApplicationException e)
-            {
-                throw new ApplicationException();
-            }
-            return Ok("Se guardó correctamente");
-        }
     }
 }

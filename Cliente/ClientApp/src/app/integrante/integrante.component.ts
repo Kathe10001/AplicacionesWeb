@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { Observable } from 'rxjs';
 import { IntegranteService } from '../servicios/integrante.service';
 import { Integrante } from '../tipos/integrante';
 import { obtenerFiltros } from '../utils';
@@ -10,9 +9,9 @@ import { obtenerFiltros } from '../utils';
   templateUrl: './integrante.component.html',
   styleUrls: ['./integrante.component.css']
 })
-export default class CancionComponent {
+export default class IntegranteComponent {
 
-  integrantes!: Observable<Integrante[]>;
+  integrantes!: Integrante[];
 
   integrantesForm = this.formBuilder.group({
     Nombre: '',
@@ -27,7 +26,7 @@ export default class CancionComponent {
 
   onSubmit(): void {
     const filtros: any = obtenerFiltros(this.integrantesForm, ["Nombre", "Apellido"]);
-    this.integrantes = this.integranteService.getIntegrantesApi(filtros);
+    this.integranteService.getIntegrantesApi(filtros).subscribe(integrantes => this.integrantes = integrantes);
     this.integrantesForm.reset();
   }
 }
