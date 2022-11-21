@@ -147,9 +147,19 @@ namespace Logica.Negocio
                 throw new ApplicationException("El integrante no existe");
             }
         }
-        public void Calificar(VOCalificacion voc)
+        public void AltaCalificacion(VOCalificacion voc)
         {
             daoCalificacion.Alta(voc);
+        }
+
+        public void ModificarCalificacion(VOCalificacion voc)
+        {
+            daoCalificacion.Modificar(voc);
+        }
+
+        public VOCalificacion BuscarCalificacion(int idUsuario, int id, TipoCalificacion tipo)
+        {
+            return daoCalificacion.Buscar(idUsuario, id, (VOs.TipoCalificacion)tipo);
         }
 
         public VOCancion BuscarCancion(int idCancion)
