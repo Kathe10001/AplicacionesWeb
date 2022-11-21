@@ -13,8 +13,8 @@ namespace Persistencia.DAOs
     {
         public SqlConnection Conexion()
         {
-            string strConn = @"data source = KATHERINEFE9E8B\MSSQLSERVER02; " + "initial catalog = Spotify; " + "integrated security = true";
-            //string strConn = @"data source = NB-MPEREZ\SQLEXPRESS; " + "initial catalog = Spotify; " + "integrated security = true";
+            //string strConn = @"data source = KATHERINEFE9E8B\MSSQLSERVER02; " + "initial catalog = Spotify; " + "integrated security = true";
+            string strConn = @"data source = NB-MPEREZ\SQLEXPRESS; " + "initial catalog = Spotify; " + "integrated security = true";
             SqlConnection conn = new SqlConnection(strConn);
             return conn;
         }
@@ -95,7 +95,7 @@ namespace Persistencia.DAOs
                 {
                     ParameterName = "@Apellido",
                     Value = vou.Apellido,
-                    SqlDbType = SqlDbType.Int
+                    SqlDbType = SqlDbType.VarChar
                 };
                 comando.Parameters.Add(apellidoMParameter);
 

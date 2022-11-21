@@ -190,6 +190,18 @@ namespace Logica.Negocio
         {
             daoUsuario.Insertar(vou);
         }
+
+        public List<VOCancion> ListarCancionesAlbum(int idAlbum)
+        {
+            return daoAlbum.ListarCanciones(idAlbum);
+        }
+
+        public List<VOIntegrante> ListarIntegrantesBanda(int idBanda)
+        {
+            return daoBanda.ListarIntegrantes(idBanda);
+        }
+
+        /***************/
         public List<VOCancion> ListarCancionesporNombre(string nombre)
         {
             return daoCancion.ListarPorNombre(nombre);
@@ -222,6 +234,7 @@ namespace Logica.Negocio
         {
             return daoAlbum.ListarPorAnio(anio);
         }
+
         public List<VOIntegrante> ListarIntegrantePorNombre(string nombre)
         {
             return daoIntegrante.ListarPorNombre(nombre);
