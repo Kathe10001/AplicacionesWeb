@@ -384,7 +384,7 @@ namespace Persistencia.DAOs
 
             SqlConnection conn = null;
             SqlDataReader myReader = null;
-            List<VOCancion> listVoc = null;
+            List<VOCancion> listVoc = new List<VOCancion>();
 
             try
             {
