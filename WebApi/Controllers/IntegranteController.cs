@@ -6,14 +6,19 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using WebApi.Models;
 
 namespace WebApi.Controllers
 {
     public class IntegranteController : ApiController
     {
-        public IEnumerable<VOIntegrante> GetAllIntegrante()
+
+        public IEnumerable<VOIntegrante> GetAllIntegrante([FromUri] Integrante integrante)
         {
-            return Fachada.Instancia.ListarIntegrante();
+            string nombre = integrante.Nombre;
+            string apellido = integrante.Apellido;
+            return Fachada.Instancia.ListarIntegrante(nombre, apellido);
         }
+
     }
 }

@@ -13,11 +13,39 @@ namespace Persistencia.DAOs
     {
         public SqlConnection Conexion()
         {
-           // string strConn = @"data source = KATHERINEFE9E8B\MSSQLSERVER02; " + "initial catalog = Spotify; " + "integrated security = true";
-            string strConn = @"data source = NB-MPEREZ\SQLEXPRESS; " + "initial catalog = Spotify; " + "integrated security = true";
+            string strConn = @"data source = KATHERINEFE9E8B\MSSQLSERVER02; " + "initial catalog = Spotify; " + "integrated security = true";
+            //string strConn = @"data source = NB-MPEREZ\SQLEXPRESS; " + "initial catalog = Spotify; " + "integrated security = true";
             SqlConnection conn = new SqlConnection(strConn);
             return conn;
         }
+
+        public String ConsultaListar(string nombre, string generoMusical)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append("select  *  from Banda");
+
+            if (nombre != null || generoMusical != null)
+            {
+
+                sb.Append(" where ");
+
+                List<string> parametros = new List<string>();
+                if (nombre != null)
+                {
+                    parametros.Add("Nombre like @nombre");
+                }
+
+                if (generoMusical != null)
+                {
+                    parametros.Add("GeneroMusical like @generoMusical");
+                }
+
+                sb.Append(String.Join(" AND ", parametros));
+            }
+            return sb.ToString();
+        }
+
         public VOBanda Buscar(int id)
         {
             StringBuilder sb = new StringBuilder();
@@ -182,40 +210,53 @@ namespace Persistencia.DAOs
             return listvob;
         }
 
-       
-        public List<VOBanda> ListarPorNombre(string nombre)
+        public List<VOBanda> Listar(string nombre, string generoMusical)
         {
 
-            String consulta = "select  *  from Banda where  Nombre like %@nombre%";
             SqlConnection conn = null;
             SqlDataReader myReader = null;
-            List<VOBanda> listvob = new List<VOBanda>();
-
+            List<VOBanda> listVoc = new List<VOBanda>();
             try
             {
                 conn = Conexion();
                 conn.Open();
 
+                String consulta = ConsultaListar(nombre, generoMusical);
+
                 SqlCommand comando = new SqlCommand(consulta, conn);
-                SqlParameter nomParameter = new SqlParameter()
+
+                if (nombre != null)
                 {
-                    ParameterName = "@nombre",
-                    Value = nombre,
-                    SqlDbType = SqlDbType.VarChar
-                };
-                comando.Parameters.Add(nomParameter);
+                    SqlParameter nomParameter = new SqlParameter()
+                    {
+                        ParameterName = "@nombre",
+                        Value = nombre,
+                        SqlDbType = SqlDbType.VarChar
+                    };
+                    comando.Parameters.Add(nomParameter);
+                }
+
+                if (generoMusical != null)
+                {
+                    SqlParameter genParameter = new SqlParameter()
+                    {
+                        ParameterName = "@generoMusical",
+                        Value = generoMusical,
+                        SqlDbType = SqlDbType.VarChar
+                    };
+                    comando.Parameters.Add(genParameter);
+                }
 
                 myReader = comando.ExecuteReader();
-                VOBanda vob = new VOBanda();
                 while (myReader.Read())
                 {
-                    vob.Id = Convert.ToInt32(myReader["Id"]);
-                    vob.Nombre = Convert.ToString(myReader["Nombre"]);
-                    vob.GeneroMusical = Convert.ToString(myReader["GeneroMusical"]);
-                    vob.AnioCreacion = Convert.ToInt32(myReader["AnioCreacion"]);
-                    vob.AnioSeparacion = Convert.ToInt32(myReader["AnioSeparacion"]);
-
-                    listvob.Add(vob);
+                    VOBanda voc = new VOBanda();
+                    voc.Id = Convert.ToInt32(myReader["Id"]);
+                    voc.Nombre = Convert.ToString(myReader["Nombre"]);
+                    voc.GeneroMusical = Convert.ToString(myReader["GeneroMusical"]);
+                    voc.AnioCreacion = Convert.ToInt32(myReader["AnioCreacion"]);
+                    voc.AnioSeparacion = Convert.ToInt32(myReader["Anioseparacion"]);
+                    listVoc.Add(voc);
                 }
 
             }
@@ -233,59 +274,7 @@ namespace Persistencia.DAOs
                     if (conn.State == ConnectionState.Open)
                         conn.Close();
             }
-            return listvob;
-        }
-        public List<VOBanda> ListarPorGenero(string genero)
-        {
-
-            String consulta = "select  *  from Banda where  GeneroMusical like %@genero%";
-            SqlConnection conn = null;
-            SqlDataReader myReader = null;
-            List<VOBanda> listvob = new List<VOBanda>();
-
-            try
-            {
-                conn = Conexion();
-                conn.Open();
-
-                SqlCommand comando = new SqlCommand(consulta, conn);
-                SqlParameter Parameter = new SqlParameter()
-                {
-                    ParameterName = "@genero",
-                    Value = genero,
-                    SqlDbType = SqlDbType.VarChar
-                };
-                comando.Parameters.Add(Parameter);
-
-                myReader = comando.ExecuteReader();
-                VOBanda vob = new VOBanda();
-                while (myReader.Read())
-                {
-                    vob.Id = Convert.ToInt32(myReader["Id"]);
-                    vob.Nombre = Convert.ToString(myReader["Nombre"]);
-                    vob.GeneroMusical = Convert.ToString(myReader["GeneroMusical"]);
-                    vob.AnioCreacion = Convert.ToInt32(myReader["AnioCreacion"]);
-                    vob.AnioSeparacion = Convert.ToInt32(myReader["AnioSeparacion"]);
-
-                    listvob.Add(vob);
-                }
-
-            }
-            catch (SqlException e)
-            {
-                throw new ApplicationException("Error con acceso a datos");
-            }
-            finally
-            {
-                if (myReader != null)
-                    if (!myReader.IsClosed)
-                        myReader.Close();
-
-                if (conn != null)
-                    if (conn.State == ConnectionState.Open)
-                        conn.Close();
-            }
-            return listvob;
+            return listVoc;
         }
 
         public void Borrar(int id)
@@ -380,53 +369,53 @@ namespace Persistencia.DAOs
             }
             return listaintegrantes;
         }
-            public void AgregarIntegrante(int idBanda, int idIntegrante)
+        public void AgregarIntegrante(int idBanda, int idIntegrante)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("insert into BandaIntegrante ");
+            sb.Append("values(@IdIntegrante, @IdBanda) ");
+            SqlConnection conn = null;
+            SqlDataReader myReader = null;
+
+            try
             {
-                StringBuilder sb = new StringBuilder();
-                sb.Append("insert into BandaIntegrante ");
-                sb.Append("values(@IdIntegrante, @IdBanda) ");
-                SqlConnection conn = null;
-                SqlDataReader myReader = null;
+                conn = Conexion();
+                conn.Open();
 
-                try
+                SqlCommand comando = new SqlCommand(sb.ToString(), conn);
+                SqlParameter idintegratneParameter = new SqlParameter()
                 {
-                    conn = Conexion();
-                    conn.Open();
+                    ParameterName = "@IdIntegrante",
+                    Value = idIntegrante,
+                    SqlDbType = SqlDbType.VarChar
+                };
+                comando.Parameters.Add(idintegratneParameter);
 
-                    SqlCommand comando = new SqlCommand(sb.ToString(), conn);
-                    SqlParameter idintegratneParameter = new SqlParameter()
-                    {
-                        ParameterName = "@IdIntegrante",
-                        Value = idIntegrante,
-                        SqlDbType = SqlDbType.VarChar
-                    };
-                    comando.Parameters.Add(idintegratneParameter);
-
-                    SqlParameter idbandaParameter = new SqlParameter()
-                    {
-                        ParameterName = "@IdBanda",
-                        Value = idBanda,
-                        SqlDbType = SqlDbType.Int
-                    };
-                    comando.Parameters.Add(idbandaParameter);
-                
-                    myReader = comando.ExecuteReader();
-                }
-                catch (SqlException e)
+                SqlParameter idbandaParameter = new SqlParameter()
                 {
-                    throw new ApplicationException("Error con acceso a datos");
-                }
-                finally
-                {
-                    if (myReader != null)
-                        if (!myReader.IsClosed)
-                            myReader.Close();
+                    ParameterName = "@IdBanda",
+                    Value = idBanda,
+                    SqlDbType = SqlDbType.Int
+                };
+                comando.Parameters.Add(idbandaParameter);
 
-                    if (conn != null)
-                        if (conn.State == ConnectionState.Open)
-                            conn.Close();
-                }
+                myReader = comando.ExecuteReader();
             }
+            catch (SqlException e)
+            {
+                throw new ApplicationException("Error con acceso a datos");
+            }
+            finally
+            {
+                if (myReader != null)
+                    if (!myReader.IsClosed)
+                        myReader.Close();
+
+                if (conn != null)
+                    if (conn.State == ConnectionState.Open)
+                        conn.Close();
+            }
+        }
 
         public void QuitarIntegrante(int idIntegrante, int idBanda)
         {
@@ -449,7 +438,7 @@ namespace Persistencia.DAOs
                     SqlDbType = SqlDbType.Int
                 };
                 comando.Parameters.Add(idintegranteParameter);
-               
+
                 SqlParameter idbandaParameter = new SqlParameter()
                 {
                     ParameterName = "@idBanda",
@@ -477,4 +466,4 @@ namespace Persistencia.DAOs
             }
         }
     }
-    }
+}

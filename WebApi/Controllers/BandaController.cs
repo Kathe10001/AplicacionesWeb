@@ -6,15 +6,19 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using WebApi.Models;
 
 namespace WebApi.Controllers
 {
     [RoutePrefix("api/banda")]
     public class BandaController : ApiController
     {
-        public IEnumerable<VOBanda> GetAllBanda()
+
+        public IEnumerable<VOBanda> GetAllBanda([FromUri] Banda banda)
         {
-            return Fachada.Instancia.ListarBandas();
+            string nombre = banda.Nombre;
+            string generoMusical = banda.GeneroMusical;
+            return Fachada.Instancia.ListarBandas(nombre, generoMusical);
         }
 
         public IHttpActionResult GetBanda(int id)

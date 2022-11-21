@@ -23,6 +23,7 @@
             <th scope="col">Género</th>
             <th scope="col">Año</th>
             <th scope="col">Separación</th>
+            <th scope="col">Calificar</th>
           </tr>
         </thead>
         <tbody>
@@ -32,6 +33,11 @@
             <td> {{ banda.GeneroMusical }}</td>
             <td>{{ banda.AnioCreacion }}</td>
             <td>{{ banda.AnioSeparacion }}</td>
+            <td>
+              <a (click)="open()" class="button fancy-button">
+                <span class="fa fa-star checked"></span>
+              </a>
+            </td>
           </tr>
         </tbody>
       </table>

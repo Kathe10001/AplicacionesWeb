@@ -27,7 +27,7 @@ namespace Persistencia.DAOs
 
             if (nombre != null || anio != 0 || generoMusical != null)
             {
-               
+
                 sb.Append(" where ");
 
                 List<string> parametros = new List<string>();
@@ -227,7 +227,6 @@ namespace Persistencia.DAOs
             SqlConnection conn = null;
             SqlDataReader myReader = null;
             List<VOCancion> listVoc = new List<VOCancion>();
-
             try
             {
                 conn = Conexion();
@@ -269,9 +268,9 @@ namespace Persistencia.DAOs
                 }
 
                 myReader = comando.ExecuteReader();
-                VOCancion voc = new VOCancion();
                 while (myReader.Read())
                 {
+                    VOCancion voc = new VOCancion();
                     voc.Id = Convert.ToInt32(myReader["Id"]);
                     voc.Nombre = Convert.ToString(myReader["Nombre"]);
                     voc.GeneroMusical = Convert.ToString(myReader["GeneroMusical"]);

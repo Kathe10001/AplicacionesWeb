@@ -6,15 +6,20 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using WebApi.Models;
 
 namespace WebApi.Controllers
 {
     [RoutePrefix("api/album")]
     public class AlbumController : ApiController
     {
-        public IEnumerable<VOAlbum> GetAllAlbum()
+
+        public IEnumerable<VOAlbum> GetAllAlbum([FromUri] Album album)
         {
-            return Fachada.Instancia.ListadoAlbum();
+            string nombre = album.Nombre;
+            int anioCreacion = album.AnioCreacion;
+            string generoMusical = album.GeneroMusical;
+            return Fachada.Instancia.ListarAlbum(nombre, anioCreacion, generoMusical);
         }
 
         public IHttpActionResult GetAlbum(int id)

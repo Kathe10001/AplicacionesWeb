@@ -9,7 +9,7 @@ const updateMenu = (menu: Nav[], link: string) => (menu.map((nav: Nav) => ({ ...
   styleUrls: ['./menu.component.css']
 })
 
-export class MenuComponent implements OnInit {
+export default class MenuComponent implements OnInit {
 
   menu: Nav[] = [
     { Titulo: "Home", Link: "/", Activo: false },

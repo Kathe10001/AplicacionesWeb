@@ -18,6 +18,37 @@ namespace Persistencia.DAOs
             SqlConnection conn = new SqlConnection(strConn);
             return conn;
         }
+
+        public String ConsultaListar(string nombre, int anioCreacion, string generoMusical)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append("select  *  from Album");
+
+            if (nombre != null || anioCreacion != 0 || generoMusical != null)
+            {
+
+                sb.Append(" where ");
+
+                List<string> parametros = new List<string>();
+                if (nombre != null)
+                {
+                    parametros.Add("Nombre like @nombre");
+                }
+                if (anioCreacion != 0)
+                {
+                    parametros.Add("AnioCreacion = @anioCreacion");
+                }
+                if (generoMusical != null)
+                {
+                    parametros.Add("GeneroMusical like @genero");
+                }
+
+                sb.Append(String.Join(" AND ", parametros));
+            }
+            return sb.ToString();
+        }
+
         public VOAlbum Buscar(int id)
         {
             StringBuilder sb = new StringBuilder();
@@ -67,7 +98,6 @@ namespace Persistencia.DAOs
             }
             return voa;
         }
-
 
         public void Insertar(VOAlbum voa)
         {
@@ -178,38 +208,62 @@ namespace Persistencia.DAOs
             return listvoa;
         }
 
-        public List<VOAlbum> ListarPorAnio(int anio)
+        public List<VOAlbum> Listar(string nombre, int anioCreacion, string generoMusical)
         {
 
-            String consulta = "select  *  from Album where AnioCreacion = @anio";
             SqlConnection conn = null;
             SqlDataReader myReader = null;
-            List<VOAlbum> listvoa = new List<VOAlbum>();
-
+            List<VOAlbum> listVoc = new List<VOAlbum>();
             try
             {
                 conn = Conexion();
                 conn.Open();
 
+                String consulta = ConsultaListar(nombre, anioCreacion, generoMusical);
+
                 SqlCommand comando = new SqlCommand(consulta, conn);
-                SqlParameter anioCParameter = new SqlParameter()
+
+                if (nombre != null)
                 {
-                    ParameterName = "@anio",
-                    Value = anio,
-                    SqlDbType = SqlDbType.Int
-                };
-                comando.Parameters.Add(anioCParameter);
+                    SqlParameter nomParameter = new SqlParameter()
+                    {
+                        ParameterName = "@nombre",
+                        Value = nombre,
+                        SqlDbType = SqlDbType.VarChar
+                    };
+                    comando.Parameters.Add(nomParameter);
+                }
+                if (anioCreacion != 0)
+                {
+                    SqlParameter anioParameter = new SqlParameter()
+                    {
+                        ParameterName = "@anioCreacion",
+                        Value = anioCreacion,
+                        SqlDbType = SqlDbType.Int
+                    };
+                    comando.Parameters.Add(anioParameter);
+                }
+                if (generoMusical != null)
+                {
+                    SqlParameter genParameter = new SqlParameter()
+                    {
+                        ParameterName = "@generoMusical",
+                        Value = generoMusical,
+                        SqlDbType = SqlDbType.VarChar
+                    };
+                    comando.Parameters.Add(genParameter);
+                }
 
                 myReader = comando.ExecuteReader();
-                VOAlbum voa = new VOAlbum();
                 while (myReader.Read())
                 {
-                    voa.Id = Convert.ToInt32(myReader["Id"]);
-                    voa.Nombre = Convert.ToString(myReader["Nombre"]);
-                    voa.GeneroMusical = Convert.ToString(myReader["GeneroMusical"]);
-                    voa.IdBanda = Convert.ToInt32(myReader["Banda"]);
-                    voa.AnioCreacion = Convert.ToInt32(myReader["AnioCreacion"]);
-                    listvoa.Add(voa);
+                    VOAlbum voc = new VOAlbum();
+                    voc.Id = Convert.ToInt32(myReader["Id"]);
+                    voc.Nombre = Convert.ToString(myReader["Nombre"]);
+                    voc.GeneroMusical = Convert.ToString(myReader["GeneroMusical"]);
+                    voc.IdBanda = Convert.ToInt32(myReader["Banda"]);
+                    voc.AnioCreacion = Convert.ToInt32(myReader["AnioCreacion"]);
+                    listVoc.Add(voc);
                 }
 
             }
@@ -227,112 +281,8 @@ namespace Persistencia.DAOs
                     if (conn.State == ConnectionState.Open)
                         conn.Close();
             }
-            return listvoa;
+            return listVoc;
         }
-        public List<VOAlbum> ListarPorNombre(String nombre)
-        {
-
-            String consulta = "select  *  from Album where nombre like %@nombre%";
-            SqlConnection conn = null;
-            SqlDataReader myReader = null;
-            List<VOAlbum> listvoa = new List<VOAlbum>();
-
-            try
-            {
-                conn = Conexion();
-                conn.Open();
-
-                SqlCommand comando = new SqlCommand(consulta, conn);
-                SqlParameter nomParameter = new SqlParameter()
-                {
-                    ParameterName = "@nombre",
-                    Value = nombre,
-                    SqlDbType = SqlDbType.VarChar
-                };
-                comando.Parameters.Add(nomParameter);
-
-                myReader = comando.ExecuteReader();
-                VOAlbum voa = new VOAlbum();
-                while (myReader.Read())
-                {
-                    voa.Id = Convert.ToInt32(myReader["Id"]);
-                    voa.Nombre = Convert.ToString(myReader["Nombre"]);
-                    voa.GeneroMusical = Convert.ToString(myReader["GeneroMusical"]);
-                    voa.IdBanda = Convert.ToInt32(myReader["Banda"]);
-                    voa.AnioCreacion = Convert.ToInt32(myReader["AnioCreacion"]);
-                    listvoa.Add(voa);
-                }
-
-            }
-            catch (SqlException e)
-            {
-                throw new ApplicationException("Error con acceso a datos");
-            }
-            finally
-            {
-                if (myReader != null)
-                    if (!myReader.IsClosed)
-                        myReader.Close();
-
-                if (conn != null)
-                    if (conn.State == ConnectionState.Open)
-                        conn.Close();
-            }
-            return listvoa;
-        }
-
-        public List<VOAlbum> ListarPorGenero(String genero)
-        {
-
-            String consulta = "select  *  from Album where GeneroMusical like %@genero%";
-            SqlConnection conn = null;
-            SqlDataReader myReader = null;
-            List<VOAlbum> listvoa = new List<VOAlbum>();
-
-            try
-            {
-                conn = Conexion();
-                conn.Open();
-
-                SqlCommand comando = new SqlCommand(consulta, conn);
-                SqlParameter Parameter = new SqlParameter()
-                {
-                    ParameterName = "@genero",
-                    Value = genero,
-                    SqlDbType = SqlDbType.VarChar
-                };
-                comando.Parameters.Add(Parameter);
-
-                myReader = comando.ExecuteReader();
-                VOAlbum voa = new VOAlbum();
-                while (myReader.Read())
-                {
-                    voa.Id = Convert.ToInt32(myReader["Id"]);
-                    voa.Nombre = Convert.ToString(myReader["Nombre"]);
-                    voa.GeneroMusical = Convert.ToString(myReader["GeneroMusical"]);
-                    voa.IdBanda = Convert.ToInt32(myReader["Banda"]);
-                    voa.AnioCreacion = Convert.ToInt32(myReader["AnioCreacion"]);
-                    listvoa.Add(voa);
-                }
-
-            }
-            catch (SqlException e)
-            {
-                throw new ApplicationException("Error con acceso a datos");
-            }
-            finally
-            {
-                if (myReader != null)
-                    if (!myReader.IsClosed)
-                        myReader.Close();
-
-                if (conn != null)
-                    if (conn.State == ConnectionState.Open)
-                        conn.Close();
-            }
-            return listvoa;
-        }
-
 
         public void Borrar(int id)
         {
@@ -460,7 +410,7 @@ namespace Persistencia.DAOs
                     SqlDbType = SqlDbType.Int
                 };
                 comando.Parameters.Add(idalbumCParameter);
-                            
+
                 myReader = comando.ExecuteReader();
             }
             catch (SqlException e)

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Logica.Negocio
 {
-    public class Fachada 
+    public class Fachada
     {
         private DAOAlbum daoAlbum;
         private DAOBanda daoBanda;
@@ -18,7 +18,6 @@ namespace Logica.Negocio
         private DAOCalificacion daoCalificacion;
 
         private static readonly Fachada instancia = new Fachada();
-
 
         private Fachada()
         {
@@ -34,12 +33,17 @@ namespace Logica.Negocio
         {
             get { return instancia; }
         }
-        public List<VOAlbum> ListadoAlbum() 
-        {  
+        public List<VOAlbum> ListadoAlbum()
+        {
             return daoAlbum.Listar();
         }
 
-        public void AltaAlbum(VOAlbum album) 
+        public List<VOAlbum> ListarAlbum(string nombre, int anioCreacion, string generoMusical)
+        {
+            return daoAlbum.Listar(nombre, anioCreacion, generoMusical);
+        }
+
+        public void AltaAlbum(VOAlbum album)
         {
             daoAlbum.Insertar(album);
         }
@@ -57,27 +61,32 @@ namespace Logica.Negocio
             }
         }
 
-        public void AgregarCancionAlbum(VOCancion cancion, VOAlbum album) 
+        public void AgregarCancionAlbum(VOCancion cancion, VOAlbum album)
         {
             daoAlbum.AgregarCancion(album.Id, cancion.Id);
         }
 
-        public void QuitarCancionAlbum(int idCancion, VOAlbum album) 
+        public void QuitarCancionAlbum(int idCancion, VOAlbum album)
         {
             daoAlbum.QuitarCancion(album.Id, idCancion);
         }
 
-        public List<VOBanda> ListarBandas() 
+        public List<VOBanda> ListarBandas()
         {
-            return daoBanda.Listar(); 
+            return daoBanda.Listar();
         }
 
-        public void AltaBanda(VOBanda banda) 
+        public List<VOBanda> ListarBandas(string nombre, string generoMusical)
+        {
+            return daoBanda.Listar(nombre, generoMusical);
+        }
+
+        public void AltaBanda(VOBanda banda)
         {
             daoBanda.Insertar(banda);
         }
 
-        public void BajaBanda(int idBanda) 
+        public void BajaBanda(int idBanda)
         {
             VOBanda vob = daoBanda.Buscar(idBanda);
             if (vob != null)
@@ -90,12 +99,12 @@ namespace Logica.Negocio
             }
         }
 
-        public void AgregarIntegranteBanda(VOIntegrante integrante, VOBanda banda) 
+        public void AgregarIntegranteBanda(VOIntegrante integrante, VOBanda banda)
         {
             daoBanda.AgregarIntegrante(banda.Id, integrante.Id);
         }
 
-        public void QuitarIntegranteBanda(int idIntegrante, VOBanda banda) 
+        public void QuitarIntegranteBanda(int idIntegrante, VOBanda banda)
         {
             daoBanda.QuitarIntegrante(idIntegrante, banda.Id);
         }
@@ -105,17 +114,17 @@ namespace Logica.Negocio
             return daoCancion.Listar();
         }
 
-        public List<VOCancion> ListarCanciones(string Nombre, int Anio, string GeneroMusical) 
+        public List<VOCancion> ListarCanciones(string nombre, int anio, string generoMusical)
         {
-            return daoCancion.Listar(Nombre, Anio, GeneroMusical);
+            return daoCancion.Listar(nombre, anio, generoMusical);
         }
 
-        public void AltaCancion(VOCancion cancion) 
+        public void AltaCancion(VOCancion cancion)
         {
             daoCancion.Insertar(cancion);
         }
 
-        public void BajaCancion(int idCancion) 
+        public void BajaCancion(int idCancion)
         {
 
             VOCancion voc = daoCancion.Buscar(idCancion);
@@ -127,20 +136,25 @@ namespace Logica.Negocio
             {
                 throw new ApplicationException("La cancion no existe");
             }
-            
+
         }
 
-        public List<VOIntegrante> ListarIntegrante() 
+        public List<VOIntegrante> ListarIntegrante()
         {
             return daoIntegrante.Listar();
         }
 
-        public void AltaIntegrante(VOIntegrante integrante) 
+        public List<VOIntegrante> ListarIntegrante(string nombre, string apellido)
+        {
+            return daoIntegrante.Listar(nombre, apellido);
+        }
+
+        public void AltaIntegrante(VOIntegrante integrante)
         {
             daoIntegrante.Insertar(integrante);
         }
 
-        public void BajaIntegrante(int idIntegrante) 
+        public void BajaIntegrante(int idIntegrante)
         {
             VOIntegrante voi = daoIntegrante.Buscar(idIntegrante);
             if (voi != null)
@@ -169,7 +183,7 @@ namespace Logica.Negocio
 
         public VOCancion BuscarCancion(int idCancion)
         {
-           return daoCancion.Buscar(idCancion);
+            return daoCancion.Buscar(idCancion);
         }
 
         public VOAlbum BuscarAlbum(int idAlbum)
@@ -205,37 +219,6 @@ namespace Logica.Negocio
         {
             return daoBanda.ListarIntegrantes(idBanda);
         }
-
-        public List<VOBanda> ListarBandasPorNombre(string nombre)
-        {
-            return daoBanda.ListarPorNombre(nombre);
-        }
-        public List<VOBanda> ListarBandasPorGenero(string genero)
-        {
-            return daoBanda.ListarPorGenero(genero);
-        }
-        public List<VOAlbum> ListarAlbumsPorNombre(string nombre)
-        {
-            return daoAlbum.ListarPorNombre(nombre);
-        }
-        public List<VOAlbum> ListarAlbumsPorGenero(string genero)
-        {
-            return daoAlbum.ListarPorGenero(genero);
-        }
-        public List<VOAlbum> ListarAlbumsPoranio(int anio)
-        {
-            return daoAlbum.ListarPorAnio(anio);
-        }
-
-        public List<VOIntegrante> ListarIntegrantePorNombre(string nombre)
-        {
-            return daoIntegrante.ListarPorNombre(nombre);
-        }
-        public List<VOIntegrante> ListarIntegrantePorApellido(string apellido)
-        {
-            return daoIntegrante.ListarPorApellido(apellido);
-        }
-
 
     }
 }

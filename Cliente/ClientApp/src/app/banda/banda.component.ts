@@ -28,4 +28,7 @@ export default class BandaComponent {
     this.bandaService.getBandasApi(filtros).subscribe(bandas => this.bandas = bandas);
     this.bandasForm.reset();
   }
+
+  open(): void {
+  }
 }

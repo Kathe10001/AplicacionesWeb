@@ -18,6 +18,34 @@ namespace Persistencia.DAOs
             SqlConnection conn = new SqlConnection(strConn);
             return conn;
         }
+
+        public String ConsultaListar(string nombre, string apellido)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append("select  *  from Integrante");
+
+            if (nombre != null || apellido != null)
+            {
+
+                sb.Append(" where ");
+
+                List<string> parametros = new List<string>();
+                if (nombre != null)
+                {
+                    parametros.Add("Nombre like @nombre");
+                }
+
+                if (apellido != null)
+                {
+                    parametros.Add("Apellido like @apellido");
+                }
+
+                sb.Append(String.Join(" AND ", parametros));
+            }
+            return sb.ToString();
+        }
+
         public VOIntegrante Buscar(int id)
         {
             StringBuilder sb = new StringBuilder();
@@ -171,37 +199,52 @@ namespace Persistencia.DAOs
             return listvoi;
         }
 
-        public List<VOIntegrante> ListarPorNombre(String nombre)
+        public List<VOIntegrante> Listar(string nombre, string apellido)
         {
 
-            String consulta = "select  *  from Integrante where nombre like %nombre%";
             SqlConnection conn = null;
             SqlDataReader myReader = null;
-            List<VOIntegrante> listvoi = null;
-
+            List<VOIntegrante> listVoc = new List<VOIntegrante>();
             try
             {
                 conn = Conexion();
                 conn.Open();
 
+                String consulta = ConsultaListar(nombre, apellido);
+
                 SqlCommand comando = new SqlCommand(consulta, conn);
-                SqlParameter nomParameter = new SqlParameter()
+
+                if (nombre != null)
                 {
-                    ParameterName = "@nombre",
-                    Value = nombre,
-                    SqlDbType = SqlDbType.VarChar
-                };
-                comando.Parameters.Add(nomParameter);
+                    SqlParameter nomParameter = new SqlParameter()
+                    {
+                        ParameterName = "@nombre",
+                        Value = nombre,
+                        SqlDbType = SqlDbType.VarChar
+                    };
+                    comando.Parameters.Add(nomParameter);
+                }
+
+                if (apellido != null)
+                {
+                    SqlParameter apParameter = new SqlParameter()
+                    {
+                        ParameterName = "@apellido",
+                        Value = apellido,
+                        SqlDbType = SqlDbType.VarChar
+                    };
+                    comando.Parameters.Add(apParameter);
+                }
 
                 myReader = comando.ExecuteReader();
-                VOIntegrante voi = new VOIntegrante();
                 while (myReader.Read())
                 {
-                    voi.Id = Convert.ToInt32(myReader["Id"]);
-                    voi.Nombre = Convert.ToString(myReader["Nombre"]);
-                    voi.Apellido = Convert.ToString(myReader["Apellido"]);
-                    voi.FechaNacimiento = Convert.ToDateTime(myReader["FechaNacimiento"]);
-                    listvoi.Add(voi);
+                    VOIntegrante voc = new VOIntegrante();
+                    voc.Id = Convert.ToInt32(myReader["Id"]);
+                    voc.Nombre = Convert.ToString(myReader["Nombre"]);
+                    voc.Apellido = Convert.ToString(myReader["Apellido"]);
+                    voc.FechaNacimiento = Convert.ToDateTime(myReader["FechaNacimiento"]);
+                    listVoc.Add(voc);
                 }
 
             }
@@ -219,60 +262,8 @@ namespace Persistencia.DAOs
                     if (conn.State == ConnectionState.Open)
                         conn.Close();
             }
-            return listvoi;
+            return listVoc;
         }
-
-        public List<VOIntegrante> ListarPorApellido(String apellido)
-        {
-
-            String consulta = "select  *  from Integrante where apellido like %apellido%";
-            SqlConnection conn = null;
-            SqlDataReader myReader = null;
-            List<VOIntegrante> listvoi = null;
-
-            try
-            {
-                conn = Conexion();
-                conn.Open();
-
-                SqlCommand comando = new SqlCommand(consulta, conn);
-                SqlParameter Parameter = new SqlParameter()
-                {
-                    ParameterName = "@apellido",
-                    Value = apellido,
-                    SqlDbType = SqlDbType.VarChar
-                };
-                comando.Parameters.Add(Parameter);
-
-                myReader = comando.ExecuteReader();
-                VOIntegrante voi = new VOIntegrante();
-                while (myReader.Read())
-                {
-                    voi.Id = Convert.ToInt32(myReader["Id"]);
-                    voi.Nombre = Convert.ToString(myReader["Nombre"]);
-                    voi.Apellido = Convert.ToString(myReader["Apellido"]);
-                    voi.FechaNacimiento = Convert.ToDateTime(myReader["FechaNacimiento"]);
-                    listvoi.Add(voi);
-                }
-
-            }
-            catch (SqlException e)
-            {
-                throw new ApplicationException("Error con acceso a datos");
-            }
-            finally
-            {
-                if (myReader != null)
-                    if (!myReader.IsClosed)
-                        myReader.Close();
-
-                if (conn != null)
-                    if (conn.State == ConnectionState.Open)
-                        conn.Close();
-            }
-            return listvoi;
-        }
-
 
         public void Borrar(int id)
         {

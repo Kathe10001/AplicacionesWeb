@@ -22,6 +22,7 @@
       <table class="table mt-4 mb-4">
         <thead>
           <tr>
+            <th scope="col">Id</th>
             <th scope="col">Nombre</th>
             <th scope="col">Género</th>
             <th scope="col">Año</th>
@@ -29,6 +30,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let album of albumes">
+            <th scope="row">{{ album.Id }}</th>
             <th scope="row">{{ album.Nombre }}</th>
             <th scope="row">{{ album.GeneroMusical }}</th>
             <td scope="row">{{ album.AnioCreacion }}</td>
