@@ -100,9 +100,14 @@ namespace Logica.Negocio
             daoBanda.QuitarIntegrante(idIntegrante, banda.Id);
         }
 
-        public List<VOCancion> ListarCanciones() 
+        public List<VOCancion> ListarCanciones()
         {
             return daoCancion.Listar();
+        }
+
+        public List<VOCancion> ListarCanciones(string Nombre, int Anio, string GeneroMusical) 
+        {
+            return daoCancion.Listar(Nombre, Anio, GeneroMusical);
         }
 
         public void AltaCancion(VOCancion cancion) 
@@ -201,19 +206,6 @@ namespace Logica.Negocio
             return daoBanda.ListarIntegrantes(idBanda);
         }
 
-        /***************/
-        public List<VOCancion> ListarCancionesporNombre(string nombre)
-        {
-            return daoCancion.ListarPorNombre(nombre);
-        }
-        public List<VOCancion> ListarCancionesporGenero(string genero)
-        {
-            return daoCancion.ListarPorGenero(genero);
-        }
-        public List<VOCancion> ListarCancionesporAnio(int anio)
-        {
-            return daoCancion.ListarPorAnio(anio);
-        }
         public List<VOBanda> ListarBandasPorNombre(string nombre)
         {
             return daoBanda.ListarPorNombre(nombre);

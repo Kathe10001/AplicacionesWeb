@@ -13,11 +13,42 @@ namespace Persistencia.DAOs
     {
         public SqlConnection Conexion()
         {
-           // string strConn = @"data source = KATHERINEFE9E8B\MSSQLSERVER02; " + "initial catalog = Spotify; " + "integrated security = true";
-            string strConn = @"data source = NB-MPEREZ\SQLEXPRESS; " + "initial catalog = Spotify; " + "integrated security = true";
+            string strConn = @"data source = KATHERINEFE9E8B\MSSQLSERVER02; " + "initial catalog = Spotify; " + "integrated security = true";
+            //string strConn = @"data source = NB-MPEREZ\SQLEXPRESS; " + "initial catalog = Spotify; " + "integrated security = true";
             SqlConnection conn = new SqlConnection(strConn);
             return conn;
         }
+
+        public String ConsultaListar(string nombre, int anio, string generoMusical)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append("select  *  from Cancion");
+
+            if (nombre != null || anio != 0 || generoMusical != null)
+            {
+               
+                sb.Append(" where ");
+
+                List<string> parametros = new List<string>();
+                if (nombre != null)
+                {
+                    parametros.Add("Nombre like @nombre");
+                }
+                if (anio != 0)
+                {
+                    parametros.Add("Anio = @anio");
+                }
+                if (generoMusical != null)
+                {
+                    parametros.Add("GeneroMusical like @genero");
+                }
+
+                sb.Append(String.Join(" AND ", parametros));
+            }
+            return sb.ToString();
+        }
+
         public VOCancion Buscar(int id)
         {
             StringBuilder sb = new StringBuilder();
@@ -190,10 +221,9 @@ namespace Persistencia.DAOs
             }
             return listVoc;
         }
-        public List<VOCancion> ListarPorNombre(string nombre)
+        public List<VOCancion> Listar(string nombre, int anio, string generoMusical)
         {
 
-            String consulta = "select  *  from Cancion where Nombre like %@nombre%";
             SqlConnection conn = null;
             SqlDataReader myReader = null;
             List<VOCancion> listVoc = new List<VOCancion>();
@@ -203,118 +233,40 @@ namespace Persistencia.DAOs
                 conn = Conexion();
                 conn.Open();
 
-                SqlCommand comando = new SqlCommand(consulta, conn);
-                SqlParameter nomParameter = new SqlParameter()
-                {
-                    ParameterName = "@nombre",
-                    Value = nombre,
-                    SqlDbType = SqlDbType.VarChar
-                };
-                comando.Parameters.Add(nomParameter);
+                String consulta = ConsultaListar(nombre, anio, generoMusical);
 
-                myReader = comando.ExecuteReader();
-                VOCancion voc = new VOCancion();
-                while (myReader.Read())
+                SqlCommand comando = new SqlCommand(consulta, conn);
+
+                if (nombre != null)
                 {
-                    voc.Id = Convert.ToInt32(myReader["Id"]);
-                    voc.Nombre = Convert.ToString(myReader["Nombre"]);
-                    voc.GeneroMusical = Convert.ToString(myReader["GeneroMusical"]);
-                    voc.Duracion = Convert.ToInt32(myReader["Duracion"]);
-                    voc.Anio = Convert.ToInt32(myReader["Anio"]);
-                    voc.IdCantante = Convert.ToInt32(myReader["Cantante"]);
-                    listVoc.Add(voc);
+                    SqlParameter nomParameter = new SqlParameter()
+                    {
+                        ParameterName = "@nombre",
+                        Value = nombre,
+                        SqlDbType = SqlDbType.VarChar
+                    };
+                    comando.Parameters.Add(nomParameter);
                 }
-
-            }
-            catch (SqlException e)
-            {
-                throw new ApplicationException("Error con acceso a datos");
-            }
-            finally
-            {
-                if (myReader != null)
-                    if (!myReader.IsClosed)
-                        myReader.Close();
-
-                if (conn != null)
-                    if (conn.State == ConnectionState.Open)
-                        conn.Close();
-            }
-            return listVoc;
-        }
-        public List<VOCancion> ListarPorGenero(string genero)
-        {
-
-            String consulta = "select  *  from Cancion where GeneroMusical like %@genero%";
-            SqlConnection conn = null;
-            SqlDataReader myReader = null;
-            List<VOCancion> listVoc = new List<VOCancion>();
-
-            try
-            {
-                conn = Conexion();
-                conn.Open();
-
-                SqlCommand comando = new SqlCommand(consulta, conn);
-                SqlParameter Parameter = new SqlParameter()
+                if (anio != 0)
                 {
-                    ParameterName = "@genero",
-                    Value = genero,
-                    SqlDbType = SqlDbType.VarChar
-                };
-                comando.Parameters.Add(Parameter);
-
-                myReader = comando.ExecuteReader();
-                VOCancion voc = new VOCancion();
-                while (myReader.Read())
-                {
-                    voc.Id = Convert.ToInt32(myReader["Id"]);
-                    voc.Nombre = Convert.ToString(myReader["Nombre"]);
-                    voc.GeneroMusical = Convert.ToString(myReader["GeneroMusical"]);
-                    voc.Duracion = Convert.ToInt32(myReader["Duracion"]);
-                    voc.Anio = Convert.ToInt32(myReader["Anio"]);
-                    voc.IdCantante = Convert.ToInt32(myReader["Cantante"]);
-                    listVoc.Add(voc);
+                    SqlParameter anioParameter = new SqlParameter()
+                    {
+                        ParameterName = "@anio",
+                        Value = anio,
+                        SqlDbType = SqlDbType.Int
+                    };
+                    comando.Parameters.Add(anioParameter);
                 }
-
-            }
-            catch (SqlException e)
-            {
-                throw new ApplicationException("Error con acceso a datos");
-            }
-            finally
-            {
-                if (myReader != null)
-                    if (!myReader.IsClosed)
-                        myReader.Close();
-
-                if (conn != null)
-                    if (conn.State == ConnectionState.Open)
-                        conn.Close();
-            }
-            return listVoc;
-        }
-        public List<VOCancion> ListarPorAnio(int  anio)
-        {
-
-            String consulta = "select  *  from Cancion where  anio =@anio";
-            SqlConnection conn = null;
-            SqlDataReader myReader = null;
-            List<VOCancion> listVoc = new List<VOCancion>();
-
-            try
-            {
-                conn = Conexion();
-                conn.Open();
-
-                SqlCommand comando = new SqlCommand(consulta, conn);
-                SqlParameter Parameter = new SqlParameter()
+                if (generoMusical != null)
                 {
-                    ParameterName = "@anio",
-                    Value = anio,
-                    SqlDbType = SqlDbType.Int
-                };
-                comando.Parameters.Add(Parameter);
+                    SqlParameter genParameter = new SqlParameter()
+                    {
+                        ParameterName = "@genero",
+                        Value = generoMusical,
+                        SqlDbType = SqlDbType.VarChar
+                    };
+                    comando.Parameters.Add(genParameter);
+                }
 
                 myReader = comando.ExecuteReader();
                 VOCancion voc = new VOCancion();

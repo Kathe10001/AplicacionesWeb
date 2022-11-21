@@ -91,6 +91,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ActionResult.cs" />
     <Compile Include="Controllers\AlbumController.cs" />
     <Compile Include="Controllers\BandaController.cs" />
     <Compile Include="Controllers\CancionController.cs" />
