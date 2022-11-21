@@ -9,6 +9,7 @@ using System.Web.Http;
 
 namespace WebApi.Controllers
 {
+    [RoutePrefix("api/banda")]
     public class BandaController : ApiController
     {
         public IEnumerable<VOBanda> GetAllBanda()
@@ -39,6 +40,16 @@ namespace WebApi.Controllers
             return Ok("Se guardó correctamente");
         }
 
+        [Route("{id:int}/integrantes")]
+        public IHttpActionResult GetIntegrantes(int id)
+        {
+            var integrante = Fachada.Instancia.ListarIntegrantesBanda(id);
+            if (integrante == null)
+            {
+                return NotFound();
+            }
+            return Ok(integrante);
+        }
 
 
 
