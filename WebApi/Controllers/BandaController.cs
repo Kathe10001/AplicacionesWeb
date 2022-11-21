@@ -26,6 +26,8 @@ namespace WebApi.Controllers
             }
             return Ok(cancion);
         }
+<<<<<<< HEAD
+=======
         public IHttpActionResult PostBanda(VOBanda banda)
         {
             try
@@ -53,5 +55,6 @@ namespace WebApi.Controllers
 
 
 
+>>>>>>> main
     }
 }

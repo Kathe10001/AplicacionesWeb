@@ -15,28 +15,5 @@ namespace WebApi.Controllers
         {
             return Fachada.Instancia.ListarIntegrante();
         }
-
-        public IHttpActionResult GetIntegrante(int id)
-        {
-            var cancion = Fachada.Instancia.BuscarIntegrante(id);
-            if (cancion == null)
-            {
-                return NotFound();
-            }
-            return Ok(cancion);
-        }
-        public IHttpActionResult PostIntegrante(VOIntegrante integrante)
-        {
-            try
-            {
-                Fachada.Instancia.AltaIntegrante(integrante);
-
-            }
-            catch (ApplicationException e)
-            {
-                throw new ApplicationException();
-            }
-            return Ok("Se guardó correctamente");
-        }
     }
 }

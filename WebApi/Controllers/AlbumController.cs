@@ -26,6 +26,7 @@ namespace WebApi.Controllers
             }
             return Ok(album);
         }
+<<<<<<< HEAD
         public IHttpActionResult PostAlbum(VOAlbum album)
         {
             try
@@ -51,5 +52,7 @@ namespace WebApi.Controllers
             return Ok(cancion);
         }
 
+=======
+>>>>>>> main
     }
 }
