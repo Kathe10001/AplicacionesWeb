@@ -91,7 +91,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\ActionResult.cs" />
+    <Compile Include="Controllers\CalificacionController.cs" />
     <Compile Include="Controllers\AlbumController.cs" />
     <Compile Include="Controllers\BandaController.cs" />
     <Compile Include="Controllers\CancionController.cs" />
@@ -100,6 +100,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Calificacion.cs" />
     <Compile Include="Models\Banda.cs" />
     <Compile Include="Models\Integrante.cs" />
     <Compile Include="Models\Album.cs" />

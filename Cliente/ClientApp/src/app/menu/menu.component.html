@@ -1,13 +1,3 @@
-<!--
-  <a routerLink="/">
-  <h1>My Spotify</h1>
-</a>
-<a routerLink="/login" class="button fancy-button">
-  <i class="material-icons">shopping_cart</i>Login
-</a>
-
--->
-
 <nav class="navbar navbar-expand-lg bg-light">
   <div class="container-fluid">
     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -17,6 +7,9 @@
         </a>
       </li>
     </ul>
+    <div class="ms-4 me-4" *ngIf="user">
+      {{user.Email}}
+    </div>
     <form class="d-flex" role="login">
       <button class="btn btn-outline-success" type="submit">Login</button>
     </form>

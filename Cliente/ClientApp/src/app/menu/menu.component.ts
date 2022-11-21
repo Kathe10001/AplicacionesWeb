@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Nav } from '../tipos/nav';
+import { AppComponent } from '../app.component';
 
 const updateMenu = (menu: Nav[], link: string) => (menu.map((nav: Nav) => ({ ...nav, Activo: nav.Link === link })));
 
@@ -11,6 +12,7 @@ const updateMenu = (menu: Nav[], link: string) => (menu.map((nav: Nav) => ({ ...
 
 export default class MenuComponent implements OnInit {
 
+  user!: any; 
   menu: Nav[] = [
     { Titulo: "Home", Link: "/", Activo: false },
     { Titulo: "Integrantes", Link: "/integrantes", Activo: false },
@@ -20,9 +22,11 @@ export default class MenuComponent implements OnInit {
   ];
 
   constructor(
+    private appComponent: AppComponent
   ) { }
 
   ngOnInit() {
+    this.user = this.appComponent.user
     this.menu = updateMenu(this.menu, window.location.pathname);
   }
 

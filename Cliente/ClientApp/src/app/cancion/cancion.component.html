@@ -44,4 +44,16 @@
       <h3 class="mt-4 mb-4">No se encontraron resultados</h3>
     </div>
   </div>
+  <form class="row" [formGroup]="calificacionForm" (ngSubmit)="onSubmitCalificacion()" *ngIf="show">
+    <h3 class="mt-4 mb-4">Califica a {{cancion.Nombre}}</h3>
+    <div class="col-md-12">
+      <label for="Puntaje">Puntaje del 1 al 5</label>
+      <input type="number" class="form-control" id="Puntaje" formControlName="Puntaje" min="1" max="5">
+      <label for="Comentario">Comentario</label>
+      <textarea class="form-control" id="Comentario" rows="3" formControlName="Comentario"></textarea>
+      <div class="col-12 mt-4 mb-4">
+        <button type="submit" class="btn btn-primary">Enviar</button>
+      </div>
+    </div>
+  </form>
 </div>

@@ -36,6 +36,7 @@ import MenuComponent from './menu/menu.component';
   ],
   bootstrap: [
     AppComponent
-  ]
+  ],
+  providers: [AppComponent]
 })
 export class AppModule { }

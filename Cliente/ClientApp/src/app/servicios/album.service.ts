@@ -11,7 +11,7 @@ export class AlbumService {
 
   constructor(
     private http: HttpClient
-  ) {}
+  ) { }
 
 
   getAlbumes() {
