@@ -26,10 +26,6 @@ namespace WebApi.Controllers
             }
             return Ok(cancion);
         }
-<<<<<<< HEAD
-=======
-
-       
 
         [Route("{id:int}/integrantes")]
         public IHttpActionResult GetIntegrantes(int id)
@@ -41,10 +37,5 @@ namespace WebApi.Controllers
             }
             return Ok(integrante);
         }
-
-
-
-
->>>>>>> main
     }
 }
