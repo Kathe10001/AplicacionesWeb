@@ -131,7 +131,7 @@ namespace Persistencia.DAOs
             String consulta = "select  *  from Integrante";
             SqlConnection conn = null;
             SqlDataReader myReader = null;
-            List<VOIntegrante> listvoi = null;
+            List<VOIntegrante> listvoi = new List<VOIntegrante>();
 
             try
             {

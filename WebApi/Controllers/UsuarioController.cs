@@ -12,27 +12,27 @@ namespace WebApi.Controllers
     public class UsuarioController : ApiController
     {
 
-        public IHttpActionResult GetUsuario(int id)
+        public IHttpActionResult GetUsuario(String email)
         {
-            var cancion = Fachada.Instancia.BuscarUsuario(id);
+            var cancion = Fachada.Instancia.BuscarUsuario(email);
             if (cancion == null)
             {
                 return NotFound();
             }
             return Ok(cancion);
         }
-        //public IHttpActionResult PostUsuario(VOUsuario usuario)
-        //{
-        //    try
-        //    {
-        //        Fachada.Instancia.(usuario);
+        public IHttpActionResult PostUsuario(VOUsuario usuario)
+        {
+            try
+            {
+                Fachada.Instancia.InsertarUsuario(usuario);
 
-        //    }
-        //    catch (ApplicationException e)
-        //    {
-        //        throw new ApplicationException();
-        //    }
-        //    return Ok("Se guardó correctamente");
-        //}
+            }
+            catch (ApplicationException e)
+            {
+                throw new ApplicationException("Error de registro");
+            }
+            return Ok("Se guardó correctamente");
+        }
     }
 }
