@@ -17,7 +17,11 @@ export class CalificacionService {
     return this.http.get<Calificacion>('http://localhost:62462/api/calificacion' + obtenerParametros(filtros));
   }
 
-  postCalificacionApi(filtros: any) {
-    return this.http.get<Calificacion>('http://localhost:62462/api/calificacion' + obtenerParametros(filtros));
+  postCalificacionApi(body: any) {
+    return this.http.post<Calificacion>('http://localhost:62462/api/calificacion', body);
+  }
+
+  putCalificacionApi(body: any) {
+    return this.http.put<Calificacion>('http://localhost:62462/api/calificacion', body);
   }
 }

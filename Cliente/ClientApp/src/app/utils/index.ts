@@ -1,3 +1,5 @@
+type ComentarioType = "BANDA" | "CANCION"; 
+
 export const obtenerFiltros = (form: any, parametros: string[]) => {
     let filtros: any = null;
     parametros.forEach(param => {
@@ -12,6 +14,21 @@ export const obtenerFiltros = (form: any, parametros: string[]) => {
     return filtros;
 };
 
+export const obtenerBody = (idUsuario: number, id: number, tipo: ComentarioType, form: any, parametros: string[]) => {
+  const filtros = obtenerFiltros(form, parametros);
+  return {
+    ...filtros,
+    IdUsuario: idUsuario,
+    Id: id,
+    Tipo: tipo
+  };
+};
+
+export const setCalificacion = (form: any, parametros: string[], data: any) => {
+  parametros.forEach(param => {
+    form.get(param)?.setValue(data[param]);
+  });
+};
 
 export const obtenerParametros = (filtros: any): string => {
    const parametros: string[] = [];
@@ -21,3 +38,9 @@ export const obtenerParametros = (filtros: any): string => {
    });
    return parametros.length > 0 ? '?' + parametros.join('&') : '';
 }
+
+export const obtenerFiltrosCalificacion = (idUsuario: number, id: number, tipo: ComentarioType) => ({
+  Id: id,
+  IdUsuario: idUsuario,
+  Tipo: tipo
+});

@@ -31,7 +31,7 @@ namespace WebApi.Controllers
             return Ok(cancion);
         }
 
-        [Route("{id:int}/integrantes")]
+        [Route("{id}/integrantes")]
         public IHttpActionResult GetIntegrantes(int id)
         {
             var integrante = Fachada.Instancia.ListarIntegrantesBanda(id);

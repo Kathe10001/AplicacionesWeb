@@ -31,7 +31,7 @@ namespace Persistencia.DAOs
             }
             else
             {
-                sb.Append("insert into UsuarioCalificacion ");
+                sb.Append("insert into UsuarioCancion ");
                 sb.Append("values(@IdUsuario, @Id, @Puntaje, @Comentario) ");
             }
 
@@ -76,9 +76,6 @@ namespace Persistencia.DAOs
 
             return sb.ToString();
         }
-
-
-
 
         public void Alta(VOCalificacion voc)
         {
@@ -143,7 +140,6 @@ namespace Persistencia.DAOs
                         conn.Close();
             }
         }
-
         public void Modificar(VOCalificacion voc)
         {
 

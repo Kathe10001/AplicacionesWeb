@@ -10,6 +10,6 @@ namespace WebApi.Models
     {
         public int IdUsuario { get; set; }
         public int Id { get; set; }
-        public TipoCalificacion TipoCalificacion { get; set; }
+        public TipoCalificacion Tipo { get; set; }
     }
 }

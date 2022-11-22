@@ -17,7 +17,7 @@ namespace WebApi.Controllers
 
             int idUsuario = filtros.IdUsuario;
             int id = filtros.Id;
-            Logica.Negocio.TipoCalificacion tipoCalificacion = filtros.TipoCalificacion;
+            Logica.Negocio.TipoCalificacion tipoCalificacion = filtros.Tipo;
             var calificacion = Fachada.Instancia.BuscarCalificacion(idUsuario, id, tipoCalificacion);
             if (calificacion == null)
             {
@@ -27,11 +27,25 @@ namespace WebApi.Controllers
 
         }
 
-        public IHttpActionResult PostUsuario(VOCalificacion calificacion)
+        public IHttpActionResult PostCalificacio(VOCalificacion calificacion)
         {
             try
             {
                 Fachada.Instancia.AltaCalificacion(calificacion);
+
+            }
+            catch (ApplicationException e)
+            {
+                throw new ApplicationException("Error de registro");
+            }
+            return Ok("Se guardó correctamente");
+        }
+
+        public IHttpActionResult PutCalificacio(VOCalificacion calificacion)
+        {
+            try
+            {
+                Fachada.Instancia.ModificarCalificacion(calificacion);
 
             }
             catch (ApplicationException e)
