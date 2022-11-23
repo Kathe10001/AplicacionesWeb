@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { AlbumService } from '../servicios/album.service';
 import { Album } from '../tipos/album';
+import { Cancion } from '../tipos/cancion';
 import { obtenerFiltros } from '../utils';
 
 @Component({
@@ -11,7 +12,11 @@ import { obtenerFiltros } from '../utils';
 })
 export default class AlbumComponent {
 
+  showCanciones: boolean = false;
+  showAlbumes: boolean = false;
+  album!: Album;
   albumes!: Album[];
+  canciones!: Cancion[];
 
   albumesForm = this.formBuilder.group({
     Nombre: '',
@@ -26,8 +31,20 @@ export default class AlbumComponent {
   ) { }
 
   onSubmit(): void {
+    this.showCanciones = false;
     const filtros: any = obtenerFiltros(this.albumesForm, ["GeneroMusical", "Nombre", "AnioCreacion"]);
-    this.albumService.getAlbumesApi(filtros).subscribe(albumes => this.albumes = albumes);
+      this.albumService.getAlbumesApi(filtros).subscribe(albumes => {
+          this.showAlbumes = true;
+          this.albumes = albumes
+      });
     this.albumesForm.reset();
-  }
+    }
+
+    openCanciones(album: Album): void {
+        this.showCanciones = true;
+        this.album = album;
+        this.albumService.getAlbumCancionesApi(album.Id).subscribe(canciones => {
+            this.canciones = canciones;
+        })
+    }
 }

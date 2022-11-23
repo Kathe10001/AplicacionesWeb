@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Cancion } from '../tipos/cancion';
+import { Album } from '../tipos/album';
 import { obtenerParametros } from '../utils';
 
 @Injectable({

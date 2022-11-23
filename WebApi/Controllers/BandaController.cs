@@ -41,5 +41,16 @@ namespace WebApi.Controllers
             }
             return Ok(integrante);
         }
+
+        [Route("{id:int}/albumes")]
+        public IHttpActionResult GetAlbumes(int id)
+        {
+            var albumes = "";//Fachada.Instancia.ListarCancionesAlbum(id);
+            if (albumes == null)
+            {
+                return NotFound();
+            }
+            return Ok(albumes);
+        }
     }
 }

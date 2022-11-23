@@ -10,6 +10,7 @@ using WebApi.Models;
 
 namespace WebApi.Controllers
 {
+    [RoutePrefix("api/cancion")]
     public class CancionController : ApiController
     {
         public IEnumerable<VOCancion> GetAllCancion([FromUri] Cancion cancion)

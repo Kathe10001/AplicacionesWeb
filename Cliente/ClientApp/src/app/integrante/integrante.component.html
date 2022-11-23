@@ -1,5 +1,5 @@
 <div class="container-md">
-  <form class="row" [formGroup]="integrantesForm" (ngSubmit)="onSubmit()">
+  <form class="row mt-4 mb-4 bg-secondary p-2 text-dark bg-opacity-10 rounded" [formGroup]="integrantesForm" (ngSubmit)="onSubmit()">
     <h3 class="mt-4 mb-4">Listado de integrantes</h3>
     <div class="col-md-3">
       <label for="Nombre" class="form-label">Nombre</label>
@@ -22,6 +22,7 @@
             <th scope="col">Nombre</th>
             <th scope="col">Apellido</th>
             <th scope="col">Fecha Nacimiento</th>
+            <th scope="col">Banda</th>
           </tr>
         </thead>
         <tbody>
@@ -30,12 +31,44 @@
             <td scope="row">{{ integrante.Nombre }}</td>
             <td scope="row">{{ integrante.Apellido }}</td>
             <td scope="row">{{ integrante.FechaNacimiento }}</td>
+            <td>
+              <a (click)="openBandas(integrante)" class="button fancy-button">
+                <span class="fa fa-group checked text-primary"></span>
+              </a>
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
     <div class="row ps-2 pe-2" *ngIf="integrantes.length <= 0">
       <h3 class="mt-4 mb-4">No se encontraron resultados</h3>
+    </div>
+  </div>
+  <div class="row ps-2 pe-2" *ngIf="showBandas && bandas">
+    <div *ngIf="bandas.length > 0">
+      <table class="table mt-4 mb-4">
+        <thead>
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Género</th>
+            <th scope="col">Año</th>
+            <th scope="col">Separación</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let banda of bandas">
+            <th scope="row">{{ banda.Id }}</th>
+            <td scope="row">{{ banda.Nombre }}</td>
+            <td scope="row"> {{ banda.GeneroMusical }}</td>
+            <td scope="row">{{ banda.AnioCreacion }}</td>
+            <td scope="row">{{ banda.AnioSeparacion }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="row ps-2 pe-2" *ngIf="bandas.length <= 0">
+      <h3 class="mt-4 mb-4">No se encontraron bandas</h3>
     </div>
   </div>
 </div>
