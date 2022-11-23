@@ -13,7 +13,7 @@
       <button type="submit" class="btn btn-primary">Buscar</button>
     </div>
   </form>
-  <div class="row ps-2 pe-2" *ngIf="bandas">
+  <div class="row ps-2 pe-2" *ngIf="showBandas && bandas">
     <div *ngIf="bandas.length > 0">
       <table class="table mt-4 mb-4">
         <thead>
@@ -25,23 +25,29 @@
             <th scope="col">Separación</th>
             <th scope="col">Calificar</th>
             <th scope="col">Integrantes</th>
+            <th scope="col">Albumes</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let banda of bandas">
             <th scope="row">{{ banda.Id }}</th>
             <td scope="row">{{ banda.Nombre }}</td>
-            <td> {{ banda.GeneroMusical }}</td>
-            <td>{{ banda.AnioCreacion }}</td>
-            <td>{{ banda.AnioSeparacion }}</td>
+            <td scope="row"> {{ banda.GeneroMusical }}</td>
+            <td scope="row">{{ banda.AnioCreacion }}</td>
+            <td scope="row">{{ banda.AnioSeparacion }}</td>
             <td>
               <a (click)="openCalificacion(banda)" class="button fancy-button">
                 <span class="fa fa-star checked text-warning"></span>
               </a>
             </td>
             <td>
-              <a (click)="showIntegrantes(banda)" class="button fancy-button">
+              <a (click)="openIntegrantes(banda)" class="button fancy-button">
                 <span class="fa fa-user checked text-primary"></span>
+              </a>
+            </td>
+            <td>
+              <a (click)="openAlbumes(banda)" class="button fancy-button">
+                <span class="fa fa-folder-open checked text-success"></span>
               </a>
             </td>
           </tr>
@@ -72,7 +78,7 @@
       </div>
     </div>
   </form>
-  <div class="row ps-2 pe-2" *ngIf="showIntengrantes && integrantes">
+  <div class="row ps-2 pe-2" *ngIf="showIntegrantes && integrantes">
     <div *ngIf="integrantes.length > 0">
       <table class="table mt-4 mb-4">
         <thead>
@@ -95,6 +101,31 @@
     </div>
     <div class="row ps-2 pe-2" *ngIf="integrantes.length <= 0">
       <h3 class="mt-4 mb-4">No se encontraron integrantes</h3>
+    </div>
+  </div>
+  <div class="row ps-2 pe-2" *ngIf="showAlbumes && albumes">
+    <div *ngIf="albumes.length > 0">
+      <table class="table mt-4 mb-4">
+        <thead>
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Género</th>
+            <th scope="col">Año</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let album of albumes">
+            <th scope="row">{{ album.Id }}</th>
+            <td scope="row">{{ album.Nombre }}</td>
+            <td scope="row">{{ album.GeneroMusical }}</td>
+            <td scope="row">{{ album.AnioCreacion }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="row ps-2 pe-2" *ngIf="albumes.length <= 0">
+      <h3 class="mt-4 mb-4">No se encontraron albumes</h3>
     </div>
   </div>
 </div>

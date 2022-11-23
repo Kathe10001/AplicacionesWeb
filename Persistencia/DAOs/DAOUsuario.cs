@@ -37,7 +37,7 @@ namespace Persistencia.DAOs
                 {
                     ParameterName = "@email",
                     Value = email,
-                    SqlDbType = SqlDbType.Int
+                    SqlDbType = SqlDbType.VarChar
                 };
                 comando.Parameters.Add(emailParameter);
                 myReader = comando.ExecuteReader();

@@ -11,6 +11,7 @@ import IntegranteComponent from './integrante/integrante.component';
 import BandaComponent from './banda/banda.component';
 import AlbumComponent from './album/album.component';
 import MenuComponent from './menu/menu.component';
+import LoginComponent from './login/login.component';
 
 @NgModule({
   imports: [
@@ -19,6 +20,7 @@ import MenuComponent from './menu/menu.component';
     ReactiveFormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
+      { path: 'login', component: LoginComponent },
       { path: 'integrantes', component: IntegranteComponent },
       { path: 'bandas', component: BandaComponent },
       { path: 'albumes', component: AlbumComponent },
@@ -28,6 +30,7 @@ import MenuComponent from './menu/menu.component';
   declarations: [
     AppComponent,
     MenuComponent,
+    LoginComponent,
     HomeComponent,
     CancionComponent,
     BandaComponent,
@@ -36,7 +39,6 @@ import MenuComponent from './menu/menu.component';
   ],
   bootstrap: [
     AppComponent
-  ],
-  providers: [AppComponent]
+  ]
 })
 export class AppModule { }

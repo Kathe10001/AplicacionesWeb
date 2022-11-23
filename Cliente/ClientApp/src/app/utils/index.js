@@ -11,7 +11,7 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.obtenerFiltrosCalificacion = exports.obtenerParametros = exports.setCalificacion = exports.obtenerBody = exports.obtenerFiltros = void 0;
+exports.setCookie = exports.getCookie = exports.obtenerFiltrosCalificacion = exports.obtenerParametros = exports.setCalificacion = exports.obtenerBody = exports.obtenerFiltros = void 0;
 var obtenerFiltros = function (form, parametros) {
     var filtros = null;
     parametros.forEach(function (param) {
@@ -52,4 +52,24 @@ var obtenerFiltrosCalificacion = function (idUsuario, id, tipo) { return ({
     Tipo: tipo
 }); };
 exports.obtenerFiltrosCalificacion = obtenerFiltrosCalificacion;
+var getCookie = function (n, from) {
+    var name = n + '=';
+    var cDecoded = decodeURIComponent(from);
+    var cArr = cDecoded.split('; ');
+    var res = '';
+    cArr.forEach(function (val) {
+        if (val.indexOf(name) === 0)
+            res = val.substring(name.length);
+    });
+    return res;
+};
+exports.getCookie = getCookie;
+var setCookie = function (cName, cValue, expDays) {
+    if (expDays === void 0) { expDays = 1; }
+    var date = new Date();
+    date.setTime(date.getTime() + (expDays * 24 * 60 * 60 * 1000));
+    var expires = "expires=" + date.toUTCString();
+    document.cookie = cName + "=" + cValue + "; " + expires + "; path=/";
+};
+exports.setCookie = setCookie;
 //# sourceMappingURL=index.js.map

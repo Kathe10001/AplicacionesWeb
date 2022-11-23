@@ -1,0 +1,53 @@
+<div class="position-absolute top-50 start-50 translate-middle">
+  <ul class="nav nav-tabs justify-content-center">
+    <li class="nav-item">
+      <a class="nav-link" [class.active]="activo" (click)="activar()">Ingresar</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [class.active]="!activo" (click)="activar()">Registrar</a>
+    </li>
+  </ul>
+  <div>
+    <p class="text-danger" *ngIF="mensaje">{{mensaje}}</p>
+  </div>
+  <div class="row">
+    <form *ngIf="activo" class="mt-4 mb-4 bg-secondary p-2 text-dark bg-opacity-10 rounded" [formGroup]="ingresarForm" (ngSubmit)="ingresar()">
+      <div class="">
+        <label for="Email" class="form-label">Email</label>
+        <input type="text" class="form-control" id="Email" formControlName="Email">
+      </div>
+      <div class="">
+        <label for="Contrasenia" class="form-label">Contarseña</label>
+        <input type="password" class="form-control" id="Contrasenia" formControlName="Contrasenia">
+      </div>
+      <div class="">
+        <button type="submit" class="btn btn-primary">Ingresar</button>
+      </div>
+    </form>
+  </div>
+  <div class="row">
+    <form *ngIf="!activo" class="mt-4 mb-4 bg-secondary p-2 text-dark bg-opacity-10 rounded" [formGroup]="registrarForm" (ngSubmit)="registrar()">
+      <div class="">
+        <label for="Nombre" class="form-label">Nombre</label>
+        <input type="text" class="form-control" id="Nombre" formControlName="Nombre">
+      </div>
+      <div class="">
+        <label for="Email" class="form-label">Email</label>
+        <input type="text" class="form-control" id="Email" formControlName="Email">
+      </div>
+      <div class="">
+        <label for="Contrasenia" class="form-label">Contarseña</label>
+        <input type="password" class="form-control" id="Contrasenia" formControlName="Contrasenia">
+      </div>
+      <div class="">
+        <button type="submit" class="btn btn-primary">Registrar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+
+
+
+

@@ -41,10 +41,13 @@
     <TypeScriptCompile Remove="ClientApp\src\app\cancion - Copia (3)\cancion.component.ts" />
     <TypeScriptCompile Remove="ClientApp\src\app\home\home.component.ts" />
     <TypeScriptCompile Remove="ClientApp\src\app\integrante.service.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\login\login.component.ts" />
     <TypeScriptCompile Remove="ClientApp\src\app\servicios\calificacion.service.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\servicios\login.service.ts" />
     <TypeScriptCompile Remove="ClientApp\src\app\tipos\album.ts" />
     <TypeScriptCompile Remove="ClientApp\src\app\tipos\calificacion.ts" />
     <TypeScriptCompile Remove="ClientApp\src\app\tipos\integrante.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\tipos\usuario.ts" />
     <TypeScriptCompile Remove="ClientApp\src\app\utils\index.ts" />
   </ItemGroup>
 

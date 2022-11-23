@@ -4,6 +4,7 @@ import { BandaService } from '../servicios/banda.service';
 import { CalificacionService } from '../servicios/calificacion.service';
 import { Banda } from '../tipos/banda';
 import { Integrante } from '../tipos/integrante';
+import { Album } from '../tipos/album';
 import { Calificacion } from '../tipos/calificacion';
 import { obtenerFiltros, obtenerFiltrosCalificacion, setCalificacion, obtenerBody } from '../utils';
 import { AppComponent } from '../app.component';
@@ -18,11 +19,14 @@ export default class BandaComponent implements OnInit {
 
   editar: boolean = false;
   user!: any;
-  showIntengrantes: boolean = false;
+  showAlbumes: boolean = false;
+  showBandas: boolean = false;
+  showIntegrantes: boolean = false;
   showCalificacion: boolean = false;
   banda!: Banda;
   bandas!: Banda[];
   integrantes!: Integrante[];
+  albumes!: Album[];
   calificacionParam: string[] = ["Puntaje", "Comentario"];
   mensaje!: string;
 
@@ -48,8 +52,10 @@ export default class BandaComponent implements OnInit {
   }
 
   onSubmit(): void {
+    this.showBandas = true;
     this.showCalificacion = false;
-    this.showIntengrantes = false;
+    this.showIntegrantes = false;
+    this.showAlbumes = false;
     const filtros: any = obtenerFiltros(this.bandasForm, ["GeneroMusical", "Nombre"]);
     this.bandaService.getBandasApi(filtros).subscribe(bandas => this.bandas = bandas);
     this.bandasForm.reset();
@@ -66,7 +72,8 @@ export default class BandaComponent implements OnInit {
 
   openCalificacion(banda: Banda): void {
     this.showCalificacion = true;
-    this.showIntengrantes = false;
+    this.showIntegrantes = false;
+    this.showAlbumes = false;
     this.banda = banda;
     const filtros: any = obtenerFiltrosCalificacion(this.user.Id, banda.Id, "BANDA");
     this.calificacionService.getCalificacionApi(filtros).subscribe(calificacion => {
@@ -79,12 +86,25 @@ export default class BandaComponent implements OnInit {
     this.showCalificacion = false;
   }
 
-  showIntegrantes(banda: Banda): void {
+  openIntegrantes(banda: Banda): void {
+    this.showIntegrantes = true;
+    this.showCalificacion = false;
+    this.showAlbumes = false;
+    this.banda = banda;
+    this.bandaService.getBandaIntegrantesApi(banda.Id).subscribe(integrantes => {
+      this.showIntegrantes = true;
+      this.integrantes = integrantes;
+    })
+  }
+
+  openAlbumes(banda: Banda): void {
+    this.showAlbumes = true;
+    this.showIntegrantes = false;
     this.showCalificacion = false;
     this.banda = banda;
-    this.bandaService.getBandaIntegrantesnApi(banda.Id).subscribe(integrantes => {
-      this.showIntengrantes = true;
-      this.integrantes = integrantes;
+    this.bandaService.getBandaAlbumesApi(banda.Id).subscribe(albumes => {
+      this.showAlbumes = true;
+      this.albumes = albumes;
     })
   }
 }

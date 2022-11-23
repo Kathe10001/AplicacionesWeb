@@ -33,4 +33,9 @@ export default class MenuComponent implements OnInit {
   onChange(link: string) {
     this.menu = updateMenu(this.menu, link);
   }
+
+  logout() {
+      document.cookie = "session=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+      window.location.href = '/login';
+  }
 }

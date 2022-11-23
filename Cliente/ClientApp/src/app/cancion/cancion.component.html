@@ -38,7 +38,7 @@
             <td scope="row"> {{ cancion.Duracion }}</td>
             <td scope="row">{{ cancion.Anio }}</td>
             <td>
-              <a (click)="open(cancion)" class="button fancy-button">
+              <a (click)="openCalificacion(cancion)" class="button fancy-button">
                 <span class="fa fa-star checked text-warning"></span>
               </a>
             </td>
@@ -50,9 +50,12 @@
       <h3 class="mt-4 mb-4">No se encontraron resultados</h3>
     </div>
   </div>
-  <form class="row mt-4 mb-4 bg-secondary p-2 text-dark bg-opacity-10 rounded" [formGroup]="calificacionForm" (ngSubmit)="onSubmitCalificacion()" *ngIf="show">
+  <form class="row mt-4 mb-4 bg-secondary p-2 text-dark bg-opacity-10 rounded" [formGroup]="calificacionForm" (ngSubmit)="onSubmitCalificacion()" *ngIf="showCanciones">
     <div class="row mt-4 mb-4">
-      <h3 class="col-11">{{ editar ? "Tu calificación fue:" : cancion.Nombre }}</h3>
+      <h3 class="col-11">
+        <span *ngIf="editar">Tu calificación para {{cancion.Nombre}} fue:</span>
+        <span *ngIf="!editar">{{cancion.Nombre}}</span>
+      </h3>
       <div class="col-1">
         <button type="button" class="btn-close float-end" aria-label="Close" (click)="close()"></button>
       </div>
