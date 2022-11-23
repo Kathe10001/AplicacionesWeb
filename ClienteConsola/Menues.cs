@@ -121,16 +121,49 @@ namespace ClienteConsola
             try
             {
                 Console.Clear();
-                Console.WriteLine("Ingrese Nombre: ");
-                String nombre = Console.ReadLine();
-                Console.WriteLine("Ingrese Duracion: ");
-                int duracion = int.Parse(Console.ReadLine());
-                Console.WriteLine("Ingrese Año: ");
-                int anio = int.Parse(Console.ReadLine());
-                Console.WriteLine("Ingrese Genero: ");
-                String genero = Console.ReadLine();
-                Console.WriteLine("Ingrese ID Cantante: ");
-                int idCantante = int.Parse(Console.ReadLine());
+
+                // String.IsNullOrEmpty(anioCreacion.Trim())
+                String nombre;
+                do
+                {
+                    Console.WriteLine("Ingrese Nombre: ");
+                    nombre = Console.ReadLine();
+
+                } while (String.IsNullOrEmpty(nombre.Trim()));
+
+                String duracionC;
+                do
+                {
+                    Console.WriteLine("Ingrese Duracion: ");
+                    duracionC = Console.ReadLine();
+
+                } while (String.IsNullOrEmpty(duracionC.Trim()));
+                int duracion = int.Parse(duracionC);
+
+                String anioC;
+                do 
+                { 
+                    Console.WriteLine("Ingrese Año: ");
+                    anioC = Console.ReadLine();
+
+                } while (String.IsNullOrEmpty(anioC.Trim()));
+                int anio = int.Parse(anioC);
+
+                String genero;
+                do 
+                {
+                    Console.WriteLine("Ingrese Genero: ");
+                   genero = Console.ReadLine();
+                } while (String.IsNullOrEmpty(genero.Trim()));
+
+                String id;
+                do
+                { 
+                    Console.WriteLine("Ingrese ID Cantante: ");
+                    id = Console.ReadLine();
+                } while (String.IsNullOrEmpty(id.Trim()));
+                int idCantante = int.Parse(id);
+
                 wService.AltaCancion(nombre, duracion, genero, idCantante, anio);
                 Console.WriteLine("Ingreso exitoso");
                 Console.ReadLine();
@@ -146,8 +179,14 @@ namespace ClienteConsola
             try
             {
                 Console.Clear();
-                Console.WriteLine("Ingrese ID de la cancion: ");
-                int idEliminar = int.Parse(Console.ReadLine());
+
+                String id;
+                do
+                { 
+                    Console.WriteLine("Ingrese ID de la cancion: ");
+                    id = Console.ReadLine();
+                } while (String.IsNullOrEmpty(id.Trim()));
+                int idEliminar = int.Parse(id);
                 wService.BajaCancion(idEliminar);
                 Console.WriteLine("Borrado exitoso");
                 Console.ReadLine();
@@ -184,14 +223,38 @@ namespace ClienteConsola
             try
             {
                 Console.Clear();
-                Console.WriteLine("Ingrese Nombre: ");
-                String nombre = Console.ReadLine();
-                Console.WriteLine("Ingrese Genero: ");
-                String genero = Console.ReadLine();
-                Console.WriteLine("Ingrese Año Creacion: ");
-                int anioC = int.Parse(Console.ReadLine());
+                String nombre;
+                do
+                {
+                    Console.WriteLine("Ingrese Nombre: ");
+                    nombre = Console.ReadLine();
+                }
+                while (String.IsNullOrEmpty(nombre.Trim()));
+                String genero;
+                do
+                {
+                    Console.WriteLine("Ingrese Genero: ");
+                    genero = Console.ReadLine();
+                }while (String.IsNullOrEmpty(genero.Trim()));
+
+                String anioCreacion;
+                do
+                {
+                    Console.WriteLine("Ingrese Año Creacion: ");
+                    anioCreacion = Console.ReadLine();
+                } while (String.IsNullOrEmpty(anioCreacion.Trim()));
+                int anioC = int.Parse(anioCreacion);
+
                 Console.WriteLine("Ingrese Año Separacion: ");
-                int anioS = int.Parse(Console.ReadLine());
+                int anioS;
+                String anioSeparacion = Console.ReadLine();
+                if (String.IsNullOrEmpty(anioSeparacion))
+                {
+                    anioS = 0;
+                }
+                else
+                anioS  = int.Parse(anioSeparacion);
+                
                 wService.AltaBanda(nombre, genero, anioC, anioS);
                 Console.WriteLine("Ingreso exitoso");
                 Console.ReadLine();
@@ -208,8 +271,14 @@ namespace ClienteConsola
             try
             {
                 Console.Clear();
-                Console.WriteLine("Ingrese ID de la banda: ");
-                int idEliminar = int.Parse(Console.ReadLine());
+                String eliminar;
+                do
+                {
+                    Console.WriteLine("Ingrese ID de la banda: ");
+                    eliminar = Console.ReadLine();
+                } while (String.IsNullOrEmpty(eliminar.Trim()));
+                int idEliminar = int.Parse(eliminar);
+
                 wService.BajaBanda(idEliminar);
                 Console.WriteLine("Borrado exitoso");
                 Console.ReadLine();
@@ -243,10 +312,22 @@ namespace ClienteConsola
         public void AgregarIntegranteBanda()
         {
             Console.Clear();
-            Console.WriteLine("Ingrese un ID de Integrante: ");
-            int idIntegrante = int.Parse(Console.ReadLine());
-            Console.WriteLine("Ingrese un ID de Banda: ");
-            int idBanda = int.Parse(Console.ReadLine());
+            String integrante;
+            do
+            { 
+                Console.WriteLine("Ingrese un ID de Integrante: ");
+                integrante = Console.ReadLine();
+            } while (String.IsNullOrEmpty(integrante.Trim()));
+            int idIntegrante = int.Parse(integrante);
+
+            String banda;
+            do
+            {
+                Console.WriteLine("Ingrese un ID de Banda: ");
+                banda = Console.ReadLine();
+            } while (String.IsNullOrEmpty(banda.Trim()));
+            int idBanda = int.Parse(banda);
+
             wService.AgregarIntegranteBanda(idIntegrante, idBanda);
             Console.WriteLine("Ingreso exitoso");
             Console.ReadLine();
@@ -256,10 +337,23 @@ namespace ClienteConsola
         public void QuitarIntegranteBanda()
         {
             Console.Clear();
-            Console.WriteLine("Ingrese un ID de Integrante: ");
-            int idIntegrante = int.Parse(Console.ReadLine());
-            Console.WriteLine("Ingrese un ID de Banda: ");
-            int idBanda = int.Parse(Console.ReadLine());
+
+            String integrante;
+            do
+            { 
+                Console.WriteLine("Ingrese un ID de Integrante: ");
+                integrante = Console.ReadLine();
+            } while (String.IsNullOrEmpty(integrante.Trim()));
+            int idIntegrante = int.Parse(integrante);
+
+            String banda;
+            do
+            { 
+                Console.WriteLine("Ingrese un ID de Banda: ");
+                banda = Console.ReadLine();
+            } while (String.IsNullOrEmpty(banda.Trim()));
+            int idBanda = int.Parse(banda);
+
             wService.QuitarIntegranteBanda(idIntegrante, idBanda);
             Console.WriteLine("Borrado exitoso");
             Console.ReadLine();
@@ -270,12 +364,30 @@ namespace ClienteConsola
             try
             {
                 Console.Clear();
-                Console.WriteLine("Ingrese Nombre: ");
-                String nombre = Console.ReadLine();
-                Console.WriteLine("Ingrese Apellido: ");
-                String apellido = Console.ReadLine();
-                Console.WriteLine("Ingrese Fecha Nacimiento: ");
-                DateTime fechaN = DateTime.Parse(Console.ReadLine());
+
+                String nombre;
+                do
+                {
+                     Console.WriteLine("Ingrese Nombre: ");
+                     nombre = Console.ReadLine();
+
+                } while (String.IsNullOrEmpty(nombre.Trim()));
+
+                String apellido;
+                do
+                {
+                    Console.WriteLine("Ingrese Apellido: ");
+                    apellido = Console.ReadLine();
+                } while (String.IsNullOrEmpty(apellido.Trim()));
+
+                String date;
+                do 
+                { 
+                     Console.WriteLine("Ingrese Fecha Nacimiento: ");
+                    date = Console.ReadLine();
+                } while (String.IsNullOrEmpty(date.Trim()));
+                DateTime fechaN = DateTime.Parse(date);
+
                 wService.AltaIntegrante(nombre, apellido, fechaN);
                 Console.WriteLine("Ingreso exitoso");
                 Console.ReadLine();
@@ -290,8 +402,15 @@ namespace ClienteConsola
             try
             {
                 Console.Clear();
-                Console.WriteLine("Ingrese ID del Integrante: ");
-                int idEliminar = int.Parse(Console.ReadLine());
+
+                String id;
+                do
+                { 
+                    Console.WriteLine("Ingrese ID del Integrante: ");
+                    id = Console.ReadLine();
+                } while (String.IsNullOrEmpty(id.Trim()));
+                int idEliminar = int.Parse(id);
+
                 wService.BajaIntegrante(idEliminar);
                 Console.WriteLine("Borrado exitoso");
                 Console.ReadLine();
@@ -327,14 +446,36 @@ namespace ClienteConsola
             try
             {
                 Console.Clear();
-                Console.WriteLine("Ingrese Nombre: ");
-                String nombre = Console.ReadLine();
-                Console.WriteLine("Ingrese Genero Musical: ");
-                String genero = Console.ReadLine();
-                Console.WriteLine("Ingrese ID Banda: ");
-                int idBanda = int.Parse(Console.ReadLine());
-                Console.WriteLine("Ingrese Año Creacion: ");
-                int anioC = int.Parse(Console.ReadLine());
+                String nombre;
+                do 
+                { 
+                    Console.WriteLine("Ingrese Nombre: ");
+                    nombre = Console.ReadLine();
+                } while (String.IsNullOrEmpty(nombre.Trim()));
+
+
+                String genero;
+                do
+                { 
+                    Console.WriteLine("Ingrese Genero Musical: ");
+                    genero = Console.ReadLine();
+                } while (String.IsNullOrEmpty(genero.Trim()));
+
+                String idb;
+                do 
+                { 
+                    Console.WriteLine("Ingrese ID Banda: ");
+                    idb = Console.ReadLine();
+                } while (String.IsNullOrEmpty(idb.Trim()));
+                int idBanda = int.Parse(idb);
+
+                String anio;
+                do
+                {
+                    Console.WriteLine("Ingrese Año Creacion: ");
+                    anio = Console.ReadLine();
+                } while (String.IsNullOrEmpty(anio.Trim()));
+                int anioC = int.Parse(anio);
                 wService.AltaAlbum(nombre, anioC, genero, idBanda);
                 Console.WriteLine("Ingreso exitoso");
                 Console.ReadLine();
@@ -349,8 +490,13 @@ namespace ClienteConsola
             try
             {
                 Console.Clear();
-                Console.WriteLine("Ingrese ID del Integrante: ");
-                int idEliminar = int.Parse(Console.ReadLine());
+                String eliminar;
+                do 
+                { 
+                    Console.WriteLine("Ingrese ID del Integrante: ");
+                    eliminar = Console.ReadLine();
+                } while (String.IsNullOrEmpty(eliminar.Trim()));
+                int idEliminar = int.Parse(eliminar);
                 wService.BajaAlbum(idEliminar);
                 Console.WriteLine("Borrado exitoso");
                 Console.ReadLine();
@@ -385,10 +531,21 @@ namespace ClienteConsola
         public void AgregarCancionAlbum()
         {
             Console.Clear();
-            Console.WriteLine("Ingrese un ID de Cancion: ");
-            int idCancion = int.Parse(Console.ReadLine());
-            Console.WriteLine("Ingrese un ID de Album: ");
-            int idAlbum = int.Parse(Console.ReadLine());
+            String idc;
+            do
+            { 
+                Console.WriteLine("Ingrese un ID de Cancion: ");
+                idc = Console.ReadLine();
+            } while (String.IsNullOrEmpty(idc.Trim()));
+            int idCancion = int.Parse(idc);
+
+            String ida;
+            do
+            { 
+                Console.WriteLine("Ingrese un ID de Album: ");
+                ida = Console.ReadLine();
+            } while (String.IsNullOrEmpty(ida.Trim()));
+            int idAlbum = int.Parse(ida);
             wService.AgregarCancionAlbum(idCancion, idAlbum);
             Console.WriteLine("Ingreso exitoso");
             Console.ReadLine();
@@ -397,10 +554,22 @@ namespace ClienteConsola
         public void QuitarCancionAlbum()
         {
             Console.Clear();
-            Console.WriteLine("Ingrese un ID de Cancion: ");
-            int idCancion = int.Parse(Console.ReadLine());
-            Console.WriteLine("Ingrese un ID de Album: ");
-            int idAlbum = int.Parse(Console.ReadLine());
+
+            String idc;
+            do
+            { 
+                Console.WriteLine("Ingrese un ID de Cancion: ");
+                idc = Console.ReadLine();
+            } while (String.IsNullOrEmpty(idc.Trim()));
+            int idCancion = int.Parse(idc);
+
+            String ida;
+            do 
+            { 
+                Console.WriteLine("Ingrese un ID de Album: ");
+                ida = Console.ReadLine();
+            } while (String.IsNullOrEmpty(ida.Trim()));
+            int idAlbum = int.Parse(ida);
             wService.QuitarCancionAlbum(idCancion, idAlbum);
             Console.WriteLine("Borrado exitoso");
             Console.ReadLine();
