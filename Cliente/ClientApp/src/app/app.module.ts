@@ -12,6 +12,7 @@ import BandaComponent from './banda/banda.component';
 import AlbumComponent from './album/album.component';
 import MenuComponent from './menu/menu.component';
 import LoginComponent from './login/login.component';
+import { LoginService } from './servicios/login.service';
 
 @NgModule({
   imports: [

@@ -5,7 +5,7 @@ import { Cancion } from '../tipos/cancion';
 import { obtenerParametros } from '../utils';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class AlbumService {
   albumes: Album[] = [];

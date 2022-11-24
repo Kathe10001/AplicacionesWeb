@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Nav } from '../tipos/nav';
 import { AppComponent } from '../app.component';
+import { removeLocalUsuario } from '../utils';
 
 const updateMenu = (menu: Nav[], link: string) => (menu.map((nav: Nav) => ({ ...nav, Activo: nav.Link === link })));
 
@@ -35,7 +36,7 @@ export default class MenuComponent implements OnInit {
   }
 
   logout() {
-      document.cookie = "session=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+      removeLocalUsuario();
       window.location.href = '/login';
   }
 }

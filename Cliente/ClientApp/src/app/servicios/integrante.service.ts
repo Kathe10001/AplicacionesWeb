@@ -5,7 +5,7 @@ import { Banda } from '../tipos/banda';
 import { obtenerParametros } from '../utils';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class IntegranteService {
   integrantes: Integrante[] = [];

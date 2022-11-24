@@ -4,7 +4,7 @@ import { Calificacion } from '../tipos/calificacion';
 import { obtenerParametros } from '../utils';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class CalificacionService {
 

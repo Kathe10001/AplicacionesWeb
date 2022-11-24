@@ -13,8 +13,8 @@ namespace Persistencia.DAOs
     {
         public SqlConnection Conexion()
         {
-            //string strConn = @"data source = KATHERINEFE9E8B\MSSQLSERVER02; " + "initial catalog = Spotify; " + "integrated security = true";
-            string strConn = @"data source = NB-MPEREZ\SQLEXPRESS; " + "initial catalog = Spotify; " + "integrated security = true";
+            string strConn = @"data source = KATHERINEFE9E8B\MSSQLSERVER02; " + "initial catalog = Spotify; " + "integrated security = true";
+            //string strConn = @"data source = NB-MPEREZ\SQLEXPRESS; " + "initial catalog = Spotify; " + "integrated security = true";
             SqlConnection conn = new SqlConnection(strConn);
             return conn;
         }
@@ -69,14 +69,15 @@ namespace Persistencia.DAOs
         }
 
 
-        public void Insertar(VOUsuario vou)
+        public int Insertar(VOUsuario vou)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("insert into Usuario ");
             sb.Append("values(@Nombre, @Apellido, @Email, @Contrasenia) ");
-            SqlConnection conn = null;
-            SqlDataReader myReader = null;
-
+            sb.Append("SELECT CAST(scope_identity() AS int)")
+;           SqlConnection conn = null;
+          
+            int id = -1;
             try
             {
                 conn = Conexion();
@@ -115,7 +116,8 @@ namespace Persistencia.DAOs
                 };
                 comando.Parameters.Add(contraseniaParameter);
 
-                myReader = comando.ExecuteReader();
+                id = (Int32)comando.ExecuteScalar();
+
             }
             catch (SqlException e)
             {
@@ -123,14 +125,12 @@ namespace Persistencia.DAOs
             }
             finally
             {
-                if (myReader != null)
-                    if (!myReader.IsClosed)
-                        myReader.Close();
 
                 if (conn != null)
                     if (conn.State == ConnectionState.Open)
                         conn.Close();
             }
+            return id;
         }
 
 

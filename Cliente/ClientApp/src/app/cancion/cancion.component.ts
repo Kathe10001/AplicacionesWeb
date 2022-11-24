@@ -23,7 +23,8 @@ export default class CancionComponent {
   canciones!: Cancion[];
   albumes!: Album[];
   calificacionParam: string[] = ["Puntaje", "Comentario"];
-  mensaje!: string
+  mensaje!: string;
+  error!: string;
 
   cancionesForm = this.formBuilder.group({
     Nombre: '',
@@ -48,6 +49,8 @@ export default class CancionComponent {
   }
 
   onSubmit(): void {
+    this.error = '';
+    this.mensaje = '';
     this.showCanciones = false;
     const filtros: any = obtenerFiltros(this.cancionesForm, ["Anio", "GeneroMusical", "Nombre"]);
     this.cancionService.getCancionesApi(filtros).subscribe(canciones => this.canciones = canciones);
@@ -55,15 +58,21 @@ export default class CancionComponent {
   }
 
   onSubmitCalificacion(): void {
+    this.error = '';
+    this.mensaje = '';
     const body: any = obtenerBody(this.user.Id, this.cancion.Id, "CANCION", this.calificacionForm, this.calificacionParam)
     if (this.editar) {
-      this.calificacionService.putCalificacionApi(body).subscribe(calificacion => this.mensaje = "Se guardó correctamente");
+      this.calificacionService.putCalificacionApi(body).subscribe(calificacion => this.mensaje = "Se guardó correctamente",
+        error => this.error = "No se pudo enviar");
     } else {
-      this.calificacionService.postCalificacionApi(body).subscribe(calificacion => this.mensaje = "Se guardó correctamente");
+      this.calificacionService.postCalificacionApi(body).subscribe(calificacion => this.mensaje = "Se guardó correctamente",
+        error => this.error = "No se pudo enviar");
     }
   }
 
   openCalificacion(cancion: Cancion): void {
+    this.error = '';
+    this.mensaje = '';
     this.showCanciones = true;
     this.cancion = cancion;
     const filtros: any = obtenerFiltrosCalificacion(this.user.Id, cancion.Id, "CANCION");
@@ -74,6 +83,8 @@ export default class CancionComponent {
   }
 
   close(): void {
+    this.error = '';
+    this.mensaje = '';
     this.showCanciones = false;
   }
 }

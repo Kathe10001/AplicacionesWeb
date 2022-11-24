@@ -66,11 +66,14 @@
       </div>
     </div>
     <div class="row ps-2 pe-2" *ngIf="mensaje">
-      <span class="mt-2 mb-2">{{mensaje}}</span>
+      <p class="mt-2 mb-2 text-success">{{mensaje}}</p>
+    </div>
+    <div class="row ps-2 pe-2" *ngIf="error">
+      <p class="mt-2 mb-2 text-danger">{{error}}</p>
     </div>
     <div class="col-md-12">
-      <label for="Puntaje">Puntaje del 1 al 5</label>
-      <input type="number" class="form-control" id="Puntaje" formControlName="Puntaje" min="1" max="5">
+      <label for="Puntaje">Puntaje del 0 al 9</label>
+      <input type="text" maxlength=1 class="form-control" id="Puntaje" formControlName="Puntaje" pattern="[1-5.]+">
       <label for="Comentario">Comentario</label>
       <textarea class="form-control" id="Comentario" rows="3" formControlName="Comentario"></textarea>
       <div class="col-12 mt-4 mb-4">
