@@ -14,6 +14,40 @@ namespace ClienteConsola
         localhost.WebService1 wService = new localhost.WebService1();
 
         #region Menu Display
+        int tableWidth = 73;
+        public void ImprimeLinea()
+        {
+            Console.WriteLine(new string('-', tableWidth));
+        }
+        public void ImprimeFila(params string[] columns)
+        {
+            int width = (tableWidth - columns.Length) / columns.Length;
+            string row = " ";
+            foreach (string column in columns)
+            {
+                row += Centro(column, width) + " ";
+
+            }
+            Console.WriteLine(row);
+        }
+
+
+        public string Centro(string text, int width)
+        {
+            text = text.Length > width ? text.Substring(0, width - 3) + "..." : text;
+            if (string.IsNullOrEmpty(text))
+            {
+                return new string(' ', width);
+            }
+            else
+            {
+                return text.PadRight(width - (width - text.Length) / 2).PadLeft(width);
+            }
+
+        }
+
+
+
 
         public String[] Menu()
         {
@@ -122,7 +156,6 @@ namespace ClienteConsola
             {
                 Console.Clear();
 
-                // String.IsNullOrEmpty(anioCreacion.Trim())
                 String nombre;
                 do
                 {
@@ -197,16 +230,23 @@ namespace ClienteConsola
                 throw new ApplicationException("El dato ingresado no es correcto");
             }
         }
+        
         public void ListarCancion()
         {
             try
             {
                 Console.Clear();
-                Console.WriteLine("Nombre\t Duracion\t Año\t Genero\t Cantante(ID)\t");
-                VOCancion[] listVoc = wService.ListarCanciones(); //ya intenté de todo
+                ImprimeLinea();
+                ImprimeFila("Nombre","Duracion","Año","Genero","Cantante(ID)");
+                Console.WriteLine(" ");
+                VOCancion[] listVoc = wService.ListarCanciones(); 
                 foreach (VOCancion vo in listVoc)
                 {
-                    Console.WriteLine(vo.Nombre + "\t " + vo.Duracion + "\t\t " + vo.Anio + "\t " + vo.GeneroMusical + "\t " + vo.IdCantante);
+                    String duracion = vo.Duracion.ToString();
+                    String anio = vo.Anio.ToString();
+                    String id = vo.IdCantante.ToString();
+                    ImprimeFila(vo.Nombre,duracion,anio,vo.GeneroMusical,id);
+
                 }
                 Console.ReadLine();
 
@@ -216,7 +256,6 @@ namespace ClienteConsola
                 throw new ApplicationException("El dato ingresado no es correcto");
             }
         }
-
 
         public void InsertarBanda()
         {
@@ -294,11 +333,16 @@ namespace ClienteConsola
             try
             {
                 Console.Clear();
-                Console.WriteLine("Nombre\t Genero\t Año-Creacion\t Año-Separacion\t");
+                ImprimeLinea();
+                ImprimeFila("Nombre","Genero","Año-Creacion","Año-Separacion");
+                Console.WriteLine(" ");
                 VOBanda[] listvob = wService.ListarBandas();
                 foreach (var vo in listvob)
                 {
-                    Console.WriteLine(vo.Nombre + "\t " + vo.GeneroMusical + "\t " + vo.AnioCreacion + "\t " + vo.AnioSeparacion);
+                    //Console.WriteLine(vo.Nombre + "\t " + vo.GeneroMusical + "\t " + vo.AnioCreacion + "\t " + vo.AnioSeparacion);
+                    String anioC = vo.AnioCreacion.ToString();
+                    String anioS = vo.AnioSeparacion.ToString();
+                    ImprimeFila(vo.Nombre, vo.GeneroMusical,anioC,anioS);
                 }
                 Console.ReadLine();
 
@@ -426,11 +470,15 @@ namespace ClienteConsola
             try
             {
                 Console.Clear();
-                Console.WriteLine("Nombre\t Apellido\t Fecha Nacimiento\t ");
+                ImprimeLinea();
+                ImprimeFila("Nombre","Apellido","Fecha Nacimiento");
+                Console.WriteLine(" ");
                 var listvoi = wService.ListarIntegrante();
                 foreach (var vo in listvoi)
                 {
-                    Console.WriteLine(vo.Nombre + "\t " + vo.Apellido + "\t " + vo.FechaNacimiento);
+                    String fecha = vo.FechaNacimiento.ToString();
+                    ImprimeFila(vo.Nombre,vo.Apellido,fecha);
+
                 }
                 Console.ReadLine();
 
@@ -512,11 +560,15 @@ namespace ClienteConsola
             try
             {
                 Console.Clear();
-                Console.WriteLine("Nombre\t Apellido\t Banda(ID)\t Año Creacion(ID)\t");
+                ImprimeLinea();
+                ImprimeFila("Nombre","Apellido","Banda(ID)","Año Creacion(ID)");
+                Console.WriteLine(" ");
                 var listvoa = wService.ListadoAlbum();
                 foreach (var vo in listvoa)
                 {
-                    Console.WriteLine(vo.Nombre + "\t " + vo.GeneroMusical + "\t " + vo.IdBanda + "\t " + vo.AnioCreacion);
+                    String idb = vo.IdBanda.ToString();
+                    String anio = vo.AnioCreacion.ToString();
+                    ImprimeFila(vo.Nombre,vo.GeneroMusical,idb,anio);
                 }
                 Console.ReadLine();
 
