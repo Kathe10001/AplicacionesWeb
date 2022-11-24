@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgModule } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { BandaService } from '../servicios/banda.service';
 import { CalificacionService } from '../servicios/calificacion.service';
@@ -8,7 +8,7 @@ import { Album } from '../tipos/album';
 import { Calificacion } from '../tipos/calificacion';
 import { obtenerFiltros, obtenerFiltrosCalificacion, setCalificacion, obtenerBody } from '../utils';
 import { AppComponent } from '../app.component';
- 
+
 @Component({
   selector: 'app-banda',
   templateUrl: './banda.component.html',

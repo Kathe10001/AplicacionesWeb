@@ -4,7 +4,7 @@ import { Usuario } from '../tipos/usuario';
 import { obtenerParametros } from '../utils';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class LoginService {
   usuario!: Usuario;
@@ -18,6 +18,6 @@ export class LoginService {
   }
 
   postRegistrarApi(body: any) {
-      return this.http.post<Usuario>('http://localhost:62462/api/usuario', body);
+    return this.http.post<number>('http://localhost:62462/api/usuario', body);
   }
 }

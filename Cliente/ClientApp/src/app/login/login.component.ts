@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { LoginService } from '../servicios/login.service';
-import { obtenerFiltros, setCookie } from '../utils';
+import { obtenerFiltros, setLocalUsuario } from '../utils';
 
 @Component({
   selector: 'app-login',
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.css']
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css'],
 })
 export default class LoginComponent {
 
@@ -14,6 +14,7 @@ export default class LoginComponent {
     activo: boolean = true;
     registrarForm = this.formBuilder.group({
       Nombre: '',
+      Apellido: '',
       Email: '',
       Contrasenia: ''
     });
@@ -23,36 +24,37 @@ export default class LoginComponent {
         Contrasenia: ''
     });
 
-
     constructor(
       private loginService: LoginService,
       private formBuilder: FormBuilder,
     ) { }
 
-    activar() {
+  activar() {
+    this.mensaje = '';
         this.activo = !this.activo;
-    }
+  }
 
-    registrar(): void {
-        const body: any = obtenerFiltros(this.registrarForm, ["Nombre", "Email", "Contrasenia"]);
-        this.loginService.postRegistrarApi(body).subscribe(usuario => {
-            console.log("registrar", usuario)  
-        });
-        this.registrarForm.reset();
-    }
+  registrar(): void {
+    const body: any = obtenerFiltros(this.registrarForm, ["Nombre", "Apellido", "Email", "Contrasenia"]); 
+    this.loginService.postRegistrarApi(body).subscribe(id => {
+      this.mensaje = '';
+      setLocalUsuario({ ...body, Id: id });
+      window.location.href = '';
+      }, error => this.mensaje = error);
+      this.registrarForm.reset();
+  }
 
-    ingresar(): void {
-        const filtros: any = obtenerFiltros(this.ingresarForm, ["Email"]);
-        this.loginService.getIngresarApi(filtros.Email).subscribe(usuario => {
-            const contrasenia = this.ingresarForm.get("Contrasenia")?.value;   
-            if (contrasenia === usuario?.Contrasenia) {
-                this.mensaje = '';
-                setCookie("session", usuario.Email);
-                window.location.href = '';
-            } else {
-                this.mensaje = "Los datos no son válidos";
-            }
-        });
-   
-    }
+  ingresar(): void {
+      const filtros: any = obtenerFiltros(this.ingresarForm, ["Email"]);
+      this.loginService.getIngresarApi(filtros.Email).subscribe(usuario => {
+          const contrasenia = this.ingresarForm.get("Contrasenia")?.value;   
+          if (contrasenia === usuario?.Contrasenia) {
+              this.mensaje = '';
+              setLocalUsuario(usuario);
+              window.location.href = '';
+          } else {
+              this.mensaje = "Los datos no son válidos";
+          }
+      }, error => this.mensaje = error.status === 404 ? "Usuario no registrado" : "Hubo un error, intente más tarde");
+  }
 }

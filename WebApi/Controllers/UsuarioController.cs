@@ -14,25 +14,26 @@ namespace WebApi.Controllers
 
         public IHttpActionResult GetUsuario(String email)
         {
-            var cancion = Fachada.Instancia.BuscarUsuario(email);
-            if (cancion == null)
+            VOUsuario usuario = Fachada.Instancia.BuscarUsuario(email);
+            if (usuario == null)
             {
                 return NotFound();
             }
-            return Ok(cancion);
+            return Ok(usuario);
         }
         public IHttpActionResult PostUsuario(VOUsuario usuario)
         {
+            int id;
             try
             {
-                Fachada.Instancia.InsertarUsuario(usuario);
+                id = Fachada.Instancia.InsertarUsuario(usuario);
 
             }
             catch (ApplicationException e)
             {
                 throw new ApplicationException("Error de registro");
             }
-            return Ok("Se guardó correctamente");
+            return Ok(id);
         }
     }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { getCookie, setCookie } from './utils';
+import { Usuario } from './tipos/usuario';
+import { getLocalUsuario, setLocalUsuario } from './utils';
 
 @Component({
   selector: 'app-root',
@@ -9,21 +10,20 @@ import { getCookie, setCookie } from './utils';
 export class AppComponent implements OnInit  {
 
   showMenu: boolean = true;
-  user: any = {
-    Email: ''
-  }
+  user!: Usuario;
 
   constructor(
   ) { }
 
   ngOnInit() {
-      const cookie = getCookie("session", document.cookie);
-      if (cookie && cookie !== "NONE") {
-          this.user.Email = cookie;
+      const usuario = getLocalUsuario();
+      if (usuario && usuario.Email !== "NONE") {
+          this.user = usuario;
           this.showMenu = true;
       } else {
+          const usuarioDumy: Usuario = { Id: 0, Nombre: "NONE", Apellido: "NONE", Email: "NONE", Contrasenia: "NONE" }
           this.showMenu = false;
-          setCookie("session", "NONE");
+          setLocalUsuario(usuarioDumy);
           if (window.location.pathname !== '/login')
               window.location.href = '/login';
       }
