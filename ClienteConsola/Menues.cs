@@ -162,6 +162,7 @@ namespace ClienteConsola
                     Console.WriteLine("Ingrese Nombre: ");
                     nombre = Console.ReadLine();
 
+
                 } while (String.IsNullOrEmpty(nombre.Trim()));
 
                 String duracionC;
@@ -218,12 +219,24 @@ namespace ClienteConsola
                 { 
                     Console.WriteLine("Ingrese ID de la cancion: ");
                     id = Console.ReadLine();
+                    if (String.IsNullOrEmpty(id.Trim()))
+                    {
+                        Console.WriteLine("desea salir? (y/n)");
+                        if (Console.ReadLine() == "y")
+                        {
+                            id = "out";
+                        }
+                    }
                 } while (String.IsNullOrEmpty(id.Trim()));
-                int idEliminar = int.Parse(id);
-                wService.BajaCancion(idEliminar);
-                Console.WriteLine("Borrado exitoso");
-                Console.ReadLine();
 
+                //while (String.IsNullOrEmpty(id.Trim()));
+                if (!(id == "out"))
+                {
+                    int idEliminar = int.Parse(id);
+                    wService.BajaCancion(idEliminar);
+                    Console.WriteLine("Borrado exitoso");
+                    Console.ReadLine();
+                }
             }
             catch (Exception e)
             {
@@ -237,15 +250,16 @@ namespace ClienteConsola
             {
                 Console.Clear();
                 ImprimeLinea();
-                ImprimeFila("Nombre","Duracion","Año","Genero","Cantante(ID)");
+                ImprimeFila("ID-Cancion","Nombre","Duracion","Año","Genero","Cantante(ID)");
                 Console.WriteLine(" ");
                 VOCancion[] listVoc = wService.ListarCanciones(); 
                 foreach (VOCancion vo in listVoc)
                 {
+                    String id = vo.Id.ToString();
                     String duracion = vo.Duracion.ToString();
                     String anio = vo.Anio.ToString();
-                    String id = vo.IdCantante.ToString();
-                    ImprimeFila(vo.Nombre,duracion,anio,vo.GeneroMusical,id);
+                    String idc = vo.IdCantante.ToString();
+                    ImprimeFila(id,vo.Nombre,duracion,anio,vo.GeneroMusical,idc);
 
                 }
                 Console.ReadLine();
@@ -339,7 +353,6 @@ namespace ClienteConsola
                 VOBanda[] listvob = wService.ListarBandas();
                 foreach (var vo in listvob)
                 {
-                    //Console.WriteLine(vo.Nombre + "\t " + vo.GeneroMusical + "\t " + vo.AnioCreacion + "\t " + vo.AnioSeparacion);
                     String anioC = vo.AnioCreacion.ToString();
                     String anioS = vo.AnioSeparacion.ToString();
                     ImprimeFila(vo.Nombre, vo.GeneroMusical,anioC,anioS);
