@@ -14,7 +14,7 @@ namespace ClienteConsola
         localhost.WebService1 wService = new localhost.WebService1();
 
         #region Menu Display
-        int tableWidth = 73;
+        int tableWidth = 80;
         public void ImprimeLinea()
         {
             Console.WriteLine(new string('-', tableWidth));
