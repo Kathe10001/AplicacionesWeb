@@ -29,6 +29,7 @@ export default class BandaComponent implements OnInit {
   albumes!: Album[];
   calificacionParam: string[] = ["Puntaje", "Comentario"];
   mensaje!: string;
+  error!: string;
 
   bandasForm = this.formBuilder.group({
     Nombre: '',
@@ -52,6 +53,7 @@ export default class BandaComponent implements OnInit {
   }
 
   onSubmit(): void {
+    this.error = '';
     this.showBandas = true;
     this.showCalificacion = false;
     this.showIntegrantes = false;
@@ -62,18 +64,23 @@ export default class BandaComponent implements OnInit {
   }
 
   onSubmitCalificacion(): void {
+    this.error = '';
     const body: any = obtenerBody(this.user.Id, this.banda.Id, "BANDA", this.calificacionForm, this.calificacionParam)
     if (this.editar) {
-      this.calificacionService.putCalificacionApi(body).subscribe(calificacion => this.mensaje = "Se guardó correctamente");
+      this.calificacionService.putCalificacionApi(body).subscribe(calificacion => this.mensaje = "Se guardó correctamente",
+      error => this.error = "No se pudo enviar");
     } else {
-      this.calificacionService.postCalificacionApi(body).subscribe(calificacion => this.mensaje = "Se guardó correctamente");
+      this.calificacionService.postCalificacionApi(body).subscribe(calificacion => this.mensaje = "Se guardó correctamente",
+       error => this.error = "No se pudo enviar");
     }
   }
 
   openCalificacion(banda: Banda): void {
+    this.error = '';
     this.showCalificacion = true;
     this.showIntegrantes = false;
     this.showAlbumes = false;
+    this.mensaje = '';
     this.banda = banda;
     const filtros: any = obtenerFiltrosCalificacion(this.user.Id, banda.Id, "BANDA");
     this.calificacionService.getCalificacionApi(filtros).subscribe(calificacion => {
@@ -83,6 +90,8 @@ export default class BandaComponent implements OnInit {
   }
 
   closeCalificacion(): void {
+    this.error = '';
+    this.mensaje = '';
     this.showCalificacion = false;
   }
 
@@ -91,6 +100,8 @@ export default class BandaComponent implements OnInit {
     this.showCalificacion = false;
     this.showAlbumes = false;
     this.banda = banda;
+    this.error = '';
+    this.mensaje = '';
     this.bandaService.getBandaIntegrantesApi(banda.Id).subscribe(integrantes => {
       this.showIntegrantes = true;
       this.integrantes = integrantes;
@@ -102,6 +113,8 @@ export default class BandaComponent implements OnInit {
     this.showIntegrantes = false;
     this.showCalificacion = false;
     this.banda = banda;
+    this.error = '';
+    this.mensaje = '';
     this.bandaService.getBandaAlbumesApi(banda.Id).subscribe(albumes => {
       this.showAlbumes = true;
       this.albumes = albumes;
