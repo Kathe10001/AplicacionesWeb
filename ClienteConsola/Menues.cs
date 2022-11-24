@@ -348,14 +348,15 @@ namespace ClienteConsola
             {
                 Console.Clear();
                 ImprimeLinea();
-                ImprimeFila("Nombre","Genero","Año-Creacion","Año-Separacion");
+                ImprimeFila("ID-Banda","Nombre","Genero","Año-Creacion","Año-Separacion");
                 Console.WriteLine(" ");
                 VOBanda[] listvob = wService.ListarBandas();
                 foreach (var vo in listvob)
                 {
+                    String id = vo.Id.ToString();
                     String anioC = vo.AnioCreacion.ToString();
                     String anioS = vo.AnioSeparacion.ToString();
-                    ImprimeFila(vo.Nombre, vo.GeneroMusical,anioC,anioS);
+                    ImprimeFila(id,vo.Nombre, vo.GeneroMusical,anioC,anioS);
                 }
                 Console.ReadLine();
 
@@ -484,13 +485,14 @@ namespace ClienteConsola
             {
                 Console.Clear();
                 ImprimeLinea();
-                ImprimeFila("Nombre","Apellido","Fecha Nacimiento");
+                ImprimeFila("ID-Integrante","Nombre","Apellido","Fecha Nacimiento");
                 Console.WriteLine(" ");
                 var listvoi = wService.ListarIntegrante();
                 foreach (var vo in listvoi)
                 {
+                    String id = vo.Id.ToString();
                     String fecha = vo.FechaNacimiento.ToString();
-                    ImprimeFila(vo.Nombre,vo.Apellido,fecha);
+                    ImprimeFila(id,vo.Nombre,vo.Apellido,fecha);
 
                 }
                 Console.ReadLine();
@@ -574,14 +576,15 @@ namespace ClienteConsola
             {
                 Console.Clear();
                 ImprimeLinea();
-                ImprimeFila("Nombre","Apellido","Banda(ID)","Año Creacion(ID)");
+                ImprimeFila("ID-Album","Nombre","Apellido","Banda(ID)","Año Creacion(ID)");
                 Console.WriteLine(" ");
                 var listvoa = wService.ListadoAlbum();
                 foreach (var vo in listvoa)
                 {
+                    String ida = vo.Id.ToString();
                     String idb = vo.IdBanda.ToString();
                     String anio = vo.AnioCreacion.ToString();
-                    ImprimeFila(vo.Nombre,vo.GeneroMusical,idb,anio);
+                    ImprimeFila(ida,vo.Nombre,vo.GeneroMusical,idb,anio);
                 }
                 Console.ReadLine();
 
