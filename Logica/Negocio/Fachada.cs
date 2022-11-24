@@ -207,7 +207,10 @@ namespace Logica.Negocio
 
         public int InsertarUsuario(VOUsuario vou)
         {
-            return daoUsuario.Insertar(vou);
+            if (daoUsuario.Buscar(vou.Email) != null)
+                return -1;
+            else
+                return daoUsuario.Insertar(vou);
         }
 
         public List<VOCancion> ListarCancionesAlbum(int idAlbum)

@@ -4,6 +4,7 @@ import { AlbumService } from '../servicios/album.service';
 import { Album } from '../tipos/album';
 import { Cancion } from '../tipos/cancion';
 import { obtenerFiltros } from '../utils';
+import { AppComponent } from '../app.component';
 
 @Component({
   selector: 'app-album',
@@ -11,7 +12,7 @@ import { obtenerFiltros } from '../utils';
   styleUrls: ['./album.component.css']
 })
 export default class AlbumComponent {
-
+  user!: any;
   showCanciones: boolean = false;
   showAlbumes: boolean = false;
   album!: Album;
@@ -26,9 +27,14 @@ export default class AlbumComponent {
 
 
   constructor(
+    private appComponent: AppComponent,
     private albumService: AlbumService,
     private formBuilder: FormBuilder,
   ) { }
+
+  ngOnInit() {
+    this.user = this.appComponent.user;
+  }
 
   onSubmit(): void {
     this.showCanciones = false;

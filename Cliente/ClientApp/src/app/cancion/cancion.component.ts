@@ -43,7 +43,6 @@ export default class CancionComponent {
 
   ngOnInit() {
     this.user = this.appComponent.user;
-
     this.calificacionForm = new FormGroup({
       Puntaje: new FormControl(5),
       Comentario: new FormControl("")

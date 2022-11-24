@@ -122,7 +122,7 @@ namespace Persistencia.DAOs
                 {
                     ParameterName = "@Apellido",
                     Value = voi.Apellido,
-                    SqlDbType = SqlDbType.Int
+                    SqlDbType = SqlDbType.VarChar
                 };
                 comando.Parameters.Add(apellidoMParameter);
 
@@ -130,7 +130,7 @@ namespace Persistencia.DAOs
                 {
                     ParameterName = "@FechaNacimiento",
                     Value = voi.FechaNacimiento,
-                    SqlDbType = SqlDbType.Int
+                    SqlDbType = SqlDbType.DateTime
                 };
                 comando.Parameters.Add(fechaNParameter);
 

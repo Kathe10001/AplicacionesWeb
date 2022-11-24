@@ -35,11 +35,15 @@ export default class LoginComponent {
   }
 
   registrar(): void {
-    const body: any = obtenerFiltros(this.registrarForm, ["Nombre", "Apellido", "Email", "Contrasenia"]); 
+    const body: any = obtenerFiltros(this.registrarForm, ["Nombre", "Apellido", "Email", "Contrasenia"]);
+    this.mensaje = '';
     this.loginService.postRegistrarApi(body).subscribe(id => {
-      this.mensaje = '';
-      setLocalUsuario({ ...body, Id: id });
-      window.location.href = '';
+      if (id === -1) {
+        this.mensaje = "El mail ya existe";
+      } else {
+        setLocalUsuario({ ...body, Id: id });
+        window.location.href = '';
+      }
       }, error => this.mensaje = error);
       this.registrarForm.reset();
   }

@@ -1,4 +1,4 @@
-<div class="container-md">
+<div class="container-md" *ngIf="user">
   <form class="row mt-4 mb-4 bg-secondary p-2 text-dark bg-opacity-10 rounded" [formGroup]="cancionesForm" (ngSubmit)="onSubmit()">
     <h3 class="mt-4 mb-4">Listado de canciones</h3>
     <div class="col-md-3">
