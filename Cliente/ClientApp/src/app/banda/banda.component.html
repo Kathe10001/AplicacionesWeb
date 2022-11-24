@@ -25,7 +25,6 @@
             <th scope="col">Separación</th>
             <th scope="col">Calificar</th>
             <th scope="col">Integrantes</th>
-            <th scope="col">Albumes</th>
           </tr>
         </thead>
         <tbody>
@@ -45,11 +44,6 @@
                 <span class="fa fa-user checked text-primary"></span>
               </a>
             </td>
-            <td>
-              <a (click)="openAlbumes(banda)" class="button fancy-button">
-                <span class="fa fa-folder-open checked text-success"></span>
-              </a>
-            </td>
           </tr>
         </tbody>
       </table>
@@ -60,7 +54,10 @@
   </div>
   <form class="row mt-4 mb-4 bg-secondary p-2 text-dark bg-opacity-10 rounded" [formGroup]="calificacionForm" (ngSubmit)="onSubmitCalificacion()" *ngIf="showCalificacion">
     <div class="row mt-4 mb-4">
-      <h3 class="col-11">{{ editar ? "Tu calificación fue:" : banda.Nombre }}</h3>
+      <h3 class="col-11">
+        <span *ngIf="editar">Tu calificación para {{banda.Nombre}} fue:</span>
+        <span *ngIf="!editar">{{banda.Nombre}}</span>
+      </h3>
       <div class="col-1">
         <button type="button" class="btn-close float-end" aria-label="Close" (click)="closeCalificacion()"></button>
       </div>
@@ -72,12 +69,17 @@
       <p class="mt-2 mb-2 text-danger">{{error}}</p>
     </div>
     <div class="col-md-12">
-      <label for="Puntaje">Puntaje del 0 al 9</label>
-      <input type="text" maxlength=1 class="form-control" id="Puntaje" formControlName="Puntaje" pattern="[1-5.]+">
-      <label for="Comentario">Comentario</label>
-      <textarea class="form-control" id="Comentario" rows="3" formControlName="Comentario"></textarea>
+      <label for="Puntaje">Puntaje del 1 al 5</label>
+      <select class="form-select  mt-4 mb-4" aria-label="Puntaje" id="Puntaje" formControlName="Puntaje" (ngModelChange)="validarBoton()">
+        <option selected>5</option>
+        <option value="4">4</option>
+        <option value="3">3</option>
+        <option value="2">2</option>
+        <option value="1">1</option>
+      </select>
+      <textarea class="form-control" id="Comentario" rows="3" formControlName="Comentario" (ngModelChange)="validarBoton()"></textarea>
       <div class="col-12 mt-4 mb-4">
-        <button type="submit" class="btn btn-primary">{{ editar ? "Editar" : "Alta" }}</button>
+        <button type="submit" class="btn btn-primary" [disabled]="activado">{{ editar ? "Editar" : "Alta" }}</button>
       </div>
     </div>
   </form>
@@ -97,38 +99,13 @@
             <th scope="row">{{ integrante.Id }}</th>
             <td scope="row">{{ integrante.Nombre }}</td>
             <td scope="row">{{ integrante.Apellido }}</td>
-            <td scope="row">{{ integrante.FechaNacimiento }}</td>
+            <td scope="row">{{ integrante.FechaNacimiento  | date: 'dd/MM/yyyy' }}</td>
           </tr>
         </tbody>
       </table>
     </div>
     <div class="row ps-2 pe-2" *ngIf="integrantes.length <= 0">
       <h3 class="mt-4 mb-4">No se encontraron integrantes</h3>
-    </div>
-  </div>
-  <div class="row ps-2 pe-2" *ngIf="showAlbumes && albumes">
-    <div *ngIf="albumes.length > 0">
-      <table class="table mt-4 mb-4">
-        <thead>
-          <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Género</th>
-            <th scope="col">Año</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let album of albumes">
-            <th scope="row">{{ album.Id }}</th>
-            <td scope="row">{{ album.Nombre }}</td>
-            <td scope="row">{{ album.GeneroMusical }}</td>
-            <td scope="row">{{ album.AnioCreacion }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="row ps-2 pe-2" *ngIf="albumes.length <= 0">
-      <h3 class="mt-4 mb-4">No se encontraron albumes</h3>
     </div>
   </div>
 </div>

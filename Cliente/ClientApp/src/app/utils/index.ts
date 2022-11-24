@@ -59,3 +59,5 @@ export const setLocalUsuario = (usuario: Usuario) => {
 export const removeLocalUsuario = () => {
   localStorage.removeItem('session');
 }
+
+export const validarCalificacion = (puntaje: string, comentario: string): boolean => !(puntaje !== '0' && comentario && comentario !== '');

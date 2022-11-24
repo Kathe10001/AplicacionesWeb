@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators, FormControl, FormGroup } from '@angular/forms';
 import { CancionService } from '../servicios/cancion.service';
 import { CalificacionService } from '../servicios/calificacion.service';
 import { Cancion } from '../tipos/cancion';
 import { Album } from '../tipos/album';
 import { Calificacion } from '../tipos/calificacion';
-import { obtenerFiltros, obtenerFiltrosCalificacion, obtenerBody, setCalificacion } from '../utils';
+import { obtenerFiltros, obtenerFiltrosCalificacion, obtenerBody, setCalificacion, validarCalificacion } from '../utils';
 import { AppComponent } from '../app.component';
 
 @Component({
@@ -13,11 +13,12 @@ import { AppComponent } from '../app.component';
   templateUrl: './cancion.component.html',
   styleUrls: ['./cancion.component.css']
 })
-export default class CancionComponent {
 
+export default class CancionComponent {
+  activado: boolean = false;
   editar: boolean = false;
   user!: any;
-  showCanciones: boolean = false;
+  showCalificacion: boolean = false;
   showAlbumes: boolean = false;
   cancion!: Cancion;
   canciones!: Cancion[];
@@ -25,16 +26,12 @@ export default class CancionComponent {
   calificacionParam: string[] = ["Puntaje", "Comentario"];
   mensaje!: string;
   error!: string;
+  calificacionForm!: any;
 
   cancionesForm = this.formBuilder.group({
     Nombre: '',
     Anio: '',
     GeneroMusical: ''
-  });
-
-  calificacionForm = this.formBuilder.group({
-    Puntaje: 0,
-    Comentario: ''
   });
 
   constructor(
@@ -46,12 +43,17 @@ export default class CancionComponent {
 
   ngOnInit() {
     this.user = this.appComponent.user;
+
+    this.calificacionForm = new FormGroup({
+      Puntaje: new FormControl(5),
+      Comentario: new FormControl("")
+    }); 
   }
 
   onSubmit(): void {
     this.error = '';
     this.mensaje = '';
-    this.showCanciones = false;
+    this.showCalificacion = false;
     const filtros: any = obtenerFiltros(this.cancionesForm, ["Anio", "GeneroMusical", "Nombre"]);
     this.cancionService.getCancionesApi(filtros).subscribe(canciones => this.canciones = canciones);
     this.cancionesForm.reset();
@@ -73,7 +75,7 @@ export default class CancionComponent {
   openCalificacion(cancion: Cancion): void {
     this.error = '';
     this.mensaje = '';
-    this.showCanciones = true;
+    this.showCalificacion = true;
     this.cancion = cancion;
     const filtros: any = obtenerFiltrosCalificacion(this.user.Id, cancion.Id, "CANCION");
     this.calificacionService.getCalificacionApi(filtros).subscribe(calificacion => {
@@ -82,9 +84,15 @@ export default class CancionComponent {
     })
   }
 
-  close(): void {
+  closeCalificacion(): void {
     this.error = '';
     this.mensaje = '';
-    this.showCanciones = false;
+    this.showCalificacion = false;
+  }
+
+  validarBoton() {
+    const puntaje = this.calificacionForm.get('Puntaje')?.value;
+    const comentario = this.calificacionForm.get('Comentario')?.value;
+    this.activado = validarCalificacion(puntaje, comentario);
   }
 }

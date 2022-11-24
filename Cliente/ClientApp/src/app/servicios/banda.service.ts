@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Banda } from '../tipos/banda';
-import { Album } from '../tipos/album';
 import { Integrante } from '../tipos/integrante';
 import { obtenerParametros } from '../utils';
 
@@ -26,9 +25,5 @@ export class BandaService {
 
   getBandaIntegrantesApi(idBanda: number) {
     return this.http.get<Integrante[]>('http://localhost:62462/api/banda/' + idBanda + '/integrantes');
-  }
-
-  getBandaAlbumesApi(idAlbum: number) {
-    return this.http.get<Album[]>('http://localhost:62462/api/banda/' + idAlbum + '/albumes');
   }
 }

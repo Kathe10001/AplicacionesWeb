@@ -1,12 +1,11 @@
 import { Component, OnInit, NgModule } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { BandaService } from '../servicios/banda.service';
 import { CalificacionService } from '../servicios/calificacion.service';
 import { Banda } from '../tipos/banda';
 import { Integrante } from '../tipos/integrante';
-import { Album } from '../tipos/album';
 import { Calificacion } from '../tipos/calificacion';
-import { obtenerFiltros, obtenerFiltrosCalificacion, setCalificacion, obtenerBody } from '../utils';
+import { obtenerFiltros, obtenerFiltrosCalificacion, setCalificacion, obtenerBody, validarCalificacion } from '../utils';
 import { AppComponent } from '../app.component';
 
 @Component({
@@ -16,29 +15,23 @@ import { AppComponent } from '../app.component';
 })
 
 export default class BandaComponent implements OnInit {
-
+  activado: boolean = false;
   editar: boolean = false;
   user!: any;
-  showAlbumes: boolean = false;
   showBandas: boolean = false;
   showIntegrantes: boolean = false;
   showCalificacion: boolean = false;
   banda!: Banda;
   bandas!: Banda[];
   integrantes!: Integrante[];
-  albumes!: Album[];
   calificacionParam: string[] = ["Puntaje", "Comentario"];
   mensaje!: string;
   error!: string;
+  calificacionForm!: any;
 
   bandasForm = this.formBuilder.group({
     Nombre: '',
     GeneroMusical: ''
-  });
-
-  calificacionForm = this.formBuilder.group({
-    Puntaje: 0,
-    Comentario: ''
   });
 
   constructor(
@@ -50,6 +43,11 @@ export default class BandaComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.appComponent.user;
+
+    this.calificacionForm = new FormGroup({
+      Puntaje: new FormControl(5),
+      Comentario: new FormControl("")
+    }); 
   }
 
   onSubmit(): void {
@@ -57,7 +55,6 @@ export default class BandaComponent implements OnInit {
     this.showBandas = true;
     this.showCalificacion = false;
     this.showIntegrantes = false;
-    this.showAlbumes = false;
     const filtros: any = obtenerFiltros(this.bandasForm, ["GeneroMusical", "Nombre"]);
     this.bandaService.getBandasApi(filtros).subscribe(bandas => this.bandas = bandas);
     this.bandasForm.reset();
@@ -79,7 +76,6 @@ export default class BandaComponent implements OnInit {
     this.error = '';
     this.showCalificacion = true;
     this.showIntegrantes = false;
-    this.showAlbumes = false;
     this.mensaje = '';
     this.banda = banda;
     const filtros: any = obtenerFiltrosCalificacion(this.user.Id, banda.Id, "BANDA");
@@ -98,7 +94,6 @@ export default class BandaComponent implements OnInit {
   openIntegrantes(banda: Banda): void {
     this.showIntegrantes = true;
     this.showCalificacion = false;
-    this.showAlbumes = false;
     this.banda = banda;
     this.error = '';
     this.mensaje = '';
@@ -108,16 +103,9 @@ export default class BandaComponent implements OnInit {
     })
   }
 
-  openAlbumes(banda: Banda): void {
-    this.showAlbumes = true;
-    this.showIntegrantes = false;
-    this.showCalificacion = false;
-    this.banda = banda;
-    this.error = '';
-    this.mensaje = '';
-    this.bandaService.getBandaAlbumesApi(banda.Id).subscribe(albumes => {
-      this.showAlbumes = true;
-      this.albumes = albumes;
-    })
+  validarBoton() {
+    const puntaje = this.calificacionForm.get('Puntaje')?.value;
+    const comentario = this.calificacionForm.get('Comentario')?.value;
+    this.activado = validarCalificacion(puntaje, comentario);
   }
 }

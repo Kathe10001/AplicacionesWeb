@@ -41,7 +41,7 @@ namespace Persistencia.DAOs
                 }
                 if (generoMusical != null)
                 {
-                    parametros.Add("GeneroMusical like @genero");
+                    parametros.Add("GeneroMusical like @generoMusical");
                 }
 
                 sb.Append(String.Join(" AND ", parametros));

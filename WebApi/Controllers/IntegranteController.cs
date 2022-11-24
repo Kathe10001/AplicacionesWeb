@@ -21,16 +21,5 @@ namespace WebApi.Controllers
             return Fachada.Instancia.ListarIntegrante(nombre, apellido);
         }
 
-        [Route("{id}/bandas")]
-        public IHttpActionResult GetBandas(int id)
-        {
-            var integrante = "";//Fachada.Instancia.ListarBandaIntegrantes(id);
-            if (integrante == null)
-            {
-                return NotFound();
-            }
-            return Ok(integrante);
-        }
-
     }
 }
